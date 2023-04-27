@@ -1,7 +1,8 @@
+import java.awt.Color;
 
 public abstract class Oiseau extends Animal implements AnimalVolant {
-    public Oiseau() {
-        super();
+    public Oiseau(int rayon, Color c) {
+        super(rayon, c);
     }
 
     @Override

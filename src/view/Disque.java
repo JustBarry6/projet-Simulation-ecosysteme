@@ -1,28 +1,31 @@
 import java.awt.Color;
 
-class Disque {
+public class Disque {
+	private int x;
+	private int y;
+	private int rayon;
+	private Color couleur;
 
-    private int rayon;
-    private Color couleur;
+	public Disque(int x, int y, int rayon, Color couleur) {
+		this.x = x;
+		this.y = y;
+		this.rayon = rayon;
+		this.couleur = couleur;
+	}
 
-    public Disque(int rayon, Color couleur) {
-        this.rayon = rayon;
-        this.couleur = couleur;
-    }
+	public int getX() {
+		return x;
+	}
 
-    public int getRayon() {
-        return rayon;
-    }
+	public int getY() {
+		return y;
+	}
 
-    public void setRayon(int rayon) {
-        this.rayon = rayon;
-    }
+	public int getRayon() {
+		return rayon;
+	}
 
-    public Color getCouleur() {
-        return couleur;
-    }
-
-    public void setCouleur(Color couleur) {
-        this.couleur = couleur;
-    }
+	public Color getCouleur() {
+		return couleur;
+	}
 }

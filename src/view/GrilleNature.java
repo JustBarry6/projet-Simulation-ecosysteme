@@ -1,84 +1,131 @@
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
+import java.util.Random;
+
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-class GrilleNature {
+public class GrilleNature extends JPanel {
+	private int nbCasesL, nbCasesH;
+	private int nbPixelCoteCase;
+	private Zone[][] zone;
+	private Random random;
 
-    private CaseGrille[][] grille;
-    private int caseSize;
+	public GrilleNature(int nbCasesL, int nbCasesH, int nbPixelCoteCase) {
+		int i, j;
+		this.nbCasesL = nbCasesL;
+		this.nbCasesH = nbCasesH;
+		this.nbPixelCoteCase = nbPixelCoteCase;
+		random = new Random();
 
-    private JPanel zoneGraphique;
+		JFrame window = new JFrame();
+		window.setSize(nbCasesL * nbPixelCoteCase + 50, nbCasesH * nbPixelCoteCase + 50);
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window.add(this);
+		window.setVisible(true);
 
-    GrilleNature(int nbCasesL, int nbCasesH, int caseSize) {
-        grille = new CaseGrille[nbCasesL][nbCasesH];
-        for (int i = 0; i < nbCasesL; i++) {
-            for (int j = 0; j < nbCasesH; j++) {
-                grille[i][j] = new CaseGrille();
-            }
-        }
+		this.zone = new Zone[nbCasesL][nbCasesH];
+		for (i = 0; i < nbCasesL; i++) {
+			for (j = 0; j < nbCasesH; j++) {
+				zone[i][j] = new Zone(50, 10, TypeZone.DESERT);
+			}
+		}
+	}
 
-        this.caseSize = caseSize;
+	public void redessine() {
+		repaint();
+	}
 
-        // Création de la zone graphique
-        zoneGraphique = new JPanel() {
-            private static final long serialVersionUID = 1L;
+	public void colorieFond(int i, int j, Color c) {
+		zone[i][j].setCouleur(c);
+	}
 
-            @Override
-            public void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                dessine(g);
-            }
-        };
-        zoneGraphique.setPreferredSize(new java.awt.Dimension(nbCasesL * caseSize, nbCasesH * caseSize));
-    }
+	public void addAnimal(int i, int j, int rayon, Color c) {
+		zone[i][j].addAnimal(new Lion(rayon, c));
+	}
 
-    public void addDisque(int x, int y, int rayon, Color c) {
-        grille[x][y].addDisque(rayon, c);
-    }
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		int i, j;
+		for (i = 0; i < nbCasesL; i++) {
+			for (j = 0; j < nbCasesH; j++) {
+				int cellX = 10 + (i * nbPixelCoteCase);
+				int cellY = 10 + (j * nbPixelCoteCase);
+				g.setColor(zone[i][j].getCouleur());
+				g.fillRect(cellX, cellY, nbPixelCoteCase, nbPixelCoteCase);
 
-    public void clear(int x, int y) {
-        grille[x][y].lDisques.clear();
-    }
+				for (Animal animal : zone[i][j].getAnimaux()) {
+					g.setColor(animal.getCouleur());
+					g.fillOval(cellX + 10, cellY + 10, animal.getRayon(), animal.getRayon());
+				}
+			}
+		}
 
-    public int getNbDisques(int x, int y, Color c) {
-        int nbDisques = 0;
-        for (Disque d : grille[x][y].lDisques) {
-            if (d.getCouleur().equals(c)) {
-                nbDisques++;
-            }
-        }
-        return nbDisques;
-    }
+		g.setColor(Color.BLACK);
+		g.drawRect(10, 10, nbCasesL * nbPixelCoteCase, nbCasesH * nbPixelCoteCase);
 
-    public void redessine() {
-        zoneGraphique.repaint();
-    }
+		for (i = 10; i <= nbCasesL * nbPixelCoteCase; i += nbPixelCoteCase) {
+			g.drawLine(i, 10, i, nbCasesH * nbPixelCoteCase + 10);
+		}
 
-    public JPanel getZoneGraphique() {
-        return zoneGraphique;
-    }
+		for (i = 10; i <= nbCasesH * nbPixelCoteCase; i += nbPixelCoteCase) {
+			g.drawLine(10, i, nbCasesL * nbPixelCoteCase + 10, i);
+		}
+	}
 
-    public void dessine(Graphics g) {
-        for (int i = 0; i < grille.length; i++) {
-            for (int j = 0; j < grille[i].length; j++) {
-                dessineCase(g, grille[i][j], i, j);
-            }
-        }
-    }
+	public int getNbAnimal(int i, int j, Color couleur) {
+		int count = 0;
+		Zone z = zone[i][j];
+		for (Animal animal : z.getAnimaux()) {
+			if (animal.getCouleur().equals(couleur)) {
+				count++;
+			}
+		}
+		return count;
+	}
 
-    public void dessineCase(Graphics g, CaseGrille c, int x, int y) {
-        g.setColor(c.getCouleur());
-        g.fillRect(x * caseSize, y * caseSize, caseSize, caseSize);
+	public void moveProies(int i, int j) {
+		int nbLapins = getNbAnimal(i, j, Color.GREEN);
+		for (int k = 0; k < nbLapins; k++) {
+			if (random.nextInt(100) < 25) {
+				int newI = (i + random.nextInt(3) - 1 + nbCasesL) % nbCasesL;
+				int newJ = (j + random.nextInt(3) - 1 + nbCasesH) % nbCasesH;
+				if (getNbAnimal(newI, newJ, Color.GREEN) == 0 && getNbAnimal(newI, newJ, Color.RED) == 0) {
+					moveDisque(i, j, newI, newJ, Color.GREEN);
+				}
+			}
+		}
+	}
 
-        for (Disque d : c.lDisques) {
-            dessineDisque(g, d, x, y);
-        }
-    }
+	public void movePredateurs(int i, int j) {
+		int nbAigles = getNbAnimal(i, j, Color.RED);
+		for (int k = 0; k < nbAigles; k++) {
+			if (random.nextInt(100) < 25) {
+				int newI = (i + random.nextInt(3) - 1 + nbCasesL) % nbCasesL;
+				int newJ = (j + random.nextInt(3) - 1 + nbCasesH) % nbCasesH;
+				if (getNbAnimal(newI, newJ, Color.GREEN) == 0 && getNbAnimal(newI, newJ, Color.RED) == 0) {
+					moveDisque(i, j, newI, newJ, Color.RED);
+				}
+			}
+		}
+	}
 
-    public void dessineDisque(Graphics g, Disque d, int x, int y) {
-        g.setColor(d.getCouleur());
-        Point centre = new Point(x * caseSize + caseSize / 2, y * caseSize + caseSize / 2);
-        g.fillOval(centre.x - d.getRayon(), centre.y - d.getRayon(), d.getRayon() * 2, d.getRayon() * 2);
-    }
+	private void moveDisque(int x, int y, int newX, int newY, Color couleur) {
+		Zone currentZone = zone[x][y];
+		Zone newZone = zone[newX][newY];
+		Animal animalToMove = currentZone.removeAnimal(couleur);
+		newZone.addAnimal(animalToMove);
+	}
+
+	public void removeAnimal(int x, int y, Color couleur) {
+		System.out.println("Animal a supprimer");
+		// zone[x][y].removeIf(disque -> disque.getX() == x && disque.getY() == y &&
+		// disque.getCouleur().equals(couleur));
+	}
+
+	public Zone getZone(int i, int j) {
+		return zone[i][j];
+	}
+
 }

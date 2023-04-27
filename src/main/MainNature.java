@@ -1,66 +1,123 @@
-import javax.swing.JFrame;
-import java.util.Random;
 import java.awt.Color;
-import javax.swing.JPanel;
+import java.util.Random;
 
 public class MainNature {
-    public static void main(String[] args) {
-        int nbCasesL = 5, nbCasesH = 6;
-        // On crée une Grille "Logique" objet ChampGraphique de 50 cases de large, et 60
-        // de haut de 20 pixels de côté
-        GrilleNature grille = new GrilleNature(nbCasesL, nbCasesH, 100);
+	public static void main(String[] args) {
+		int nbCasesL = 5, nbCasesH = 6;
+		GrilleNature grille = new GrilleNature(nbCasesL, nbCasesH, 100);
 
-        Random r = new Random();
+		Random r = new Random();
 
-        int i, j;
-        int p1 = 30; // Pourcentage de chance qu'un lapin soit placé dans une case
-        int p2 = 10; // Pourcentage de chance qu'un aigle soit placé dans une case
-        int nbLapins, nbAigles;
+		int p1 = 30; // Pourcentage de chance qu'un lapin soit placé dans une case
+		int p2 = 10; // Pourcentage de chance qu'un aigle soit placé dans une case
+		int p3 = 20; // Pourcentage de chance de reproduction des lapins
+		int p4 = 20; // Pourcentage de chance de reproduction des aigles
+		int p5 = 10; // Pourcentage de chance de prédation
+		int p6 = 25; // Pourcentage de chance de déplacement des proies
+		int p7 = 25; // Pourcentage de chance de déplacement des prédateurs
+		int nbIterations = 10; // Nombre d'itérations de la simulation
 
-        for (i = 0; i < nbCasesL; i++)
-            for (j = 0; j < nbCasesH; j++) {
-                if (r.nextInt(100) < p1) { // Place un lapin aléatoirement dans la case avec probabilité p1
-                    grille.addDisque(i, j, 5, Color.GREEN); // Couleur des lapins : vert
-                }
-                if (r.nextInt(100) < p2) { // Place un aigle aléatoirement dans la case avec probabilité p2
-                    grille.addDisque(i, j, 5, Color.RED); // Couleur des aigles : rouge
-                }
-            }
+		for (int i = 0; i < nbCasesL; i++) {
+			for (int j = 0; j < nbCasesH; j++) {
+				if (i < j)
+					grille.colorieFond(i, j, Color.YELLOW);
+				else
+					grille.colorieFond(i, j, Color.BLUE);
+			}
+		}
 
-        grille.redessine();
+		grille.redessine();
 
-        // Puis, pause de 2s
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            return;
-        }
+		// Pause de 2s
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 
-        for (i = 0; i < nbCasesL; i++) {
-            for (j = 0; j < nbCasesH; j++) {
-                nbLapins = grille.getNbDisques(i, j, Color.GREEN); // Compte le nombre de lapins dans la case
-                nbAigles = grille.getNbDisques(i, j, Color.RED); // Compte le nombre d'aigles dans la case
-                int rayonLapins = nbLapins * 2; // Rayon des disques de lapins proportionnel au nombre de lapins
-                int rayonAigles = nbAigles * 2; // Rayon des disques d'aigles proportionnel au nombre d'aigles
-                grille.clear(i, j); // Efface tous les disques de la case
-                for (int k = 0; k < nbLapins; k++) {
-                    grille.addDisque(i, j, rayonLapins, Color.GREEN); // Ajoute les disques de lapins
-                }
-                for (int k = 0; k < nbAigles; k++) {
-                    grille.addDisque(i, j, rayonAigles, Color.RED); // Ajoute les disques d'aigles
-                }
-            }
-        }
+		for (int i = 0; i < nbCasesL; i++) {
+			for (int j = 0; j < nbCasesH; j++) {
+				if (r.nextInt(100) < p1) {
+					grille.addAnimal(i, j, 15, Color.GREEN); // ajouter directement l'animal (donc parametre à changer pour prendre directemnt les catégorie d'animaux
+				}
+				if (r.nextInt(100) < p2) {
+					grille.addAnimal(i, j, 30, Color.RED);
+				}
+				grille.redessine();
+				// Pause de 2s
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 
-        grille.redessine();
+		// Boucle de simulation
+		for (int iteration = 0; iteration < nbIterations; iteration++) {
+			// Reproduction des proies
+			for (int i = 0; i < nbCasesL; i++) {
+				for (int j = 0; j < nbCasesH; j++) {
+					Zone zone = grille.getZone(i, j);
+					int nbLapins = zone.getNbAnimaux(Color.GREEN);
+					if (nbLapins >= 2 && r.nextInt(100) < p3) {
+						grille.addAnimal(i, j, 5, Color.GREEN);
+					}
+				}
+			}
 
-        // Création et affichage de la fenêtre
-        JFrame f = new JFrame("Simulation d'écosystème");
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setContentPane(grille.getZoneGraphique());
-        f.pack();
-        f.setVisible(true);
+			// Reproduction des prédateurs
+			for (int i = 0; i < nbCasesL; i++) {
+				for (int j = 0; j < nbCasesH; j++) {
+					Zone zone = grille.getZone(i, j);
+					int nbLapins = zone.getNbAnimaux(Color.GREEN);
+					int nbAigles = zone.getNbAnimaux(Color.RED);
+					if (nbLapins > 0 && nbAigles >= 2 && r.nextInt(100) < p4) {
+						grille.addAnimal(i, j, 5, Color.RED);
+					}
+				}
+			}
 
-    }
+			// Prédation
+			for (int i = 0; i < nbCasesL; i++) {
+				for (int j = 0; j < nbCasesH; j++) {
+					Zone zone = grille.getZone(i, j);
+					int nbLapins = zone.getNbAnimaux(Color.GREEN);
+					int nbAigles = zone.getNbAnimaux(Color.RED);
+					for (int k = 0; k < nbAigles; k++) {
+						if (r.nextInt(100) < p5 && nbLapins > 0) {
+							// Suppression d'un lapin de la zone
+							grille.removeAnimal(i, j, Color.GREEN);
+							// Réduction du nombre de lapins
+							nbLapins--;
+						}
+					}
+				}
+			}
+
+			// Déplacement des proies
+			for (int i = 0; i < nbCasesL; i++) {
+				for (int j = 0; j < nbCasesH; j++) {
+					grille.moveProies(i, j);
+				}
+			}
+
+			// Déplacement des prédateurs
+			for (int i = 0; i < nbCasesL; i++) {
+				for (int j = 0; j < nbCasesH; j++) {
+					grille.movePredateurs(i, j);
+				}
+			}
+
+			grille.redessine();
+
+			// Pause entre les itérations
+			try {
+				Thread.sleep(500); // 1 seconde de pause
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 }

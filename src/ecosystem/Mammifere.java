@@ -1,6 +1,8 @@
+import java.awt.Color;
 
 public abstract class Mammifere extends Animal {
-    public Mammifere() {
-        super();
+    public Mammifere(int rayon, Color c) {
+        super(rayon, c);
     }
+    
 }

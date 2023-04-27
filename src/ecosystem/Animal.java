@@ -1,34 +1,22 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.Color;
 
-public abstract class Animal {
-    protected List<Animal> predateurs;
-    protected List<Animal> proies;
+public abstract class Animal{
 
-    public Animal() {
-        predateurs = new ArrayList<>();
-        proies = new ArrayList<>();
+    private int rayon;
+    private Color c;
+
+    public Animal(){}
+    
+    public Animal(int rayon, Color c){
+	this.rayon=rayon;
+	this.c=c;
     }
 
-    public abstract void seDeplacer();
-    public abstract void manger();
-    public abstract void boire();
-    public abstract void mourir();
-    public abstract void seReproduire();
+    public int getRayon(){ return rayon;}
+    public void setRayon(int rayon){this.rayon=rayon;}
+    public Color getCouleur(){ return c;}
+    public void setCouleur(Color c){this.c=c;}
+	
 
-    public List<Animal> getPredateurs() {
-        return predateurs;
-    }
 
-    public void setPredateurs(List<Animal> predateurs) {
-        this.predateurs = predateurs;
-    }
-
-    public List<Animal> getProies() {
-        return proies;
-    }
-
-    public void setProies(List<Animal> proies) {
-        this.proies = proies;
-    }
 }

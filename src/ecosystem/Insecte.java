@@ -1,7 +1,8 @@
+import java.awt.Color;
 
 public abstract class Insecte extends Animal implements Herbivore {
-    public Insecte() {
-        super();
+    public Insecte(int rayon, Color c) {
+        super(rayon, c);
     }
 
     @Override
