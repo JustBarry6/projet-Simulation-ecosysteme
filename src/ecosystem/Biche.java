@@ -8,8 +8,8 @@ public class Biche extends Mammifere implements Herbivore {
 	private List<Animal> proies;
 	private List<Animal> predateurs;
 
-	public Biche(int rayon, Color c) {
-		super(rayon, c);
+	public Biche(int rayon) {
+		super(rayon, Color.ORANGE);
 		this.predateurs = new ArrayList<>();
 		this.proies = new ArrayList<>();
 	}

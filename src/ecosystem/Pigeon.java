@@ -7,8 +7,8 @@ public class Pigeon extends Oiseau {
 	private List<Animal> proies;
 	private List<Animal> predateurs;
 	
-    public Pigeon(int rayon, Color c) {
-    	super(rayon, c);
+    public Pigeon(int rayon) {
+    	super(rayon, Color.GRAY);
     	this.proies = new ArrayList<>();
         this.predateurs = new ArrayList<>();
     }

@@ -86,26 +86,26 @@ public class Ecosystem extends JPanel {
 	}
 
 	public void moveProies(int i, int j) {
-		int nbLapins = getNbAnimal(i, j, Color.GREEN);
-		for (int k = 0; k < nbLapins; k++) {
+		int nbSauterelles = getNbAnimal(i, j, Color.BLACK);
+		for (int k = 0; k < nbSauterelles; k++) {
 			if (random.nextInt(100) < 25) {
 				int newI = (i + random.nextInt(3) - 1 + nbCasesL) % nbCasesL;
 				int newJ = (j + random.nextInt(3) - 1 + nbCasesH) % nbCasesH;
-				if (getNbAnimal(newI, newJ, Color.GREEN) == 0 && getNbAnimal(newI, newJ, Color.RED) == 0) {
-					moveAnimal(i, j, newI, newJ, Color.GREEN);
+				if (getNbAnimal(newI, newJ, Color.BLACK) == 0 && getNbAnimal(newI, newJ, Color.PINK) == 0) {
+					moveAnimal(i, j, newI, newJ, Color.BLACK);
 				}
 			}
 		}
 	}
 
 	public void movePredateurs(int i, int j) {
-		int nbAigles = getNbAnimal(i, j, Color.RED);
+		int nbAigles = getNbAnimal(i, j, Color.PINK);
 		for (int k = 0; k < nbAigles; k++) {
 			if (random.nextInt(100) < 25) {
 				int newI = (i + random.nextInt(3) - 1 + nbCasesL) % nbCasesL;
 				int newJ = (j + random.nextInt(3) - 1 + nbCasesH) % nbCasesH;
-				if (getNbAnimal(newI, newJ, Color.GREEN) == 0 && getNbAnimal(newI, newJ, Color.RED) == 0) {
-					moveAnimal(i, j, newI, newJ, Color.RED);
+				if (getNbAnimal(newI, newJ, Color.BLACK) == 0 && getNbAnimal(newI, newJ, Color.PINK) == 0) {
+					moveAnimal(i, j, newI, newJ, Color.PINK);
 				}
 			}
 		}

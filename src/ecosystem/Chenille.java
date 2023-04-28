@@ -7,8 +7,8 @@ public class Chenille extends Insecte {
 	private List<Animal> proies;
 	private List<Animal> predateurs;
 	
-    public Chenille(int rayon, Color c) {
-    	super(rayon, c);
+    public Chenille(int rayon) {
+    	super(rayon, Color.GREEN);
     	this.proies = new ArrayList<>();
         this.predateurs = new ArrayList<>();
     }

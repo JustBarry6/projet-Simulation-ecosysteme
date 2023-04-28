@@ -8,8 +8,8 @@ public class Sauterelle extends Insecte {
 	private List<Animal> proies;
 	private List<Animal> predateurs;
 	
-    public Sauterelle(int rayon, Color c) {
-    	super(rayon, c);
+    public Sauterelle(int rayon) {
+    	super(rayon, Color.BLACK);
         this.proies = new ArrayList<>();
         this.predateurs = new ArrayList<>();
     }

@@ -7,8 +7,8 @@ public class Aigle extends Oiseau implements Carnivore {
 	private List<Animal> proies;
 	private List<Animal> predateurs;
 	
-    public Aigle(int rayon, Color c) {
-    	super(rayon, c);
+    public Aigle(int rayon) {
+    	super(rayon, Color.PINK);
     	this.proies = new ArrayList<>();
         this.predateurs = new ArrayList<>();
     }
@@ -18,6 +18,8 @@ public class Aigle extends Oiseau implements Carnivore {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
 
 	/*
 	 * @Override public void seDeplacer() { // implémentation de la méthode
