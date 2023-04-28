@@ -5,13 +5,13 @@ import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class GrilleNature extends JPanel {
+public class Ecosystem extends JPanel {
 	private int nbCasesL, nbCasesH;
 	private int nbPixelCoteCase;
 	private Zone[][] zone;
 	private Random random;
 
-	public GrilleNature(int nbCasesL, int nbCasesH, int nbPixelCoteCase) {
+	public Ecosystem(int nbCasesL, int nbCasesH, int nbPixelCoteCase) {
 		int i, j;
 		this.nbCasesL = nbCasesL;
 		this.nbCasesH = nbCasesH;
@@ -42,6 +42,7 @@ public class GrilleNature extends JPanel {
 
 	public void addAnimal(int i, int j, int rayon, Color c) {
 		zone[i][j].addAnimal(new Lion(rayon, c));
+		zone[i][j].addAnimal(new Chenille(rayon+6, c));
 	}
 
 	@Override
@@ -92,7 +93,7 @@ public class GrilleNature extends JPanel {
 				int newI = (i + random.nextInt(3) - 1 + nbCasesL) % nbCasesL;
 				int newJ = (j + random.nextInt(3) - 1 + nbCasesH) % nbCasesH;
 				if (getNbAnimal(newI, newJ, Color.GREEN) == 0 && getNbAnimal(newI, newJ, Color.RED) == 0) {
-					moveDisque(i, j, newI, newJ, Color.GREEN);
+					moveAnimal(i, j, newI, newJ, Color.GREEN);
 				}
 			}
 		}
@@ -105,13 +106,13 @@ public class GrilleNature extends JPanel {
 				int newI = (i + random.nextInt(3) - 1 + nbCasesL) % nbCasesL;
 				int newJ = (j + random.nextInt(3) - 1 + nbCasesH) % nbCasesH;
 				if (getNbAnimal(newI, newJ, Color.GREEN) == 0 && getNbAnimal(newI, newJ, Color.RED) == 0) {
-					moveDisque(i, j, newI, newJ, Color.RED);
+					moveAnimal(i, j, newI, newJ, Color.RED);
 				}
 			}
 		}
 	}
 
-	private void moveDisque(int x, int y, int newX, int newY, Color couleur) {
+	private void moveAnimal(int x, int y, int newX, int newY, Color couleur) {
 		Zone currentZone = zone[x][y];
 		Zone newZone = zone[newX][newY];
 		Animal animalToMove = currentZone.removeAnimal(couleur);
@@ -120,8 +121,8 @@ public class GrilleNature extends JPanel {
 
 	public void removeAnimal(int x, int y, Color couleur) {
 		System.out.println("Animal a supprimer");
-		// zone[x][y].removeIf(disque -> disque.getX() == x && disque.getY() == y &&
-		// disque.getCouleur().equals(couleur));
+		// zone[x][y].removeIf(Animal -> Animal.getX() == x && Animal.getY() == y &&
+		// Animal.getCouleur().equals(couleur));
 	}
 
 	public Zone getZone(int i, int j) {

@@ -3,8 +3,8 @@ import java.util.Random;
 
 public class MainNature {
 	public static void main(String[] args) {
-		int nbCasesL = 5, nbCasesH = 6;
-		GrilleNature grille = new GrilleNature(nbCasesL, nbCasesH, 100);
+		int nbCasesL = 7, nbCasesH = 8;
+		Ecosystem grille = new Ecosystem(nbCasesL, nbCasesH, 100);
 
 		Random r = new Random();
 
@@ -15,7 +15,7 @@ public class MainNature {
 		int p5 = 10; // Pourcentage de chance de prédation
 		int p6 = 25; // Pourcentage de chance de déplacement des proies
 		int p7 = 25; // Pourcentage de chance de déplacement des prédateurs
-		int nbIterations = 10; // Nombre d'itérations de la simulation
+		int nbIterations = 100; // Nombre d'itérations de la simulation
 
 		for (int i = 0; i < nbCasesL; i++) {
 			for (int j = 0; j < nbCasesH; j++) {
@@ -30,7 +30,7 @@ public class MainNature {
 
 		// Pause de 2s
 		try {
-			Thread.sleep(500);
+			Thread.sleep(100);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -38,15 +38,15 @@ public class MainNature {
 		for (int i = 0; i < nbCasesL; i++) {
 			for (int j = 0; j < nbCasesH; j++) {
 				if (r.nextInt(100) < p1) {
-					grille.addAnimal(i, j, 15, Color.GREEN); // ajouter directement l'animal (donc parametre à changer pour prendre directemnt les catégorie d'animaux
+					grille.addAnimal(i, j, r.nextInt(20) + 5, Color.GREEN); // Ajoute un lapin avec un rayon aléatoire
 				}
 				if (r.nextInt(100) < p2) {
-					grille.addAnimal(i, j, 30, Color.RED);
+					grille.addAnimal(i, j, r.nextInt(20) + 5, Color.RED); // Ajoute un aigle avec un rayon aléatoire
 				}
 				grille.redessine();
 				// Pause de 2s
 				try {
-					Thread.sleep(500);
+					Thread.sleep(100);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -61,7 +61,7 @@ public class MainNature {
 					Zone zone = grille.getZone(i, j);
 					int nbLapins = zone.getNbAnimaux(Color.GREEN);
 					if (nbLapins >= 2 && r.nextInt(100) < p3) {
-						grille.addAnimal(i, j, 5, Color.GREEN);
+						grille.addAnimal(i, j, r.nextInt(20) + 5, Color.GREEN); // Ajoute un lapin avec un poids aléatoire
 					}
 				}
 			}
@@ -73,7 +73,7 @@ public class MainNature {
 					int nbLapins = zone.getNbAnimaux(Color.GREEN);
 					int nbAigles = zone.getNbAnimaux(Color.RED);
 					if (nbLapins > 0 && nbAigles >= 2 && r.nextInt(100) < p4) {
-						grille.addAnimal(i, j, 5, Color.RED);
+						grille.addAnimal(i, j, r.nextInt(20) + 5, Color.RED); // Ajoute un lapin avec un poids aléatoire
 					}
 				}
 			}
