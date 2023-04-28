@@ -85,31 +85,27 @@ public class Ecosystem extends JPanel {
 		return count;
 	}
 
-	public void moveProies(int i, int j) {
-		int nbSauterelles = getNbAnimal(i, j, Color.BLACK);
-		for (int k = 0; k < nbSauterelles; k++) {
-			if (random.nextInt(100) < 25) {
-				int newI = (i + random.nextInt(3) - 1 + nbCasesL) % nbCasesL;
-				int newJ = (j + random.nextInt(3) - 1 + nbCasesH) % nbCasesH;
-				if (getNbAnimal(newI, newJ, Color.BLACK) == 0 && getNbAnimal(newI, newJ, Color.PINK) == 0) {
-					moveAnimal(i, j, newI, newJ, Color.BLACK);
-				}
-			}
-		}
+	public void moveProies(int i, int j, int p, Random r) {
+	    moveAnimaux(i, j, p, r, Color.BLACK);
 	}
 
-	public void movePredateurs(int i, int j) {
-		int nbAigles = getNbAnimal(i, j, Color.PINK);
-		for (int k = 0; k < nbAigles; k++) {
-			if (random.nextInt(100) < 25) {
-				int newI = (i + random.nextInt(3) - 1 + nbCasesL) % nbCasesL;
-				int newJ = (j + random.nextInt(3) - 1 + nbCasesH) % nbCasesH;
-				if (getNbAnimal(newI, newJ, Color.BLACK) == 0 && getNbAnimal(newI, newJ, Color.PINK) == 0) {
-					moveAnimal(i, j, newI, newJ, Color.PINK);
-				}
-			}
-		}
+	public void movePredateurs(int i, int j, int p, Random r) {
+	    moveAnimaux(i, j, p, r, Color.PINK);
 	}
+
+	public void moveAnimaux(int i, int j, int p, Random r, Color couleur) {
+	    int nbAnimaux = getNbAnimal(i, j, couleur);
+	    for (int k = 0; k < nbAnimaux; k++) {
+	        if (r.nextInt(100) < p) {
+	            int newI = (i + r.nextInt(3) - 1 + nbCasesL) % nbCasesL;
+	            int newJ = (j + r.nextInt(3) - 1 + nbCasesH) % nbCasesH;
+	            if (getNbAnimal(newI, newJ, Color.BLACK) == 0 && getNbAnimal(newI, newJ, Color.PINK) == 0) {
+	                moveAnimal(i, j, newI, newJ, couleur);
+	            }
+	        }
+	    }
+	}
+
 
 	private void moveAnimal(int x, int y, int newX, int newY, Color couleur) {
 		Zone currentZone = zone[x][y];
@@ -126,6 +122,13 @@ public class Ecosystem extends JPanel {
 
 	public Zone getZone(int i, int j) {
 		return zone[i][j];
+	}
+	
+	public int getNbCasesL() {
+		return nbCasesL;
+	}
+	public int getNbCasesH() {
+		return nbCasesH;
 	}
 
 }
