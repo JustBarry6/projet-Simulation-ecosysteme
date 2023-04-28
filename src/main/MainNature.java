@@ -22,7 +22,7 @@ public class MainNature {
 				if (i < j)
 					grille.colorieFond(i, j, Color.YELLOW);
 				else
-					grille.colorieFond(i, j, Color.BLUE);
+					grille.colorieFond(i, j, Color.WHITE);
 			}
 		}
 
@@ -38,10 +38,10 @@ public class MainNature {
 		for (int i = 0; i < nbCasesL; i++) {
 			for (int j = 0; j < nbCasesH; j++) {
 				if (r.nextInt(100) < p1) {
-					grille.addAnimal(i, j, r.nextInt(20) + 5, Color.GREEN); // Ajoute un lapin avec un rayon aléatoire
+					grille.addAnimal(i, j, new Sauterelle(r.nextInt(20) + 5, Color.GREEN)); // Ajoute une sauterelle avec un rayon aléatoire
 				}
 				if (r.nextInt(100) < p2) {
-					grille.addAnimal(i, j, r.nextInt(20) + 5, Color.RED); // Ajoute un aigle avec un rayon aléatoire
+					grille.addAnimal(i, j, new Aigle(r.nextInt(20) + 5, Color.RED)); // Ajoute un aigle avec un rayon aléatoire
 				}
 				grille.redessine();
 				// Pause de 2s
@@ -59,9 +59,9 @@ public class MainNature {
 			for (int i = 0; i < nbCasesL; i++) {
 				for (int j = 0; j < nbCasesH; j++) {
 					Zone zone = grille.getZone(i, j);
-					int nbLapins = zone.getNbAnimaux(Color.GREEN);
+					int nbLapins = zone.getNbAnimal(Color.GREEN);
 					if (nbLapins >= 2 && r.nextInt(100) < p3) {
-						grille.addAnimal(i, j, r.nextInt(20) + 5, Color.GREEN); // Ajoute un lapin avec un poids aléatoire
+						grille.addAnimal(i, j, new Sauterelle(r.nextInt(20) + 5, Color.GREEN)); // Ajoute une sauterelle avec un poids aléatoire
 					}
 				}
 			}
@@ -70,10 +70,10 @@ public class MainNature {
 			for (int i = 0; i < nbCasesL; i++) {
 				for (int j = 0; j < nbCasesH; j++) {
 					Zone zone = grille.getZone(i, j);
-					int nbLapins = zone.getNbAnimaux(Color.GREEN);
-					int nbAigles = zone.getNbAnimaux(Color.RED);
+					int nbLapins = zone.getNbAnimal(Color.GREEN);
+					int nbAigles = zone.getNbAnimal(Color.RED);
 					if (nbLapins > 0 && nbAigles >= 2 && r.nextInt(100) < p4) {
-						grille.addAnimal(i, j, r.nextInt(20) + 5, Color.RED); // Ajoute un lapin avec un poids aléatoire
+						grille.addAnimal(i, j, new Aigle(r.nextInt(20) + 5, Color.RED)); // Ajoute un aigle avec un poids aléatoire
 					}
 				}
 			}
@@ -82,8 +82,8 @@ public class MainNature {
 			for (int i = 0; i < nbCasesL; i++) {
 				for (int j = 0; j < nbCasesH; j++) {
 					Zone zone = grille.getZone(i, j);
-					int nbLapins = zone.getNbAnimaux(Color.GREEN);
-					int nbAigles = zone.getNbAnimaux(Color.RED);
+					int nbLapins = zone.getNbAnimal(Color.GREEN);
+					int nbAigles = zone.getNbAnimal(Color.RED);
 					for (int k = 0; k < nbAigles; k++) {
 						if (r.nextInt(100) < p5 && nbLapins > 0) {
 							// Suppression d'un lapin de la zone

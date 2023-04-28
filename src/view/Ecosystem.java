@@ -40,10 +40,9 @@ public class Ecosystem extends JPanel {
 		zone[i][j].setCouleur(c);
 	}
 
-	public void addAnimal(int i, int j, int rayon, Color c) {
-		zone[i][j].addAnimal(new Lion(rayon, c));
-		zone[i][j].addAnimal(new Chenille(rayon+6, c));
-	}
+	public void addAnimal(int i, int j, Animal animal) {
+        zone[i][j].addAnimal(animal);
+    }
 
 	@Override
 	protected void paintComponent(Graphics g) {
