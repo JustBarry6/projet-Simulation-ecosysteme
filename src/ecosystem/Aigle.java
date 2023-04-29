@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Aigle extends Oiseau implements Carnivore {
+public class Aigle extends Oiseau implements Carnivore, AnimalVolant{
 	
     public Aigle(int rayon) {
     	super(rayon, Color.PINK, TypeAnimal.PREDATEUR);
@@ -21,24 +21,24 @@ public class Aigle extends Oiseau implements Carnivore {
 		return super.getType();
 	}
 	
-	
 
-	/*
-	 * @Override public void seDeplacer() { // implémentation de la méthode
-	 * seDeplacer pour l'aigle voler(); }
-	 * 
-	 * @Override public void mourir() { // implémentation de la méthode mourir pour
-	 * l'aigle }
-	 * 
-	 * @Override public void seReproduire() { // implémentation de la méthode
-	 * seReproduire pour l'aigle }
-	 * 
-	 * @Override public void manger() { // TODO Auto-generated method stub
-	 * 
-	 * }
-	 * 
-	 * @Override public void boire() { // TODO Auto-generated method stub
-	 * 
-	 * }
-	 */
+	@Override
+	public void seDeplacer() {
+		// implémentation de la méthodeseDeplacer pour les Aigle 
+	}
+
+	@Override
+	public void boire() {
+		// implémentation de la méthode boire pourles Aigle
+	}
+
+	@Override
+	public void mourir() {
+		// implémentation de la méthode mourir pour les Aigle
+	}
+
+	@Override
+	public void seReproduire() {
+		// implémentation de la méthode seReproduire pour les Aigle
+	}
 }

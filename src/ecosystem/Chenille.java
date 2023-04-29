@@ -15,21 +15,23 @@ public class Chenille extends Insecte {
 		return super.getType();
 	}
 
-	/*
-	 * @Override public void seDeplacer() { // implémentation de la méthode
-	 * seDeplacer pour la chenille }
-	 * 
-	 * @Override public void boire() { // implémentation de la méthode boire pour la
-	 * chenille }
-	 * 
-	 * @Override public void mourir() { // implémentation de la méthode mourir pour
-	 * la chenille }
-	 * 
-	 * @Override public void seReproduire() { // implémentation de la méthode
-	 * seReproduire pour la chenille }
-	 * 
-	 * @Override public void manger() { // TODO Auto-generated method stub
-	 * 
-	 * }
-	 */
+	@Override
+	public void seDeplacer() {
+		// implémentation de la méthodeseDeplacer pour les Chenilles }
+	}
+
+	@Override
+	public void boire() {
+		// implémentation de la méthode boire pourles Chenilles
+	}
+
+	@Override
+	public void mourir() {
+		// implémentation de la méthode mourir pour les Chenilles
+	}
+
+	@Override
+	public void seReproduire() {
+		// implémentation de la méthode seReproduire pour les Chenilles
+	}
 }

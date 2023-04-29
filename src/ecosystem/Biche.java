@@ -21,25 +21,24 @@ public class Biche extends Mammifere implements Herbivore {
 		return super.getType();
 	}
 
-	/*
-	 * @Override public void seDeplacer() { // TODO Auto-generated method stub
-	 * 
-	 * }
-	 * 
-	 * @Override public void manger() { // TODO Auto-generated method stub
-	 * 
-	 * }
-	 * 
-	 * @Override public void boire() { // TODO Auto-generated method stub
-	 * 
-	 * }
-	 * 
-	 * @Override public void mourir() { // TODO Auto-generated method stub
-	 * 
-	 * }
-	 * 
-	 * @Override public void seReproduire() { // TODO Auto-generated method stub
-	 * 
-	 * }
-	 */
+	@Override
+	public void seDeplacer() {
+		// implémentation de la méthodeseDeplacer pour les Biche }
+	}
+
+
+	@Override
+	public void boire() {
+		// implémentation de la méthode boire pourles Biche
+	}
+
+	@Override
+	public void mourir() {
+		// implémentation de la méthode mourir pour les Biche
+	}
+
+	@Override
+	public void seReproduire() {
+		// implémentation de la méthode seReproduire pour les Biche
+	}
 }

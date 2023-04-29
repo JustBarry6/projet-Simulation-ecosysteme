@@ -8,8 +8,6 @@ public abstract class Animal{
     private int rayon;
     private Color c;
 	private TypeAnimal type;
-
-    public Animal(){}
     
     public Animal(int rayon, Color c, TypeAnimal type){
 	this.rayon=rayon;
@@ -26,6 +24,8 @@ public abstract class Animal{
 		return type;
 	}
 	
-
-
+    public abstract void seDeplacer(); 
+  	public abstract void boire() ;  
+  	public abstract void mourir() ;  
+  	public abstract void seReproduire() ;  
 }
