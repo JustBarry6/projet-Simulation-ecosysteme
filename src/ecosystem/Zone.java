@@ -36,19 +36,21 @@ public class Zone {
         return animalToRemove;
     }
 
+    // Cette fonction arenvoie l'adresse d'un tableau qui permet donc la modification des données, mieux vaut éviter ça et faire une copie des données par exemple
     public List<Animal> getAnimaux() {
         return animaux;
     }
 
-    public int getNbAnimal(TypeAnimal type) {
-        int nbAnimaux = 0;
-        for (Animal animal : animaux) {
-            if (animal != null && animal.getType() == type) {
-                nbAnimaux++;
-            }
-        }
-        return nbAnimaux;
-    }
+    //! Pourquoi cette méthode ?
+//    public int getNbAnimal(TypeAnimal type) {
+//        int nbAnimaux = 0;
+//        for (Animal animal : animaux) {
+//            if (animal != null && animal.getType() == type) {
+//                nbAnimaux++;
+//            }
+//        }
+//        return nbAnimaux;
+//    }
 
     public void setCouleur(Color c) {
         this.c = c;    

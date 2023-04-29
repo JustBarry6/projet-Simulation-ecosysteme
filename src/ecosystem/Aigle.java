@@ -7,7 +7,7 @@ import java.util.List;
 public class Aigle extends Oiseau implements Carnivore, AnimalVolant{
 	
     public Aigle(int rayon) {
-    	super(rayon, Color.PINK, TypeAnimal.PREDATEUR);
+    	super(rayon, Color.PINK);
     }
 
 	@Override
@@ -15,12 +15,6 @@ public class Aigle extends Oiseau implements Carnivore, AnimalVolant{
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public TypeAnimal getType() {
-		return super.getType();
-	}
-	
 
 	@Override
 	public void seDeplacer() {

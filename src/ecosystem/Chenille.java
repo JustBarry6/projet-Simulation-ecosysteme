@@ -7,14 +7,9 @@ import java.util.List;
 public class Chenille extends Insecte {
 	
     public Chenille(int rayon) {
-    	super(rayon, Color.GREEN, TypeAnimal.PREDATEUR);
+    	super(rayon, Color.GREEN);
     }
     
-    @Override
-	public TypeAnimal getType() {
-		return super.getType();
-	}
-
 	@Override
 	public void seDeplacer() {
 		// implémentation de la méthodeseDeplacer pour les Chenilles }

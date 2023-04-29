@@ -7,12 +7,10 @@ public abstract class Animal{
 
     private int rayon;
     private Color c;
-	private TypeAnimal type;
-    
-    public Animal(int rayon, Color c, TypeAnimal type){
+	
+    public Animal(int rayon, Color c){
 	this.rayon=rayon;
 	this.c=c;
-	this.type = type;
     }
 
     public int getRayon(){ return rayon;}
@@ -20,10 +18,6 @@ public abstract class Animal{
     public Color getCouleur(){ return c;}
     public void setCouleur(Color c){this.c=c;}
 
-    public TypeAnimal getType() {
-		return type;
-	}
-	
     public abstract void seDeplacer(); 
   	public abstract void boire() ;  
   	public abstract void mourir() ;  

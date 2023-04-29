@@ -7,7 +7,7 @@ import java.util.List;
 public class Lion extends Mammifere implements Carnivore {
 	
     public Lion(int rayon) {
-    	super(rayon, Color.BLUE, TypeAnimal.PREDATEUR);
+    	super(rayon, Color.BLUE);
     }
 
 	@Override
@@ -16,10 +16,6 @@ public class Lion extends Mammifere implements Carnivore {
 		
 	}
 	
-	@Override
-	public TypeAnimal getType() {
-		return super.getType();
-	}
 	@Override
 	public void seDeplacer() {
 		// implémentation de la méthodeseDeplacer pour les Lion }

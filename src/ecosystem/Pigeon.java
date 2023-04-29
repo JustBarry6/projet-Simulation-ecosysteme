@@ -4,16 +4,14 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pigeon extends Oiseau implements AnimalVolant {
+public class Pigeon extends Oiseau implements AnimalVolant 
+{
+	
 	
     public Pigeon(int rayon) {
-    	super(rayon, Color.GRAY, TypeAnimal.PROIE);
+    	super(rayon, Color.GRAY);
     }
     
-    @Override
-	public TypeAnimal getType() {
-		return super.getType();
-	}
 	@Override
 	public void seDeplacer() {
 		// implémentation de la méthodeseDeplacer pour les Pigeons }

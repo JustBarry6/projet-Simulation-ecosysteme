@@ -7,18 +7,13 @@ import java.util.List;
 public class Biche extends Mammifere implements Herbivore {
 	
 	public Biche(int rayon) {
-		super(rayon, Color.ORANGE, TypeAnimal.PREDATEUR);
+		super(rayon, Color.ORANGE);
 	}
 
 	@Override
 	public void mangerVegetal() {
 		// TODO Auto-generated method stub
 		
-	}
-	
-	@Override
-	public TypeAnimal getType() {
-		return super.getType();
 	}
 
 	@Override
