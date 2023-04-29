@@ -60,12 +60,9 @@ public class MainNature {
             for (int j = 0; j < nbCasesH; j++) {
                 if (r.nextInt(100) < p1) {
                     grille.addAnimal(i, j, new Sauterelle(r.nextInt(20) + 5)); // Ajoute une sauterelle avec un rayon aléatoire
-                    grille.addAnimal(i, j, new Pigeon(r.nextInt(20) + 5)); // Ajoute une Pigeon avec un rayon aléatoire
                 }
                 if (r.nextInt(100) < p2) {
-                    grille.addAnimal(i, j, new Aigle(r.nextInt(20) + 5)); // Ajoute un aigle avec un rayon aléatoire
-                    grille.addAnimal(i, j, new Lion(r.nextInt(20) + 5)); // Ajoute un Lion avec un rayon aléatoire
-                    
+                    grille.addAnimal(i, j, new Aigle(r.nextInt(20) + 5)); // Ajoute un aigle avec un rayon aléatoire                    
                 }
                 grille.redessine();
                 // Pause de 2s
