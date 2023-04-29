@@ -4,19 +4,19 @@ import java.util.List;
 
 public class Aigle extends Oiseau implements Carnivore {
 	
-	private List<Animal> proies;
-	private List<Animal> predateurs;
-	
     public Aigle(int rayon) {
-    	super(rayon, Color.PINK);
-    	this.proies = new ArrayList<>();
-        this.predateurs = new ArrayList<>();
+    	super(rayon, Color.PINK, TypeAnimal.PREDATEUR);
     }
 
 	@Override
 	public void mangerAnimal(Animal animal) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	protected TypeAnimal getType() {
+		return super.getType();
 	}
 	
 	

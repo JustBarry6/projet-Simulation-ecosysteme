@@ -5,14 +5,14 @@ import java.util.List;
 public class Sauterelle extends Insecte {
 	
 	
-	private List<Animal> proies;
-	private List<Animal> predateurs;
-	
     public Sauterelle(int rayon) {
-    	super(rayon, Color.BLACK);
-        this.proies = new ArrayList<>();
-        this.predateurs = new ArrayList<>();
+    	super(rayon, Color.BLACK, TypeAnimal.PROIE);
     }
+    
+    @Override
+	protected TypeAnimal getType() {
+		return super.getType();
+	}
 
 	/*
 	 * @Override public void seDeplacer() { // implémentation de la méthode

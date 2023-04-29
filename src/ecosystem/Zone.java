@@ -20,11 +20,11 @@ public class Zone {
         animaux.add(animal);
     }
 
-    public Animal removeAnimal(Color couleur) {
+    public Animal removeAnimal(Animal animal) {
         Animal animalToRemove = null;
-        for (Animal animal : animaux) {
-            if (animal.getCouleur().equals(couleur)) {
-                animalToRemove = animal;
+        for (Animal anim : animaux) {
+            if (anim.getCouleur().equals(animal.getCouleur())) {
+                animalToRemove = anim;
                 break;
             }
         }
@@ -38,10 +38,10 @@ public class Zone {
         return animaux;
     }
 
-    public int getNbAnimal(Color couleur) {
+    public int getNbAnimal(TypeAnimal type) {
         int nbAnimaux = 0;
         for (Animal animal : animaux) {
-            if (animal.getCouleur().equals(couleur)) {
+            if (animal != null && animal.getType() == type) {
                 nbAnimaux++;
             }
         }

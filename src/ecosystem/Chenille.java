@@ -4,14 +4,14 @@ import java.util.List;
 
 public class Chenille extends Insecte {
 	
-	private List<Animal> proies;
-	private List<Animal> predateurs;
-	
     public Chenille(int rayon) {
-    	super(rayon, Color.GREEN);
-    	this.proies = new ArrayList<>();
-        this.predateurs = new ArrayList<>();
+    	super(rayon, Color.GREEN, TypeAnimal.PREDATEUR);
     }
+    
+    @Override
+	protected TypeAnimal getType() {
+		return super.getType();
+	}
 
 	/*
 	 * @Override public void seDeplacer() { // implémentation de la méthode

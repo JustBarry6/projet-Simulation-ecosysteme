@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.List;
 import java.util.Random;
 
 import javax.swing.JFrame;
@@ -74,51 +75,33 @@ public class Ecosystem extends JPanel {
 		}
 	}
 
-	public int getNbAnimal(int i, int j, Color couleur) {
-		int count = 0;
-		Zone z = zone[i][j];
-		for (Animal animal : z.getAnimaux()) {
-			if (animal.getCouleur().equals(couleur)) {
-				count++;
-			}
-		}
-		return count;
+	public int getNbAnimal(int i, int j, Animal animal) {
+	    Zone z = zone[i][j];
+	    int count = z.getNbAnimal(animal.getType());
+	    return count;
 	}
 
-	public void moveProies(int i, int j, int p, Random r) {
-	    moveAnimaux(i, j, p, r, Color.BLACK);
-	}
-
-	public void movePredateurs(int i, int j, int p, Random r) {
-	    moveAnimaux(i, j, p, r, Color.PINK);
-	}
-
-	public void moveAnimaux(int i, int j, int p, Random r, Color couleur) {
-	    int nbAnimaux = getNbAnimal(i, j, couleur);
+	public void moveAnimaux(int i, int j, int p, Random r, Animal animal) {
+	    int nbAnimaux = getNbAnimal(i, j, animal);
 	    for (int k = 0; k < nbAnimaux; k++) {
 	        if (r.nextInt(100) < p) {
 	            int newI = (i + r.nextInt(3) - 1 + nbCasesL) % nbCasesL;
 	            int newJ = (j + r.nextInt(3) - 1 + nbCasesH) % nbCasesH;
-	            if (getNbAnimal(newI, newJ, Color.BLACK) == 0 && getNbAnimal(newI, newJ, Color.PINK) == 0) {
-	                moveAnimal(i, j, newI, newJ, couleur);
+	            if (getNbAnimal(newI, newJ, animal) == 0) {
+	                moveAnimal(i, j, newI, newJ, animal);
 	            }
 	        }
 	    }
 	}
 
 
-	private void moveAnimal(int x, int y, int newX, int newY, Color couleur) {
+	private void moveAnimal(int x, int y, int newX, int newY, Animal animal) {
 		Zone currentZone = zone[x][y];
 		Zone newZone = zone[newX][newY];
-		Animal animalToMove = currentZone.removeAnimal(couleur);
+		Animal animalToMove = currentZone.removeAnimal(animal);
 		newZone.addAnimal(animalToMove);
 	}
 
-	public void removeAnimal(int x, int y, Color couleur) {
-		System.out.println("Animal a supprimer");
-		// zone[x][y].removeIf(Animal -> Animal.getX() == x && Animal.getY() == y &&
-		// Animal.getCouleur().equals(couleur));
-	}
 
 	public Zone getZone(int i, int j) {
 		return zone[i][j];
@@ -130,5 +113,9 @@ public class Ecosystem extends JPanel {
 	public int getNbCasesH() {
 		return nbCasesH;
 	}
+	
+	public List<Animal> getAnimaux(int i, int j) {
+        return zone[i][j].getAnimaux();
+    }
 
 }

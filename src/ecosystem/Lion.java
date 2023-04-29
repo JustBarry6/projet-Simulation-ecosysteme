@@ -4,13 +4,8 @@ import java.util.List;
 
 public class Lion extends Mammifere implements Carnivore {
 	
-	private List<Animal> proies;
-	private List<Animal> predateurs;
-	
     public Lion(int rayon) {
-    	super(rayon, Color.BLUE);
-        this.proies = new ArrayList<>();
-        this.predateurs = new ArrayList<>();
+    	super(rayon, Color.BLUE, TypeAnimal.PREDATEUR);
     }
 
 	@Override
@@ -18,7 +13,11 @@ public class Lion extends Mammifere implements Carnivore {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	@Override
+	protected TypeAnimal getType() {
+		return super.getType();
+	}
 	/*
 	 * @Override public void seDeplacer() { // implémentation de la méthode
 	 * seDeplacer pour le lion }

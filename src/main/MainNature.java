@@ -1,20 +1,23 @@
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class MainNature {
+	
+	static int p1 = 30; // Pourcentage de chance qu'un ... soit placé dans une case
+	static int p2 = 10; // Pourcentage de chance qu'un ... soit placé dans une case
+	static int p3 = 20; // Pourcentage de chance de reproduction des ...
+	static int p4 = 20; // Pourcentage de chance de reproduction des ...
+	static int p5 = 10; // Pourcentage de chance de prédation
+	static int p6 = 25; // Pourcentage de chance de déplacement des proies
+	static int p7 = 25; // Pourcentage de chance de déplacement des prédateurs
 	public static void main(String[] args) {
 		int nbCasesL = 7, nbCasesH = 8;
 		Ecosystem grille = new Ecosystem(nbCasesL, nbCasesH, 100);
 
 		Random r = new Random();
 
-		int p1 = 30; // Pourcentage de chance qu'un lapin soit placé dans une case
-		int p2 = 10; // Pourcentage de chance qu'un aigle soit placé dans une case
-		int p3 = 20; // Pourcentage de chance de reproduction des lapins
-		int p4 = 20; // Pourcentage de chance de reproduction des aigles
-		int p5 = 10; // Pourcentage de chance de prédation
-		int p6 = 25; // Pourcentage de chance de déplacement des proies
-		int p7 = 25; // Pourcentage de chance de déplacement des prédateurs
 		int nbIterations = 100; // Nombre d'itérations de la simulation
 
 		initialiserGrille(grille, nbCasesL, nbCasesH);
@@ -22,19 +25,14 @@ public class MainNature {
 		// Pause de 2s
 		pause(1000);
 
-		placerAnimauxInitiaux(grille, p1, p2, r);
+		placerAnimauxInitiaux(grille, r);
 
 		// Pause de 2s
 		pause(1000);
 
 		// Boucle de simulation
 		for (int iteration = 0; iteration < nbIterations; iteration++) {
-			reproductionProies(grille, p3, r);
-			reproductionPredateurs(grille, p4, r);
-			predation(grille, p5, r);
-			deplacementProies(grille, p6, r);
-			deplacementPredateurs(grille, p7, r);
-
+			deplacementAnimaux(grille, r);
 			grille.redessine();
 
 			// Pause entre les itérations
@@ -54,7 +52,7 @@ public class MainNature {
 	}
 	
 
-	private static void placerAnimauxInitiaux(Ecosystem grille, int p1, int p2, Random r) {
+	private static void placerAnimauxInitiaux(Ecosystem grille, Random r) {
         int nbCasesL = grille.getNbCasesL();
         int nbCasesH = grille.getNbCasesH();
 
@@ -62,9 +60,12 @@ public class MainNature {
             for (int j = 0; j < nbCasesH; j++) {
                 if (r.nextInt(100) < p1) {
                     grille.addAnimal(i, j, new Sauterelle(r.nextInt(20) + 5)); // Ajoute une sauterelle avec un rayon aléatoire
+                    grille.addAnimal(i, j, new Pigeon(r.nextInt(20) + 5)); // Ajoute une Pigeon avec un rayon aléatoire
                 }
                 if (r.nextInt(100) < p2) {
                     grille.addAnimal(i, j, new Aigle(r.nextInt(20) + 5)); // Ajoute un aigle avec un rayon aléatoire
+                    grille.addAnimal(i, j, new Lion(r.nextInt(20) + 5)); // Ajoute un Lion avec un rayon aléatoire
+                    
                 }
                 grille.redessine();
                 // Pause de 2s
@@ -73,77 +74,28 @@ public class MainNature {
         }
 	}
 
-	private static void reproductionProies(Ecosystem grille, int p3, Random r) {
-		int nbCasesL = grille.getNbCasesL();
-		int nbCasesH = grille.getNbCasesH();
 
-		for (int i = 0; i < nbCasesL; i++) {
-			for (int j = 0; j < nbCasesH; j++) {
-				Zone zone = grille.getZone(i, j);
-				int nbSauterelle = zone.getNbAnimal(Color.BLACK);
-				if (nbSauterelle >= 2 && r.nextInt(100) < p3) {
-					grille.addAnimal(i, j, new Sauterelle(r.nextInt(20) + 5)); // Ajoute une sauterelle avec un poids
-																				// aléatoire
-				}
-			}
-		}
-	}
-
-	private static void reproductionPredateurs(Ecosystem grille, int p4, Random r) {
-		int nbCasesL = grille.getNbCasesL();
-		int nbCasesH = grille.getNbCasesH();
-
-		for (int i = 0; i < nbCasesL; i++) {
-			for (int j = 0; j < nbCasesH; j++) {
-				Zone zone = grille.getZone(i, j);
-				int nbSauterelle = zone.getNbAnimal(Color.BLACK);
-				int nbAigles = zone.getNbAnimal(Color.PINK);
-				if (nbSauterelle > 0 && nbAigles >= 2 && r.nextInt(100) < p4) {
-					grille.addAnimal(i, j, new Aigle(r.nextInt(20) + 5)); // Ajoute un aigle avec un poids aléatoire
-				}
-			}
-		}
-	}
-
-	private static void predation(Ecosystem grille, int p5, Random r) {
-		int nbCasesL = grille.getNbCasesL();
-		int nbCasesH = grille.getNbCasesH();
-
-		for (int i = 0; i < nbCasesL; i++) {
-			for (int j = 0; j < nbCasesH; j++) {
-				Zone zone = grille.getZone(i, j);
-				int nbSauterelle = zone.getNbAnimal(Color.BLACK);
-				int nbAigles = zone.getNbAnimal(Color.PINK);
-				for (int k = 0; k < nbAigles; k++) {
-					if (r.nextInt(100) < p5 && nbSauterelle > 0) {
-						// Suppression d'une sauterelle de la zone
-						grille.removeAnimal(i, j, Color.BLACK);
-						// Réduction du nombre de sauterelles
-						nbSauterelle--;
-					}
-				}
-			}
-		}
-	}
-
-	private static void deplacementProies(Ecosystem grille, int p6, Random r) {
-	    deplacementAnimaux(grille, p6, r, Color.BLACK);
-	}
-
-	private static void deplacementPredateurs(Ecosystem grille, int p7, Random r) {
-	    deplacementAnimaux(grille, p7, r, Color.PINK);
-	}
-
-	private static void deplacementAnimaux(Ecosystem grille, int p, Random r, Color couleur) {
+	private static void deplacementAnimaux(Ecosystem grille, Random r) {
 	    int nbCasesL = grille.getNbCasesL();
 	    int nbCasesH = grille.getNbCasesH();
-
+	    
 	    for (int i = 0; i < nbCasesL; i++) {
 	        for (int j = 0; j < nbCasesH; j++) {
-	            grille.moveAnimaux(i, j, p, r, couleur);
+	            Zone zone = grille.getZone(i, j);
+	            List<Animal> animaux = new ArrayList<>(zone.getAnimaux()); // Créer une copie de la liste d'animaux
+	            
+	            for (Animal animal : animaux) {
+	                if (animal.getType() == TypeAnimal.PREDATEUR) {
+	                    grille.moveAnimaux(i, j, p7, r, animal);
+	                } else if (animal.getType() == TypeAnimal.PROIE) {
+	                    grille.moveAnimaux(i, j, p6, r, animal);
+	                }
+	            }
 	        }
 	    }
 	}
+
+
 
 
 	private static void pause(int milliseconds) {

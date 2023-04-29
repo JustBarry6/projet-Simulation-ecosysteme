@@ -5,19 +5,19 @@ import java.util.List;
 
 public class Biche extends Mammifere implements Herbivore {
 	
-	private List<Animal> proies;
-	private List<Animal> predateurs;
-
 	public Biche(int rayon) {
-		super(rayon, Color.ORANGE);
-		this.predateurs = new ArrayList<>();
-		this.proies = new ArrayList<>();
+		super(rayon, Color.ORANGE, TypeAnimal.PREDATEUR);
 	}
 
 	@Override
 	public void mangerVegetal() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	protected TypeAnimal getType() {
+		return super.getType();
 	}
 
 	/*

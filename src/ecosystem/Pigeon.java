@@ -4,15 +4,14 @@ import java.util.List;
 
 public class Pigeon extends Oiseau {
 	
-	private List<Animal> proies;
-	private List<Animal> predateurs;
-	
     public Pigeon(int rayon) {
-    	super(rayon, Color.GRAY);
-    	this.proies = new ArrayList<>();
-        this.predateurs = new ArrayList<>();
+    	super(rayon, Color.GRAY, TypeAnimal.PROIE);
     }
-
+    
+    @Override
+	protected TypeAnimal getType() {
+		return super.getType();
+	}
 	/*
 	 * @Override public void seDeplacer() { // implémentation de la méthode
 	 * seDeplacer pour le pigeon voler(); }
