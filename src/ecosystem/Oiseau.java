@@ -1,3 +1,5 @@
+package ecosystem;
+
 import java.awt.Color;
 
 public abstract class Oiseau extends Animal implements AnimalVolant {

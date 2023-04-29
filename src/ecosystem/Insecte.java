@@ -1,3 +1,5 @@
+package ecosystem;
+
 import java.awt.Color;
 
 public abstract class Insecte extends Animal implements Herbivore {

@@ -1,3 +1,5 @@
+package view ; 
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.List;
@@ -5,6 +7,10 @@ import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import ecosystem.Animal;
+import ecosystem.TypeZone;
+import ecosystem.Zone;
 
 public class Ecosystem extends JPanel {
 	private int nbCasesL, nbCasesH;

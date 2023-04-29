@@ -1,7 +1,16 @@
+package main;
+
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import ecosystem.Aigle;
+import ecosystem.Animal;
+import ecosystem.Sauterelle;
+import ecosystem.TypeAnimal;
+import ecosystem.Zone;
+import view.Ecosystem;
 
 public class MainNature {
 	

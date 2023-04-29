@@ -1,3 +1,4 @@
+package ecosystem;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class Biche extends Mammifere implements Herbivore {
 	}
 	
 	@Override
-	protected TypeAnimal getType() {
+	public TypeAnimal getType() {
 		return super.getType();
 	}
 

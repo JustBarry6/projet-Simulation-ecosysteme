@@ -1,3 +1,5 @@
+package ecosystem;
+
 public abstract class Vegetal {
 	private int seuilEauCritique;
 	private int seuilTempCritique;

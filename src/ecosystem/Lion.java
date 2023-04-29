@@ -1,3 +1,5 @@
+package ecosystem;
+
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +17,7 @@ public class Lion extends Mammifere implements Carnivore {
 	}
 	
 	@Override
-	protected TypeAnimal getType() {
+	public TypeAnimal getType() {
 		return super.getType();
 	}
 	/*

@@ -1,3 +1,6 @@
+package ecosystem;
+
+
 import java.awt.Color;
 
 public abstract class Animal{
@@ -19,7 +22,7 @@ public abstract class Animal{
     public Color getCouleur(){ return c;}
     public void setCouleur(Color c){this.c=c;}
 
-	protected TypeAnimal getType() {
+    public TypeAnimal getType() {
 		return type;
 	}
 	
