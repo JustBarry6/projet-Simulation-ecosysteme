@@ -8,10 +8,15 @@ public class Aigle extends Oiseau implements Carnivore, AnimalVolant{
 	
     public Aigle(int rayon) {
     	super(rayon, Color.PINK);
+    	this.nom = "aigle" ; 
+    	this.predateursV = null ; 
+    	this.proiesV =  null ;
+    	this.proiesA = new ArrayList <>(); 
+    	this.predateursA = new ArrayList <>();  
     }
 
 	@Override
-	public void mangerAnimal(Animal animal) {
+	public void mangerAnimal(String nom) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -1,8 +1,9 @@
 package ecosystem;
 
 public abstract class Vegetal {
-	private int seuilEauCritique;
-	private int seuilTempCritique;
+	protected String nom ; 
+	protected int seuilEauCritique;
+	protected int seuilTempCritique;
 
 	public Vegetal(int seuilEauCritique, int seuilTempCritique) {
 		this.seuilEauCritique = seuilEauCritique;
@@ -10,6 +11,11 @@ public abstract class Vegetal {
 	}
 
 	public abstract void consommerEau();
-
+	
+	public String toString()
+	{
+		return nom ; 
+	}
+	
 	// Getters and setters
 }

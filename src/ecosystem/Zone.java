@@ -2,20 +2,20 @@ package ecosystem;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class Zone {
     private int niveau_eau;
     private int temperature;
     private TypeZone type;
-    private List<Animal> animaux;
+    private ArrayList <Animal> animaux;
     private Color c;
 
     public Zone(int niveau_eau, int temperature, TypeZone type) {
         this.niveau_eau = niveau_eau;
         this.temperature = temperature;
         this.type = type;
-        this.animaux = new ArrayList<>();
+        this.animaux = new ArrayList <>();
     }
 
     public void addAnimal(Animal animal) {
@@ -36,8 +36,8 @@ public class Zone {
         return animalToRemove;
     }
 
-    // Cette fonction arenvoie l'adresse d'un tableau qui permet donc la modification des données, mieux vaut éviter ça et faire une copie des données par exemple
-    public List<Animal> getAnimaux() {
+    // Cette fonction renvoie l'adresse d'un tableau qui permet donc la modification des données, mieux vaut éviter ça et faire une copie des données par exemple
+    public ArrayList<Animal> getAnimaux() {
         return animaux;
     }
 

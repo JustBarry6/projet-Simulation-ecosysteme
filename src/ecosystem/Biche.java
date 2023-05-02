@@ -8,6 +8,11 @@ public class Biche extends Mammifere implements Herbivore {
 	
 	public Biche(int rayon) {
 		super(rayon, Color.ORANGE);
+    	this.nom = "biche" ; 
+    	this.proiesA = null ; 
+    	this.predateursV = null ; 
+    	this.proiesV = new ArrayList <>(); 
+    	this.predateursA = new ArrayList <>();  
 	}
 
 	@Override

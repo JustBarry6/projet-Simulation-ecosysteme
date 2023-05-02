@@ -8,10 +8,15 @@ public class Lion extends Mammifere implements Carnivore {
 	
     public Lion(int rayon) {
     	super(rayon, Color.BLUE);
+    	this.nom = "lion" ; 
+    	this.predateursV = null ; 
+    	this.proiesV =  null ;
+    	this.proiesA = new ArrayList <>(); 
+    	this.predateursA = new ArrayList <>();  
     }
 
 	@Override
-	public void mangerAnimal(Animal animal) {
+	public void mangerAnimal(String nom) {
 		// TODO Auto-generated method stub
 		
 	}

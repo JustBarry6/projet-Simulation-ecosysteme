@@ -4,10 +4,15 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Chenille extends Insecte {
+public class Chenille extends Insecte implements Herbivore {
 	
     public Chenille(int rayon) {
     	super(rayon, Color.GREEN);
+    	this.nom = "chenille" ; 
+    	this.proiesA = null ; 
+    	this.predateursV = null ; 
+    	this.proiesV = new ArrayList <>(); 
+    	this.predateursA = new ArrayList <>();  
     }
     
 	@Override

@@ -4,13 +4,17 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pigeon extends Oiseau implements AnimalVolant 
+public class Pigeon extends Oiseau implements AnimalVolant, Herbivore
 {
-	
 	
     public Pigeon(int rayon) {
     	super(rayon, Color.GRAY);
-    }
+    	this.nom = "pigeon" ; 
+    	this.proiesA = null ; 
+    	this.predateursV = null ; 
+    	this.proiesV = new ArrayList <>(); 
+    	this.predateursA = new ArrayList <>();  
+    	}
     
 	@Override
 	public void seDeplacer() {
@@ -30,5 +34,10 @@ public class Pigeon extends Oiseau implements AnimalVolant
 	@Override
 	public void seReproduire() {
 		// implémentation de la méthode seReproduire pour les Pigeons
+	}
+	@Override
+	public void mangerVegetal() {
+		// TODO Auto-generated method stub
+		
 	}
 }
