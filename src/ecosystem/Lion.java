@@ -41,7 +41,7 @@ public class Lion extends Mammifere implements Carnivore {
 	
 	@Override
 	public void seDeplacer(Ecosystem eco, int i, int j) {
-		// implémentation de la méthodeseDeplacer pour les Lion }
+		moveAnimaux(eco, i, j, 25, Lion.class);
 	}
 
 
