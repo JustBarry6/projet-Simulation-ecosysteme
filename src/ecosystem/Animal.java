@@ -57,4 +57,9 @@ public abstract class Animal{
         Animal animalToMove = currentZone.removeAnimal(animalClass);
         newZone.addAnimal(animalToMove);
     }
+    
+    
+  
+    
+
 }

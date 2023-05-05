@@ -1,5 +1,5 @@
 package ecosystem;
 
 public interface Carnivore {
-	void mangerAnimal(String nom);
+	void mangerAnimal(Zone zone);
 }
