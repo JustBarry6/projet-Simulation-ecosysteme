@@ -19,7 +19,7 @@ public class Pigeon extends Oiseau implements AnimalVolant, Herbivore
     
 	@Override
 	public void seDeplacer(Ecosystem eco, int i, int j) {
-		// implémentation de la méthodeseDeplacer pour les Pigeons }
+		moveAnimaux(eco, i, j, 25, Pigeon.class);
 	}
 
 	@Override

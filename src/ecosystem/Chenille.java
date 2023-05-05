@@ -18,7 +18,7 @@ public class Chenille extends Insecte implements Herbivore {
     
 	@Override
 	public void seDeplacer(Ecosystem eco, int i, int j) {
-		// implémentation de la méthodeseDeplacer pour les Chenilles }
+		moveAnimaux(eco, i, j, 25, Chenille.class);
 	}
 
 	@Override

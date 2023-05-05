@@ -97,11 +97,7 @@ public class MainNature {
 	            List<Animal> animaux = new ArrayList<>(zone.getAnimaux()); // Créer une copie de la liste d'animaux
 	            
 	            for (Animal animal : animaux) {
-	                if (animal instanceof Aigle) {
-	                    ((Aigle) animal).seDeplacer(ecosystem, i, j);
-	                } else if (animal instanceof Sauterelle) {
-	                    ((Sauterelle) animal).seDeplacer(ecosystem, i, j);
-	                }
+	                animal.seDeplacer(ecosystem, i, j);
 	            }
 	        }
 	    }

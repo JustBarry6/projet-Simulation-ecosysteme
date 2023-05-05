@@ -25,7 +25,7 @@ public class Biche extends Mammifere implements Herbivore {
 
 	@Override
 	public void seDeplacer(Ecosystem eco, int i, int j) {
-		// implémentation de la méthodeseDeplacer pour les Biche }
+		moveAnimaux(eco, i, j, 25, Biche.class);
 	}
 
 
