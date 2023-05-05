@@ -2,7 +2,8 @@ package ecosystem;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.List;
+
+import view.Ecosystem;
 
 public class Aigle extends Oiseau implements Carnivore, AnimalVolant{
 	
@@ -21,10 +22,9 @@ public class Aigle extends Oiseau implements Carnivore, AnimalVolant{
 		
 	}
 
-	@Override
-	public void seDeplacer() {
-		// implémentation de la méthodeseDeplacer pour les Aigle 
-	}
+	public void seDeplacer(Ecosystem eco, int i, int j) {
+		moveAnimaux(eco, i, j, 25, Aigle.class);
+    }
 
 	@Override
 	public void boire() {

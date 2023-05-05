@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import view.Ecosystem;
+
 public class Biche extends Mammifere implements Herbivore {
 	
 	public Biche(int rayon) {
@@ -22,7 +24,7 @@ public class Biche extends Mammifere implements Herbivore {
 	}
 
 	@Override
-	public void seDeplacer() {
+	public void seDeplacer(Ecosystem eco, int i, int j) {
 		// implémentation de la méthodeseDeplacer pour les Biche }
 	}
 

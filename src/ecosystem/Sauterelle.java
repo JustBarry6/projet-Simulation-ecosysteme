@@ -2,7 +2,8 @@ package ecosystem;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.List;
+
+import view.Ecosystem;
 
 public class Sauterelle extends Insecte implements Herbivore
 {
@@ -17,10 +18,10 @@ public class Sauterelle extends Insecte implements Herbivore
     	this.predateursA = new ArrayList <>();  
     }
 
-	@Override
-	public void seDeplacer() {
-		// implémentation de la méthodeseDeplacer pour les sauterelles }
-	}
+    @Override
+    public void seDeplacer(Ecosystem eco, int i, int j) {
+    	moveAnimaux(eco, i, j, 25, Sauterelle.class);
+    }
 
 	@Override
 	public void boire() {

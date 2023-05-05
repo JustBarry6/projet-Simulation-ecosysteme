@@ -2,7 +2,8 @@ package ecosystem;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.List;
+
+import view.Ecosystem;
 
 public class Chenille extends Insecte implements Herbivore {
 	
@@ -16,7 +17,7 @@ public class Chenille extends Insecte implements Herbivore {
     }
     
 	@Override
-	public void seDeplacer() {
+	public void seDeplacer(Ecosystem eco, int i, int j) {
 		// implémentation de la méthodeseDeplacer pour les Chenilles }
 	}
 

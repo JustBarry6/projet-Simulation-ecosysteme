@@ -2,7 +2,8 @@ package ecosystem;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.List;
+
+import view.Ecosystem;
 
 public class Pigeon extends Oiseau implements AnimalVolant, Herbivore
 {
@@ -17,7 +18,7 @@ public class Pigeon extends Oiseau implements AnimalVolant, Herbivore
     	}
     
 	@Override
-	public void seDeplacer() {
+	public void seDeplacer(Ecosystem eco, int i, int j) {
 		// implémentation de la méthodeseDeplacer pour les Pigeons }
 	}
 
