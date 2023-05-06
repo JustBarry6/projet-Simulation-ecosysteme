@@ -14,8 +14,9 @@ public class Sauterelle extends Insecte implements Herbivore
     	this.nom = "sauterelle" ; 
     	this.proiesA = null ; // La sautrelle ne mange pas d'autres animaux ; elle est herbivore
     	this.predateursV = null ; // Ses prédateurs ne peuvent pas être des vegetaux (sauf plante carnivore (pas dans le systeme))
-    	this.proiesV = new ArrayList <>(); // La sauterelle est herbivore donc ses proies sont végétales
-    	this.predateursA = new ArrayList <>();  
+    	this.proiesV = new ArrayList <Vegetal>(); // La sauterelle est herbivore donc ses proies sont végétales
+    	this.predateursA = new ArrayList <Animal>();  
+    	
     }
 
     @Override

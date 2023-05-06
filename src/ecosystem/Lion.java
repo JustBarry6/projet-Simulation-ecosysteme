@@ -13,8 +13,8 @@ public class Lion extends Mammifere implements Carnivore {
     	this.nom = "lion" ; 
     	this.predateursV = null ; 
     	this.proiesV =  null ;
-    	this.proiesA = new ArrayList <>(); 
-    	this.predateursA = new ArrayList <>();  
+    	this.proiesA = new ArrayList <Animal>(); 
+    	this.predateursA = new ArrayList <Animal>();  
     }
 
     public void mangerAnimal(Zone zone) {

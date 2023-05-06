@@ -9,12 +9,12 @@ import view.Ecosystem;
 public class Biche extends Mammifere implements Herbivore {
 	
 	public Biche(int rayon) {
-		super(rayon, Color.ORANGE);
+		super(rayon, Color.CYAN);
     	this.nom = "biche" ; 
     	this.proiesA = null ; 
     	this.predateursV = null ; 
-    	this.proiesV = new ArrayList <>(); 
-    	this.predateursA = new ArrayList <>();  
+    	this.proiesV = new ArrayList <Vegetal>(); 
+    	this.predateursA = new ArrayList <Animal>();  
 	}
 
 	@Override

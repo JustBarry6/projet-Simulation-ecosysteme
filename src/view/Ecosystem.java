@@ -32,9 +32,13 @@ public class Ecosystem extends JPanel {
         window.setVisible(true);
 
         this.zone = new Zone[nbCasesL][nbCasesH];
+        // L'ecosyteme est divise au debut en plaine et desert on cree donc autant de type Foret que desert
         for (i = 0; i < nbCasesL; i++) {
             for (j = 0; j < nbCasesH; j++) {
-                zone[i][j] = new Zone(50, 10, TypeZone.DESERT);
+            	if (i < j)
+            		zone[i][j] = new Zone(50, 10, TypeZone.FORET);
+            	else
+            		zone[i][j] = new Zone(50, 10, TypeZone.PLAINE);
             }
         }
     }
@@ -72,10 +76,10 @@ public class Ecosystem extends JPanel {
         g.setColor(Color.BLACK);
         g.drawRect(10, 10, nbCasesL * nbPixelCoteCase, nbCasesH * nbPixelCoteCase);
 
-        for (i = 10 ; i <= nbCasesL * nbPixelCoteCase ; i += nbPixelCoteCase) {
-        	g.drawLine(i, 10, i, nbCasesH * nbPixelCoteCase + 10);
+        for (i = 10; i <= nbCasesL * nbPixelCoteCase; i += nbPixelCoteCase) {
+            g.drawLine(i, 10, i, nbCasesH * nbPixelCoteCase + 10);
         }
-        	
+
         for (i = 10; i <= nbCasesH * nbPixelCoteCase; i += nbPixelCoteCase) {
             g.drawLine(10, i, nbCasesL * nbPixelCoteCase + 10, i);
         }

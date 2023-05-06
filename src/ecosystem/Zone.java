@@ -16,6 +16,17 @@ public class Zone {
         this.capacite = capacite;
         this.type = type;
         this.animals = new ArrayList<>();
+        
+        if (type == TypeZone.FORET) {
+        	couleur = Color.GREEN ; 
+        }
+        else if (type == TypeZone.PLAINE) {
+        	couleur = Color.YELLOW ; 
+        }
+        else 
+        	couleur = Color.ORANGE ; 
+        	
+        	
     }
 
     public int getRadius() {
@@ -64,7 +75,7 @@ public class Zone {
     }
 
     public Color getCouleur() {
-        return couleur;
+        return this.couleur ; 
     }
 
     public void setCouleur(Color couleur) {

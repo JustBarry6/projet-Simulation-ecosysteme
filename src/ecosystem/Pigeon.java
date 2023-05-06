@@ -13,8 +13,8 @@ public class Pigeon extends Oiseau implements AnimalVolant, Herbivore
     	this.nom = "pigeon" ; 
     	this.proiesA = null ; 
     	this.predateursV = null ; 
-    	this.proiesV = new ArrayList <>(); 
-    	this.predateursA = new ArrayList <>();  
+    	this.proiesV = new ArrayList <Vegetal>(); 
+    	this.predateursA = new ArrayList <Animal>();  
     	}
     
 	@Override

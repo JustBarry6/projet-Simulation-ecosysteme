@@ -8,14 +8,14 @@ import view.Ecosystem;
 public class Chenille extends Insecte implements Herbivore {
 	
     public Chenille(int rayon) {
-    	super(rayon, Color.GREEN);
+    	super(rayon, Color.WHITE);
     	this.nom = "chenille" ; 
     	this.proiesA = null ; 
     	this.predateursV = null ; 
-    	this.proiesV = new ArrayList <>(); 
-    	this.predateursA = new ArrayList <>();  
+    	this.proiesV = new ArrayList <Vegetal>(); 
+    	this.predateursA = new ArrayList <Animal>();  
     }
-    
+
 	@Override
 	public void seDeplacer(Ecosystem eco, int i, int j) {
 		moveAnimaux(eco, i, j, 25, Chenille.class);
@@ -35,4 +35,6 @@ public class Chenille extends Insecte implements Herbivore {
 	public void seReproduire() {
 		// implémentation de la méthode seReproduire pour les Chenilles
 	}
+	
+	
 }

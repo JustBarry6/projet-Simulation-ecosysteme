@@ -12,6 +12,7 @@ public abstract class Animal{
     private int rayon;
     private Color c;
     
+
     protected ArrayList <Vegetal> proiesV;
     protected ArrayList <Animal> proiesA;
     protected ArrayList <Vegetal> predateursV;
