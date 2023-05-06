@@ -72,10 +72,10 @@ public class Ecosystem extends JPanel {
         g.setColor(Color.BLACK);
         g.drawRect(10, 10, nbCasesL * nbPixelCoteCase, nbCasesH * nbPixelCoteCase);
 
-        for (i = 10; i <= nbCasesL * nbPixelCoteCase; i += nbPixelCoteCase) {
-            g.drawLine(i, 10, i, nbCasesH * nbPixelCoteCase + 10);
+        for (i = 10 ; i <= nbCasesL * nbPixelCoteCase ; i += nbPixelCoteCase) {
+        	g.drawLine(i, 10, i, nbCasesH * nbPixelCoteCase + 10);
         }
-
+        	
         for (i = 10; i <= nbCasesH * nbPixelCoteCase; i += nbPixelCoteCase) {
             g.drawLine(10, i, nbCasesL * nbPixelCoteCase + 10, i);
         }

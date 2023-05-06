@@ -8,10 +8,11 @@ import java.util.Random;
 import ecosystem.Aigle;
 import ecosystem.Animal;
 import ecosystem.Lion;
+import ecosystem.Zone;
 import ecosystem.Pigeon;
 import ecosystem.Sauterelle;
-import ecosystem.Zone;
 import view.Ecosystem;
+
 
 public class MainNature {
 	
@@ -87,22 +88,24 @@ public class MainNature {
         }
 	}
 	
-	private static void deplacementAnimaux(Ecosystem ecosystem) {
-	    int nbCasesL = ecosystem.getNbCasesL();
-	    int nbCasesH = ecosystem.getNbCasesH();
-	    
-	    for (int i = 0; i < nbCasesL; i++) {
-	        for (int j = 0; j < nbCasesH; j++) {
-	            Zone zone = ecosystem.getZone(i, j);
-	            List<Animal> animaux = new ArrayList<>(zone.getAnimaux()); // Créer une copie de la liste d'animaux
-	            
-	            for (Animal animal : animaux) {
-	                animal.seDeplacer(ecosystem, i, j);
-	            }
-	        }
-	    }
+	
+	private static void deplacementAnimaux(Ecosystem ecosystem)
+	{
+		int nbCasesL = ecosystem.getNbCasesL() ; 
+		int nbCasesH = ecosystem.getNbCasesH() ; 
+		
+		for (int i = 0 ; i< nbCasesL ; i++) {
+			for (int j = 0 ; i < nbCasesH ; j++) {
+				Zone zone = ecosystem.getZone(i, j);
+				List<Animal> animaux = new ArrayList<>(zone.getAnimaux()); // Créer une copie de la liste d'animaux
+				
+				for (Animal animal : animaux) {
+					animal.seDeplacer(ecosystem, i, j);
+				}
+			}		
+		}	
 	}
-
+	
 	private static void pause(int milliseconds) {
 	    try {
 	        Thread.sleep(milliseconds);
