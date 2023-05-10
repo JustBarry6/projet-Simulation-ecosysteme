@@ -80,7 +80,6 @@ public class MainNature {
 			for (int j = 0; j < nbCasesH; j++) {
 				if (r.nextInt(100) < p1) {
 					ecosystem.addAnimal(i, j, new Sauterelle(20)); // Ajoute une sauterelle avec un rayon
-																					// aléatoire
 				}
 				if (r.nextInt(100) < p1) {
 					ecosystem.addAnimal(i, j, new Pigeon(20)); 
@@ -94,15 +93,15 @@ public class MainNature {
 				if (r.nextInt(100) < p1) {
 					ecosystem.addAnimal(i, j, new Biche(20)); 
 				}
+				if (r.nextInt(100) < p1) {
+					ecosystem.addAnimal(i, j, new Chenille(20)); 
+				}
 //				if (r.nextInt(100) < p1) {
 //					ecosystem.addVegetal(i, j, new Arbre(20)); 
 //				}
 //				if (r.nextInt(100) < p1) {
 //					ecosystem.addVegetal(i, j, new Vivace(20)); 														// aléatoire
 //				}
-				if (r.nextInt(100) < p1) {
-					ecosystem.addAnimal(i, j, new Chenille(20)); 
-				}
 				ecosystem.redessine();
 				// Pause de 2s
 				pause(100);

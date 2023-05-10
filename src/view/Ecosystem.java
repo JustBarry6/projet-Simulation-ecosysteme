@@ -58,6 +58,15 @@ public class Ecosystem extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        int[] centre = new int[2] ; 
+    	int[] coinSupG = new int[2] ; 
+    	int[] coinSupD = new int[2] ; 
+    	int[] coinInfG = new int[2] ; 
+    	int[] coinInfD = new int[2] ; 
+    	int[] milieuH = new int[2] ; 
+    	int[] milieuB = new int[2] ; 
+    	int[] milieuG = new int[2] ; 
+    	int[] milieuD = new int[2] ; 
         int i, j;
         for (i = 0; i < nbCasesL; i++) {
             for (j = 0; j < nbCasesH; j++) {
@@ -65,10 +74,53 @@ public class Ecosystem extends JPanel {
                 int cellY = 10 + (j * nbPixelCoteCase);
                 g.setColor(zone[i][j].getCouleur());
                 g.fillRect(cellX, cellY, nbPixelCoteCase, nbPixelCoteCase);
-
+                
+                //Coordonnées pour le placement dynamique (9 positions possibles) 
+            	centre[0] = cellX + (nbPixelCoteCase/2);
+            	centre[1] = cellY + (nbPixelCoteCase/2);
+            	
+                coinSupG[0] = cellX + 2;  // coordonée X decalee de 2 pour ne pas toucher les bords
+            	coinSupG[1] = cellY + 2;  // coordonnée Y
+            	
+            	milieuH[0] = coinSupG[0] + (nbPixelCoteCase/2) ; 
+            	milieuH[1] = cellY + 2 ;
+            	
+            	coinSupD[0] = milieuH[0] + (nbPixelCoteCase/2) - 4 ;  
+            	coinSupD[1] = cellY + 2 ;  
+            	
+            	milieuD[0] = coinSupD[0] - 1 ; 
+            	milieuD[1] = cellY + (nbPixelCoteCase/2);
+            	
+            	coinInfD[0] = coinSupD[0] - 1 ;  // coordonée X
+            	coinInfD[1] = milieuD[1] + (nbPixelCoteCase/2) - 2 ;   // coordonnée Y
+            	
+            	milieuB[0] = coinSupD[0] - (nbPixelCoteCase/2) ;
+            	milieuB[1] = coinInfD[1] - 2  ; 
+            	
+            	coinInfG[0] = milieuB[0] - (nbPixelCoteCase/2) + 4   ; 
+            	coinInfG[1] = coinInfD[1] - 2 ;
+            	
+            	milieuG[0] = coinInfG[0] + 2; 
+            	milieuD[1] = coinInfD[1] - (nbPixelCoteCase/2); 
+            	
                 for (Animal animal : zone[i][j].getAnimaux()) {
                     g.setColor(animal.getCouleur());
-                    g.fillOval(cellX + 10, cellY + 10, animal.getRayon(), animal.getRayon());
+                    switch(animal.getNom()){
+                    	case "biche" :
+                    		g.fillOval(coinSupG[0], coinSupG[1], animal.getRayon(), animal.getRayon()); break ; 
+                    	case "lion" :
+                    		g.fillOval(milieuH[0]-animal.getRayon()/2, milieuH[1], animal.getRayon(), animal.getRayon()); break ;
+                    	case "sauterelle" :
+                    		g.fillOval(coinSupD[0]-animal.getRayon(), coinSupD[1], animal.getRayon(), animal.getRayon()); break ;	
+                    	case "aigle" :
+                    		g.fillOval(milieuD[0]-animal.getRayon(), milieuD[1]-animal.getRayon()/2, animal.getRayon(), animal.getRayon()); break ;	
+                    	case "pigeon" :
+                    		g.fillOval(coinInfD[0]-animal.getRayon(), coinInfD[1]-(animal.getRayon()), animal.getRayon(), animal.getRayon()); break ;	
+                    	case "chenille" :
+                    		g.fillOval(coinInfG[0], coinInfD[1]-(animal.getRayon()), animal.getRayon(), animal.getRayon()); break ;	                 	
+                    	default : 
+                    		g.fillOval(centre[0]-animal.getRayon()/2,centre[1]-animal.getRayon()/2,animal.getRayon(), animal.getRayon()); break ; 
+                    }         
                 }
             }
         }
