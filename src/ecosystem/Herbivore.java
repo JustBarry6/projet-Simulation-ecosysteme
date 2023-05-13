@@ -1,5 +1,7 @@
 package ecosystem;
 
+import view.Ecosystem;
+
 public interface Herbivore {
-	void mangerVegetal();
+	//public void mangerVegetal();
 }

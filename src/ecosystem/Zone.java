@@ -62,6 +62,16 @@ public class Zone {
 		}
 		return null;
 	}
+	
+	public void removeVegetal(Class<? extends Vegetal> vegetalTrouve) {
+	    for (Vegetal vegetal : this.vegetaux) {
+	        if (vegetal.getClass().equals(vegetalTrouve)) {
+	            this.vegetaux.remove(vegetal);
+	            return;
+	        }
+	    }
+	}
+
 
 	public int getNbAnimal(Class<? extends Animal> animalClass) {
 		int count = 0;

@@ -16,8 +16,9 @@ public class Aigle extends Oiseau implements Carnivore, AnimalVolant{
     	this.proiesA = new ArrayList <Animal>(); 
     	this.predateursA = new ArrayList <Animal>();  
     }
-
-    public void mangerAnimal(Ecosystem eco, int i, int j) {
+    
+    @Override
+    public void manger(Ecosystem eco, int i, int j) {
         // Récupérer la liste des animaux dans la zone
         List<Animal> animaux = eco.getZone(i,j).getAnimaux();
 

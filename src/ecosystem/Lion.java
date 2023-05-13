@@ -17,7 +17,8 @@ public class Lion extends Mammifere implements Carnivore {
     	this.predateursA = new ArrayList <Animal>();  
     }
 
-    public void mangerAnimal(Ecosystem eco, int i, int j) {
+    @Override
+    public void manger(Ecosystem eco, int i, int j) {
         // Récupérer la liste des animaux dans la zone
         List<Animal> animaux = eco.getZone(i,j).getAnimaux();
 

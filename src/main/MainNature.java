@@ -120,12 +120,7 @@ public class MainNature {
 
 				for (Animal animal : animaux) {
 					animal.seDeplacer(ecosystem, i, j);
-					if(animal instanceof Lion) {
-						((Lion) animal).mangerAnimal(ecosystem, i, j);
-					}
-					if(animal instanceof Aigle) {
-						((Aigle) animal).mangerAnimal(ecosystem, i, j);
-					}
+					animal.manger(ecosystem, i, j);
 				}
 			}
 		}

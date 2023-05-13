@@ -34,7 +34,8 @@ public abstract class Animal{
     public abstract void seDeplacer(Ecosystem ecosystem, int i, int j); 
   	public abstract void boire() ;  
   	public abstract void mourir() ;  
-  	public abstract void seReproduire() ;  
+  	public abstract void seReproduire() ;
+  	public abstract void manger(Ecosystem eco, int i, int j); // supprimer dans tous les autres interface
   	
   	public void moveAnimaux(Ecosystem ecosystem, int i, int j, int p, Class<? extends Animal> animalClass) {
         int nbCasesL = ecosystem.getNbCasesL();
