@@ -21,8 +21,8 @@ public class MainNature {
 
 	static int p1 = 30; // Pourcentage de chance qu'une proie soit placée dans une case
 	static int p2 = 10; // Pourcentage de chance qu'un predateur soit placé dans une case
-	static int p3 = 20; // Pourcentage de chance de reproduction des ...
-	static int p4 = 20; // Pourcentage de chance de reproduction des ...
+	static int p3 = 15; // Pourcentage de chance de reproduction des ...
+	static int p4 = 15; // Pourcentage de chance de reproduction des ...
 	static int p5 = 10; // Pourcentage de chance de prédation
 	static int p6 = 25; // Pourcentage de chance de déplacement des proies
 	static int p7 = 25; // Pourcentage de chance de déplacement des prédateurs
@@ -51,7 +51,7 @@ public class MainNature {
 			ecosystem.redessine();
 
 			// Pause entre les itérations
-			pause(100);
+			pause(200);
 		}
 	}
 
@@ -79,22 +79,22 @@ public class MainNature {
 		for (int i = 0; i < nbCasesL; i++) {
 			for (int j = 0; j < nbCasesH; j++) {
 				if (r.nextInt(100) < p1) {
-					ecosystem.addAnimal(i, j, new Sauterelle(20)); // Ajoute une sauterelle avec un rayon
+					ecosystem.addAnimal(i, j, new Sauterelle(15)); 
 				}
 				if (r.nextInt(100) < p1) {
-					ecosystem.addAnimal(i, j, new Pigeon(20)); 
+					ecosystem.addAnimal(i, j, new Pigeon(15)); 
 				}
 				if (r.nextInt(100) < p2) {
-					ecosystem.addAnimal(i, j, new Aigle(20)); 
+					ecosystem.addAnimal(i, j, new Aigle(15)); 
 				}
 				if (r.nextInt(100) < p2) {
-					ecosystem.addAnimal(i, j, new Lion(20)); 
+					ecosystem.addAnimal(i, j, new Lion(15));
 				}
 				if (r.nextInt(100) < p1) {
-					ecosystem.addAnimal(i, j, new Biche(20)); 
+					ecosystem.addAnimal(i, j, new Biche(15)); 
 				}
 				if (r.nextInt(100) < p1) {
-					ecosystem.addAnimal(i, j, new Chenille(20)); 
+					ecosystem.addAnimal(i, j, new Chenille(15)); 
 				}
 				if (r.nextInt(100) < p1) {
 					ecosystem.addVegetal(i, j, new Arbre()); 		//seuille ? temp ? pas rayon ?	: à voir
@@ -104,7 +104,7 @@ public class MainNature {
 				}
 				ecosystem.redessine();
 				// Pause de 2s
-				pause(100);
+				pause(200);
 			}
 		}
 	}
@@ -122,6 +122,7 @@ public class MainNature {
 					animal.seDeplacer(ecosystem, i, j);
 					animal.manger(ecosystem, i, j);
 				}
+				ecosystem.update(i, j);
 			}
 		}
 	}

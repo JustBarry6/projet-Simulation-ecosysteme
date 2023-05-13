@@ -46,11 +46,14 @@ public abstract class Animal{
             if (r.nextInt(100) < p) {
                 int newI = (i + r.nextInt(3) - 1 + nbCasesL) % nbCasesL;
                 int newJ = (j + r.nextInt(3) - 1 + nbCasesH) % nbCasesH;
-                if (ecosystem.getNbAnimal(newI, newJ, animalClass) == 0) {
+                if (ecosystem.getNbAnimal(newI, newJ, animalClass) < 3) {
                     moveAnimal(ecosystem, i, j, newI, newJ, animalClass);
                 }
             }
         }
+        // les appeller ici ? à reflechir !
+//        this.manger(ecosystem, i, j);
+//        ecosystem.update(i, j);
     }
 
     public void moveAnimal(Ecosystem ecosystem, int x, int y, int newX, int newY, Class<? extends Animal> animalClass) {
@@ -58,10 +61,7 @@ public abstract class Animal{
         Zone newZone = ecosystem.getZone(newX, newY);
         Animal animalToMove = currentZone.removeAnimal(animalClass);
         newZone.addAnimal(animalToMove);
-    }
-    
-    
-  
+    } 
     
 
 }

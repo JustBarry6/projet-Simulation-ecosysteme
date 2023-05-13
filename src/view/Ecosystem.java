@@ -172,9 +172,9 @@ public class Ecosystem extends JPanel {
 		}
 	}
 
-	public int getNbAnimal(int i, int j, Class<? extends Animal> animalClass) {
+	public int getNbAnimal(int i, int j, Class<? extends Animal> animal) {
 		Zone z = zone[i][j];
-		int count = z.getNbAnimal(animalClass);
+		int count = z.getNbAnimal(animal);
 		return count;
 	}
 
@@ -189,4 +189,48 @@ public class Ecosystem extends JPanel {
 	public int getNbCasesH() {
 		return nbCasesH;
 	}
+
+	public void updateAnimaux(int i, int j) {
+	    List<Animal> animaux = this.getZone(i, j).getAnimaux();
+	    for (Animal animal : animaux) {
+	        int count = this.getZone(i, j).getNbAnimal(animal.getClass());
+	        if (count > 1) {
+	            for (int k = 0; k < count - 1; k++) {
+	                Animal removedAnimal = this.getZone(i, j).removeAnimal(animal.getClass());
+	                int newRadius = removedAnimal.getRayon() + (count+5);
+	                Animal newAnimal = null;
+	                try {
+	                    newAnimal = animal.getClass().getDeclaredConstructor(int.class).newInstance(newRadius);
+	                } catch (Exception e) {
+	                    e.printStackTrace();
+	                }
+	                this.getZone(i, j).addAnimal(newAnimal);
+	            }
+	        } else {
+	            // Si l'animal est le seul de son type dans la zone, on réinitialise son rayon
+	            animal.setRayon(15);
+	        }
+	    }
+	}
+
+
+//	public void updateVegetaux() {
+//		for (Zone zone : zone) {
+//			List<Vegetal> vegetaux = zone.getVegetaux();
+//			for (Class<? extends Vegetal> vegetalClass : vegetalClasses) {
+//				int count = zone.getNbVegetal(vegetalClass);
+//				if (count > 1) {
+//					for (int i = 0; i < count - 1; i++) {
+//						zone.removeVegetal(vegetalClass);
+//					}
+//				}
+//			}
+//		}
+//	}
+
+	public void update(int i, int j) {
+		// updateVegetaux();
+		updateAnimaux(i, j);
+	}
+
 }
