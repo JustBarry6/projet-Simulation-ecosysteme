@@ -19,7 +19,6 @@ public class Biche extends Mammifere implements Herbivore {
 
 	@Override
 	public void mangerVegetal() {
-		// TODO Auto-generated method stub
 		
 	}
 

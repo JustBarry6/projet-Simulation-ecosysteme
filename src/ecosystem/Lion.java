@@ -17,23 +17,32 @@ public class Lion extends Mammifere implements Carnivore {
     	this.predateursA = new ArrayList <Animal>();  
     }
 
-    public void mangerAnimal(Zone zone) {
-        // Gestion de la prédation d'une proie
-    	List<Animal> proies = zone.getAnimaux(); // Liste des animaux proies du lion *******POUR L INSTANT TOUS LES ANIMAUX*****
+    public void mangerAnimal(Ecosystem eco, int i, int j) {
+        // Récupérer la liste des animaux dans la zone
+        List<Animal> animaux = eco.getZone(i,j).getAnimaux();
 
-        if (!proies.isEmpty()) {
-            Animal proie = proies.get(0); // Sélectionner une proie (dans cet exemple, la première de la liste)
+        // Rechercher une proie
+        Animal proieTrouvee = null;
+        for (Animal animal : animaux) {
+            if (animal instanceof Carnivore) { // Ignorer les carnivores
+                continue;
+            }
+            if (animal instanceof Herbivore) {// Vérifier si l'animal est 
+                proieTrouvee = animal;
+                break;
+            }
+        }
 
-            // Effectuer l'action de prédation
-            zone.removeAnimal(proie.getClass()); // Supprimer la proie de la zone
-            ajouterProieA(proie); // Ajouter la proie à la liste des proies de l'aigle
+        // Si une proie a été trouvée, effectuer la prédation
+        if (proieTrouvee != null) {
+            proieTrouvee.mourir(); // Tuer la proie
+            eco.getZone(i,j).removeAnimal(proieTrouvee.getClass()); // Retirer la proie de la zone
+            ajouterProieA(proieTrouvee); // Ajouter la proie à la liste des proies du lion
 
-            // Autres actions spécifiques au lioin lors de la prédation
-            // ...
-
-            System.out.println("Le lion a capturé une proie : " + proie.getNom());
+            System.out.println("Le lion a capturé une proie : " + proieTrouvee.getNom());
         }
     }
+    
     
     private void ajouterProieA(Animal proie) {
         proiesA.add(proie);

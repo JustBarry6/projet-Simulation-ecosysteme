@@ -5,80 +5,92 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Zone {
-    private int rayon;
-    private int capacite;
-    private TypeZone type;
-    private List<Animal> animals;
-    private Color couleur;
+	private int rayon;
+	private int capacite;
+	private TypeZone type;
+	private List<Animal> animaux;
+	private List<Vegetal> vegetaux;
+	private Color couleur;
 
-    public Zone(int rayon, int capacite, TypeZone type) {
-        this.rayon = rayon;
-        this.capacite = capacite;
-        this.type = type;
-        this.animals = new ArrayList<>();
-        
-        if (type == TypeZone.FORET) {
-        	couleur = Color.GREEN ; 
-        }
-        else if (type == TypeZone.PLAINE) {
-        	couleur = Color.YELLOW ; 
-        }
-        else 
-        	couleur = Color.ORANGE ; 
-        	
-        	
-    }
+	public Zone(int rayon, int capacite, TypeZone type) {
+		this.rayon = rayon;
+		this.capacite = capacite;
+		this.type = type;
+		this.animaux = new ArrayList<>();
+		this.vegetaux = new ArrayList<>();
 
-    public int getRadius() {
-        return rayon;
-    }
+		if (type == TypeZone.FORET) {
+			couleur = Color.GREEN;
+		} else if (type == TypeZone.PLAINE) {
+			couleur = Color.YELLOW;
+		} else {
+			couleur = Color.ORANGE;
+		}
+	}
 
-    public int getCapacity() {
-        return capacite;
-    }
+	public int getRadius() {
+		return rayon;
+	}
 
-    public TypeZone getType() {
-        return type;
-    }
+	public int getCapacity() {
+		return capacite;
+	}
 
-    public List<Animal> getAnimaux() {
-        return new ArrayList<>(animals);
-    }
+	public TypeZone getType() {
+		return type;
+	}
 
-    public void addAnimal(Animal animal) {
-        if (animals.size() < capacite) {
-            animals.add(animal);
-        } else {
-            System.out.println("La zone est déjà pleine. Impossible d'ajouter un nouvel animal.");
-        }
-    }
+	public List<Animal> getAnimaux() {
+		return new ArrayList<>(animaux);
+	}
 
-    public Animal removeAnimal(Class<? extends Animal> animalClass) {
-        for (int i = 0; i < animals.size(); i++) {
-            Animal animal = animals.get(i);
-            if (animal.getClass().equals(animalClass)) {
-                animals.remove(i);
-                return animal;
-            }
-        }
-        return null;
-    }
+	public void addAnimal(Animal animal) {
+		if (animaux.size() < capacite) {
+			animaux.add(animal);
+		} else {
+			System.out.println("La zone est déjà pleine. Impossible d'ajouter un nouvel animal.");
+		}
+	}
 
-    public int getNbAnimal(Class<? extends Animal> animalClass) {
-        int count = 0;
-        for (Animal animal : animals) {
-            if (animal.getClass().equals(animalClass)) {
-                count++;
-            }
-        }
-        return count;
-    }
+	public Animal removeAnimal(Class<? extends Animal> animalClass) {
+		for (int i = 0; i < animaux.size(); i++) {
+			Animal animal = animaux.get(i);
+			if (animal.getClass().equals(animalClass)) {
+				animaux.remove(i);
+				return animal;
+			}
+		}
+		return null;
+	}
 
-    public Color getCouleur() {
-        return this.couleur ; 
-    }
+	public int getNbAnimal(Class<? extends Animal> animalClass) {
+		int count = 0;
+		for (Animal animal : animaux) {
+			if (animal.getClass().equals(animalClass)) {
+				count++;
+			}
+		}
+		return count;
+	}
 
-    public void setCouleur(Color couleur) {
-        this.couleur = couleur;
-    }
+	public Color getCouleur() {
+		return this.couleur;
+	}
+
+	public void setCouleur(Color couleur) {
+		this.couleur = couleur;
+	}
+
+	public void addVegetal(Vegetal vegetal) {
+		if (vegetaux.size() < capacite) {
+			vegetaux.add(vegetal);
+		} else {
+			System.out.println("La zone est déjà pleine. Impossible d'ajouter un nouvel vegetal.");
+		}
+	}
+	
+	public List<Vegetal> getVegetaux() {
+		return new ArrayList<>(vegetaux);
+	}
+
 }

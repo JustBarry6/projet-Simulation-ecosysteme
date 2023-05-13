@@ -1,5 +1,7 @@
 package ecosystem;
 
+import view.Ecosystem;
+
 public interface Carnivore {
-	void mangerAnimal(Zone zone);
+	void mangerAnimal(Ecosystem ecosystem, int i, int j);
 }

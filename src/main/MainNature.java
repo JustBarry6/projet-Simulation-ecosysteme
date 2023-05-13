@@ -40,7 +40,7 @@ public class MainNature {
 		// Pause de 2s
 		pause(1000);
 
-		placerAnimauxInitiaux(ecosystem, r);
+		placerAnimauxInitiaux(ecosystem, r); // changer le nom de cette fonction puisqu'elle place aussi des Vegetaux
 
 		// Pause de 2s
 		pause(1000);
@@ -59,9 +59,9 @@ public class MainNature {
 		for (int i = 0; i < nbCasesL; i++) {
 			for (int j = 0; j < nbCasesH; j++) {
 				if (i < j)
-					ecosystem.colorieFond(i, j,ecosystem.getZone(i, j).getCouleur()); //Color.GREEN 
+					ecosystem.colorieFond(i, j,ecosystem.getZone(i, j).getCouleur());
 				else
-					ecosystem.colorieFond(i, j,ecosystem.getZone(i, j).getCouleur()); //Color.ORANGE
+					ecosystem.colorieFond(i, j,ecosystem.getZone(i, j).getCouleur());
 			}
 		}
 	}
@@ -96,12 +96,12 @@ public class MainNature {
 				if (r.nextInt(100) < p1) {
 					ecosystem.addAnimal(i, j, new Chenille(20)); 
 				}
-//				if (r.nextInt(100) < p1) {
-//					ecosystem.addVegetal(i, j, new Arbre(20)); 
-//				}
-//				if (r.nextInt(100) < p1) {
-//					ecosystem.addVegetal(i, j, new Vivace(20)); 														// aléatoire
-//				}
+				if (r.nextInt(100) < p1) {
+					ecosystem.addVegetal(i, j, new Arbre()); 		//seuille ? temp ? pas rayon ?	: à voir
+				}
+				if (r.nextInt(100) < p1) {
+					ecosystem.addVegetal(i, j, new Vivace());	//seuille ? temp ? pas rayon ?		à voir 											// aléatoire
+				}
 				ecosystem.redessine();
 				// Pause de 2s
 				pause(100);
@@ -120,6 +120,12 @@ public class MainNature {
 
 				for (Animal animal : animaux) {
 					animal.seDeplacer(ecosystem, i, j);
+					if(animal instanceof Lion) {
+						((Lion) animal).mangerAnimal(ecosystem, i, j);
+					}
+					if(animal instanceof Aigle) {
+						((Aigle) animal).mangerAnimal(ecosystem, i, j);
+					}
 				}
 			}
 		}
