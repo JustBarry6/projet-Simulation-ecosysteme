@@ -3,10 +3,13 @@ package ecosystem;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Zone {
 	private int rayon;
 	private int capacite;
+	private double niveauEau ;
+	private double temperature ;
 	private TypeZone type;
 	private List<Animal> animaux;
 	private List<Vegetal> vegetaux;
@@ -19,15 +22,55 @@ public class Zone {
 		this.animaux = new ArrayList<>();
 		this.vegetaux = new ArrayList<>();
 
+		Random rand = new Random() ; 
 		if (type == TypeZone.FORET) {
 			couleur = Color.GREEN;
-		} else if (type == TypeZone.PLAINE) {
+			
+			// Définition des niveaux d'eau et de temperature
+			niveauEau = rand.nextInt(1000) + 500 ; // nivEau entre 500 et 1000mm (precipitations par an)
+			temperature = rand.nextInt(45)-9 ;  // temperature entre -10 et 35° (max-min)*r + 1 + min
+		} 
+		
+		else if (type == TypeZone.PLAINE) {
 			couleur = Color.YELLOW;
-		} else {
+			
+			// Définition des niveaux d'eau et de temperature
+			niveauEau = rand.nextInt(500) + 250 ; // nivEau entre 250 et 500mm 
+			temperature = rand.nextInt(40) ;  // temperature entre 0 et 40°
+		
+		} 
+		else {
 			couleur = Color.ORANGE;
+			
+			// Définition des niveaux d'eau et de temperature pour un desert
+			niveauEau = rand.nextInt(250) ; //   nivEau entre 0 et 250mm 
+			temperature = rand.nextInt(70) + 40 ;  // temperature entre 40 et 70°
+		
 		}
 	}
 
+	public void changementZone()
+	{
+		// Attention, nombre d'arbres et température à prendre en compte 
+		if (type != TypeZone.DESERT)
+		{
+			if (niveauEau < 250)
+			{
+				type = TypeZone.DESERT; 
+				couleur = Color.ORANGE;
+			}
+			else if ( type == TypeZone.FORET  && niveauEau >= 250 && niveauEau <= 500 ) // foret devient-> plaine
+			{
+				type = TypeZone.PLAINE; 
+				couleur = Color.YELLOW;
+			}
+			else if ( type == TypeZone.PLAINE  && niveauEau >= 500 && niveauEau <= 1000 ) // plaine devient-> foret
+			{
+				type = TypeZone.FORET; 
+				couleur = Color.GREEN;
+			}
+		}
+	}
 	public int getRadius() {
 		return rayon;
 	}

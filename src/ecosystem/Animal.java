@@ -44,7 +44,7 @@ public abstract class Animal{
         int nbAnimaux = ecosystem.getNbAnimal(i, j, animalClass);
         for (int k = 0; k < nbAnimaux; k++) {
             if (r.nextInt(100) < p) {
-                int newI = (i + r.nextInt(3) - 1 + nbCasesL) % nbCasesL;
+                int newI = (i + r.nextInt(3) - 1 + nbCasesL) % nbCasesL; 
                 int newJ = (j + r.nextInt(3) - 1 + nbCasesH) % nbCasesH;
                 if (ecosystem.getNbAnimal(newI, newJ, animalClass) < 3) {
                     moveAnimal(ecosystem, i, j, newI, newJ, animalClass);

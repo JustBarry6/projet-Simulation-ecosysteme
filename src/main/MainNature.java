@@ -97,10 +97,10 @@ public class MainNature {
 					ecosystem.addAnimal(i, j, new Chenille(15)); 
 				}
 				if (r.nextInt(100) < p1) {
-					ecosystem.addVegetal(i, j, new Arbre()); 		//seuille ? temp ? pas rayon ?	: à voir
+					ecosystem.addVegetal(i, j, new Arbre()); 		//seuil ? temp ? pas rayon ?	: à voir
 				}
 				if (r.nextInt(100) < p1) {
-					ecosystem.addVegetal(i, j, new Vivace());	//seuille ? temp ? pas rayon ?		à voir 											// aléatoire
+					ecosystem.addVegetal(i, j, new Vivace());	//seuil ? temp ? pas rayon ?		à voir 											// aléatoire
 				}
 				ecosystem.redessine();
 				// Pause de 2s
@@ -121,7 +121,9 @@ public class MainNature {
 				for (Animal animal : animaux) {
 					animal.seDeplacer(ecosystem, i, j);
 					animal.manger(ecosystem, i, j);
+					
 				}
+				zone.changementZone() ; 
 				ecosystem.update(i, j);
 			}
 		}

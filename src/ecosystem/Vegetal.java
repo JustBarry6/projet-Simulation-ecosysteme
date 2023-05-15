@@ -5,7 +5,7 @@ import java.awt.Color;
 public abstract class Vegetal {
     protected String nom;
     protected int rayon;
-    protected int seuilEauCritique;
+    protected int seuilEauCritique;   //Pour les seuils faudrait un seuil minimal et un seuil maximal
     protected int seuilTempCritique;
     protected Color couleur;
 
