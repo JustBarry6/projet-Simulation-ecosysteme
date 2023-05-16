@@ -5,8 +5,10 @@ import java.awt.Color;
 public abstract class Vegetal {
     protected String nom;
     protected int rayon;
-    protected int seuilEauCritique;   //Pour les seuils faudrait un seuil minimal et un seuil maximal
-    protected int seuilTempCritique;
+    protected int seuilEauCritique;   
+    protected int seuilTempCritique; //Pour la temperature il faudrait un seuil minimal et un seuil maximal
+    protected double qteEauConsommee ; 
+    protected double maxEauConsommable ; 
     protected Color couleur;
 
     public Vegetal(String nom, int rayon, int seuilEauCritique, int seuilTempCritique, Color couleur) {
@@ -57,9 +59,30 @@ public abstract class Vegetal {
     public void setCouleur(Color couleur) {
         this.couleur = couleur;
     }
+    
+    //! Il faudra aussi décrementer le niveau d'eau des vegetaux au cours de la simulation
 
-	public void consommerEau() {
-		// TODO Auto-generated method stub
+    // Penser a creer une exception si une zone ne contient plus d'eau 
+	public void consommerEau(Zone Z) {
+		double qteDisponible = Z.getNiveauEau();
 		
+		if (qteDisponible != 0)
+		{
+			if (qteEauConsommee < maxEauConsommable ) {
+				double qteEauConsommable = maxEauConsommable  - qteEauConsommee ; 
+				if (qteEauConsommable < qteDisponible) // Cas où la qte disponible est suffisante pour "rassasier" le vivace
+				{
+					qteEauConsommee += qteEauConsommable ; 
+					Z.setNiveauEau(qteDisponible - qteEauConsommable);
+				}
+				else // Cas où il ne reste pas assez d'eau pour que le vivace soit "rassasié"
+				{
+					qteEauConsommee += qteDisponible ; 
+					Z.setNiveauEau(0);
+				}	
+			}
+		}
+		else
+			System.out.println("Plus D'eau Disponible\n") ; 
 	}
 }

@@ -23,10 +23,10 @@ public class Pigeon extends Oiseau implements AnimalVolant, Herbivore
 		moveAnimaux(eco, i, j, 25, Pigeon.class);
 	}
 
-	@Override
-	public void boire() {
-		// implémentation de la méthode boire pourles Pigeons
-	}
+//	@Override
+//	public void boire() {
+//		// implémentation de la méthode boire pourles Pigeons
+//	}
 
 	@Override
 	public void mourir() {

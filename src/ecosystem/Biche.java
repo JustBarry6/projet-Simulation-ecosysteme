@@ -56,10 +56,10 @@ public class Biche extends Mammifere implements Herbivore {
 	}
 
 
-	@Override
-	public void boire() {
-		// implémentation de la méthode boire pour les biches
-	}
+//	@Override
+//	public void boire() {
+//		// implémentation de la méthode boire pour les biches
+//	}
 
 	@Override
 	public void mourir() {

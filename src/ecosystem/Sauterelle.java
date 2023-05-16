@@ -25,10 +25,10 @@ public class Sauterelle extends Insecte implements Herbivore
     	moveAnimaux(eco, i, j, 25, Sauterelle.class);
     }
 
-	@Override
-	public void boire() {
-		// implémentation de la méthode boire pourles sauterelles
-	}
+//	@Override
+//	public void boire() {
+//		// implémentation de la méthode boire pourles sauterelles
+//	}
 
 	@Override
 	public void mourir() {

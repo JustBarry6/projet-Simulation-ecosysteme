@@ -133,6 +133,9 @@ public class Zone {
 	public void setCouleur(Color couleur) {
 		this.couleur = couleur;
 	}
+	
+	public double getNiveauEau () {return niveauEau ; }
+	public void setNiveauEau (double niveauActuel) {niveauEau = niveauActuel ; }
 
 	public void addVegetal(Vegetal vegetal) {
 		if (vegetaux.size() < capacite) {

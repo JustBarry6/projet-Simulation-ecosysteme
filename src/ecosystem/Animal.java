@@ -11,6 +11,8 @@ public abstract class Animal{
 	protected String nom ; 
     private int rayon;
     private Color c;
+    protected double qteEauConsommee ; 
+    protected double maxEauConsommable ; 
     
 
     protected ArrayList <Vegetal> proiesV;
@@ -32,7 +34,6 @@ public abstract class Animal{
     public void setCouleur(Color c){this.c=c;}
 
     public abstract void seDeplacer(Ecosystem ecosystem, int i, int j); 
-  	public abstract void boire() ;  
   	public abstract void mourir() ;  
   	public abstract void seReproduire() ;
   	public abstract void manger(Ecosystem eco, int i, int j); // supprimer dans tous les autres interface
@@ -63,5 +64,30 @@ public abstract class Animal{
         newZone.addAnimal(animalToMove);
     } 
     
+    
+  	
+    // Penser a creer une exception si une zone ne contient plus d'eau 
+	public void boire(Zone Z) {
+		double qteDisponible = Z.getNiveauEau();
+		
+		if (qteDisponible != 0)
+		{
+			if (qteEauConsommee < maxEauConsommable ) {
+				double qteEauConsommable = maxEauConsommable  - qteEauConsommee ; 
+				if (qteEauConsommable < qteDisponible) // Cas où la qte disponible est suffisante pour "rassasier" le vivace
+				{
+					qteEauConsommee += qteEauConsommable ; 
+					Z.setNiveauEau(qteDisponible - qteEauConsommable);
+				}
+				else // Cas où il ne reste pas assez d'eau pour que le vivace soit "rassasié"
+				{
+					qteEauConsommee += qteDisponible ; 
+					Z.setNiveauEau(0);
+				}	
+			}
+		}
+		else
+			System.out.println("Plus D'eau Disponible\n") ; 
+	}
 
 }

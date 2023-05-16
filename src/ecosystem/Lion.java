@@ -15,6 +15,8 @@ public class Lion extends Mammifere implements Carnivore {
     	this.proiesV =  null ;
     	this.proiesA = new ArrayList <Animal>(); 
     	this.predateursA = new ArrayList <Animal>();  
+    	
+
     }
 
     @Override
@@ -55,10 +57,10 @@ public class Lion extends Mammifere implements Carnivore {
 	}
 
 
-	@Override
-	public void boire() {
-		// implémentation de la méthode boire pourles Lion
-	}
+//	@Override
+//	public void boire() {
+//		// implémentation de la méthode boire pourles Lion
+//	}
 
 	@Override
 	public void mourir() {

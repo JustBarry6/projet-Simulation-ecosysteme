@@ -15,6 +15,7 @@ public class Chenille extends Insecte implements Herbivore {
 		this.predateursV = null;
 		this.proiesV = new ArrayList<Vegetal>();
 		this.predateursA = new ArrayList<Animal>();
+
 	}
 
 	@Override
@@ -22,10 +23,10 @@ public class Chenille extends Insecte implements Herbivore {
 		moveAnimaux(eco, i, j, 25, Chenille.class);
 	}
 
-	@Override
-	public void boire() {
-		// implémentation de la méthode boire pourles Chenilles
-	}
+//	@Override
+//	public void boire() {
+//		// implémentation de la méthode boire pourles Chenilles
+//	}
 
 	@Override
 	public void mourir() {

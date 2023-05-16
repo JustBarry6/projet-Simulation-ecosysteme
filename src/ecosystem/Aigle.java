@@ -64,10 +64,10 @@ public class Aigle extends Oiseau implements Carnivore, AnimalVolant{
 //	    }
     }
 
-	@Override
-	public void boire() {
-		// implémentation de la méthode boire pourles Aigle
-	}
+//	@Override
+//	public void boire() {
+//		// implémentation de la méthode boire pourles Aigle
+//	}
 
 	@Override
 	public void mourir() {

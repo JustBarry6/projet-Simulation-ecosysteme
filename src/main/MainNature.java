@@ -10,6 +10,7 @@ import ecosystem.Animal;
 import ecosystem.Lion;
 import ecosystem.Pigeon;
 import ecosystem.Sauterelle;
+import ecosystem.Vegetal;
 import ecosystem.Biche;
 import ecosystem.Vivace;
 import ecosystem.Chenille;
@@ -48,6 +49,7 @@ public class MainNature {
 		// Boucle de simulation
 		for (int iteration = 0; iteration < nbIterations; iteration++) {
 			deplacementAnimaux(ecosystem);
+			nutritionAnimauxVegetaux(ecosystem) ; 
 			ecosystem.redessine();
 
 			// Pause entre les itérations
@@ -117,18 +119,39 @@ public class MainNature {
 			for (int j = 0; j < nbCasesH; j++) {
 				Zone zone = ecosystem.getZone(i, j);
 				List<Animal> animaux = new ArrayList<>(zone.getAnimaux()); // Créer une copie de la liste d'animaux
-
 				for (Animal animal : animaux) {
 					animal.seDeplacer(ecosystem, i, j);
-					animal.manger(ecosystem, i, j);
-					
+//					animal.manger(ecosystem, i, j);
 				}
-				zone.changementZone() ; 
+//				zone.changementZone() ; 
 				ecosystem.update(i, j);
 			}
 		}
 	}
+	
+	private static void nutritionAnimauxVegetaux(Ecosystem ecosystem) {
+		int nbCasesL = ecosystem.getNbCasesL();
+		int nbCasesH = ecosystem.getNbCasesH();
 
+		for (int i = 0; i < nbCasesL; i++) {
+			for (int j = 0; j < nbCasesH; j++) {
+				Zone zone = ecosystem.getZone(i, j);
+				List<Animal> animaux = new ArrayList<>(zone.getAnimaux()); // Créer une copie de la liste d'animaux
+				List<Vegetal> vegetaux = new ArrayList<>(zone.getVegetaux()) ; 
+				
+				for (Animal animal : animaux) {
+					animal.manger(ecosystem, i, j);
+					animal.boire(zone);
+					zone.changementZone() ; 
+				}
+				for (Vegetal V : vegetaux) {
+					V.consommerEau(zone);
+					zone.changementZone() ; 
+				}
+				ecosystem.update(i, j);
+			}
+		}
+	}
 	private static void pause(int milliseconds) {
 		try {
 			Thread.sleep(milliseconds);
