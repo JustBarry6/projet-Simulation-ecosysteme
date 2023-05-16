@@ -10,7 +10,7 @@ public class Chenille extends Insecte implements Herbivore {
 
 	public Chenille(int rayon) {
 		super(rayon, Color.WHITE);
-		this.nom = "chenille";
+		this.nom = "Chenille";
 		this.proiesA = null;
 		this.predateursV = null;
 		this.proiesV = new ArrayList<Vegetal>();

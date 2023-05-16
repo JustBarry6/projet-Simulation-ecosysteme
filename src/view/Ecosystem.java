@@ -2,9 +2,14 @@ package view;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -64,111 +69,81 @@ public class Ecosystem extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		int[] centre = new int[2];
-		int[] coinSupG = new int[2];
-		int[] coinSupD = new int[2];
-		int[] coinInfG = new int[2];
-		int[] coinInfD = new int[2];
-		int[] milieuH = new int[2];
-		int[] milieuB = new int[2];
-		int[] milieuG = new int[2];
-		int[] milieuD = new int[2];
-		int i, j;
-		for (i = 0; i < nbCasesL; i++) {
-			for (j = 0; j < nbCasesH; j++) {
+
+		// Dessiner les cases
+		for (int i = 0; i < nbCasesL; i++) {
+			for (int j = 0; j < nbCasesH; j++) {
 				int cellX = 10 + (i * nbPixelCoteCase);
 				int cellY = 10 + (j * nbPixelCoteCase);
 				g.setColor(zone[i][j].getCouleur());
 				g.fillRect(cellX, cellY, nbPixelCoteCase, nbPixelCoteCase);
 
-				// Coordonnées pour le placement dynamique (9 positions possibles)
-				centre[0] = cellX + (nbPixelCoteCase / 2);
-				centre[1] = cellY + (nbPixelCoteCase / 2);
-
-				coinSupG[0] = cellX + 2; // coordonée X decalee de 2 pour ne pas toucher les bords
-				coinSupG[1] = cellY + 2; // coordonnée Y
-
-				milieuH[0] = coinSupG[0] + (nbPixelCoteCase / 2);
-				milieuH[1] = cellY + 2;
-
-				coinSupD[0] = milieuH[0] + (nbPixelCoteCase / 2) - 4;
-				coinSupD[1] = cellY + 2;
-
-				milieuD[0] = coinSupD[0] - 1;
-				milieuD[1] = cellY + (nbPixelCoteCase / 2);
-
-				coinInfD[0] = coinSupD[0] - 1; // coordonée X
-				coinInfD[1] = milieuD[1] + (nbPixelCoteCase / 2) - 2; // coordonnée Y
-
-				milieuB[0] = coinSupD[0] - (nbPixelCoteCase / 2);
-				milieuB[1] = coinInfD[1] - 2;
-
-				coinInfG[0] = milieuB[0] - (nbPixelCoteCase / 2) + 4;
-				coinInfG[1] = coinInfD[1] - 2;
-
-				milieuG[0] = coinInfG[0] + 2;
-				milieuD[1] = coinInfD[1] - (nbPixelCoteCase / 2);
-
+				// Dessiner les animaux
 				for (Animal animal : zone[i][j].getAnimaux()) {
 					g.setColor(animal.getCouleur());
-					switch (animal.getNom()) {
-					case "biche":
-						g.fillOval(coinSupG[0], coinSupG[1], animal.getRayon(), animal.getRayon());
-						break;
-					case "lion":
-						g.fillOval(milieuH[0] - animal.getRayon() / 2, milieuH[1], animal.getRayon(),
+					if (animal.getNom().equals("Biche")) {
+						dessinerImage(g, "src/view/images/biche.png", cellX, cellY, animal.getRayon());
+					} else if (animal.getNom().equals("Lion")) {
+						dessinerImage(g, "src/view/images/lion.png", cellX + nbPixelCoteCase / 2 - animal.getRayon() / 2,
+								cellY, animal.getRayon());
+					} else if (animal.getNom().equals("Sauterelle")) {
+						dessinerImage(g, "src/view/images/sauterelle.png", cellX + nbPixelCoteCase - animal.getRayon(), cellY,
 								animal.getRayon());
-						break;
-					case "sauterelle":
-						g.fillOval(coinSupD[0] - animal.getRayon(), coinSupD[1], animal.getRayon(), animal.getRayon());
-						break;
-					case "aigle":
-						g.fillOval(milieuD[0] - animal.getRayon(), milieuD[1] - animal.getRayon() / 2,
-								animal.getRayon(), animal.getRayon());
-						break;
-					case "pigeon":
-						g.fillOval(coinInfD[0] - animal.getRayon(), coinInfD[1] - (animal.getRayon()),
-								animal.getRayon(), animal.getRayon());
-						break;
-					case "chenille":
-						g.fillOval(coinInfG[0], coinInfD[1] - (animal.getRayon()), animal.getRayon(),
+					} else if (animal.getNom().equals("Aigle")) {
+						dessinerImage(g, "src/view/images/aigle.png", cellX + nbPixelCoteCase - animal.getRayon(),
+								cellY + nbPixelCoteCase / 2 - animal.getRayon() / 2, animal.getRayon());
+					} else if (animal.getNom().equals("Pigeon")) {
+						dessinerImage(g, "src/view/images/pigeon.png", cellX + nbPixelCoteCase - animal.getRayon(),
+								cellY + nbPixelCoteCase - animal.getRayon(), animal.getRayon());
+					} else if (animal.getNom().equals("Chenille")) {
+						dessinerImage(g, "src/view/images/chenille.png", cellX, cellY + nbPixelCoteCase - animal.getRayon(),
 								animal.getRayon());
-						break;
-					default:
-						g.fillOval(centre[0] - animal.getRayon() / 2, centre[1] - animal.getRayon() / 2,
-								animal.getRayon(), animal.getRayon());
-						break;
+					} else {
+						g.fillOval(cellX + nbPixelCoteCase / 2 - animal.getRayon() / 2,
+								cellY + nbPixelCoteCase / 2 - animal.getRayon() / 2, animal.getRayon(),
+								animal.getRayon());
 					}
 				}
 
+				// Dessiner les végétaux
 				for (Vegetal vegetal : zone[i][j].getVegetaux()) {
 					g.setColor(vegetal.getCouleur());
-					switch (vegetal.getNom()) {
-					case "Arbre":
-						g.fillOval(centre[0] - vegetal.getRayon() / 2, centre[1] - vegetal.getRayon() / 2,
-								vegetal.getRayon(), vegetal.getRayon());
-						break;
-					case "Vivace":
-						g.fillOval(centre[0] - vegetal.getRayon() / 2, centre[1] - vegetal.getRayon() / 2,
-								vegetal.getRayon(), vegetal.getRayon());
-						break;
-					default:
-						break;
+					int vegX = cellX + nbPixelCoteCase / 4 - vegetal.getRayon() / 2;
+					int vegY = cellY + nbPixelCoteCase / 4 - vegetal.getRayon() / 2;
+					if (vegetal.getNom().equals("Arbre")) {
+						dessinerImage(g, "src/view/images/arbre.png", vegX, vegY, vegetal.getRayon());
+					} else if (vegetal.getNom().equals("Vivace")) {
+						dessinerImage(g, "src/view/images/vivace.png", vegX+10, vegY+10, vegetal.getRayon());
+					} else {
+						g.fillOval(vegX, vegY, vegetal.getRayon(), vegetal.getRayon());
 					}
 				}
-
 			}
 		}
-
+		// Dessiner les contours des cases
 		g.setColor(Color.BLACK);
 		g.drawRect(10, 10, nbCasesL * nbPixelCoteCase, nbCasesH * nbPixelCoteCase);
 
-		for (i = 10; i <= nbCasesL * nbPixelCoteCase; i += nbPixelCoteCase) {
+		// Dessiner les lignes verticales
+		for (int i = 10; i <= nbCasesL * nbPixelCoteCase; i += nbPixelCoteCase) {
 			g.drawLine(i, 10, i, nbCasesH * nbPixelCoteCase + 10);
 		}
 
-		for (i = 10; i <= nbCasesH * nbPixelCoteCase; i += nbPixelCoteCase) {
+		// Dessiner les lignes horizontales
+		for (int i = 10; i <= nbCasesH * nbPixelCoteCase; i += nbPixelCoteCase) {
 			g.drawLine(10, i, nbCasesL * nbPixelCoteCase + 10, i);
+		}
+	}
+
+	private void dessinerImage(Graphics g, String imagePath, int x, int y, int rayon) {
+		try {
+			BufferedImage image = ImageIO.read(new File(imagePath));
+			int newWidth = rayon;
+			int newHeight = rayon;
+			Image resizedImage = image.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+			g.drawImage(resizedImage, x, y, null);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -227,6 +202,20 @@ public class Ecosystem extends JPanel {
 //			}
 //		}
 //	}
+	
+	public void placerAnimal(int x, int y, Animal animal) {
+		Zone zone = getZone(x, y);
+		if (zone != null) {
+			zone.addAnimal(animal);
+		}
+	}
+
+	public void placerVegetal(int x, int y, Vegetal vegetal) {
+		Zone zone = getZone(x, y);
+		if (zone != null) {
+			zone.addVegetal(vegetal);
+		}
+	}
 
 	public void update(int i, int j) {
 		// updateVegetaux();

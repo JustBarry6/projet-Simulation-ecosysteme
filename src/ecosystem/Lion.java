@@ -10,7 +10,7 @@ public class Lion extends Mammifere implements Carnivore {
 	
     public Lion(int rayon) {
     	super(rayon, Color.BLUE);
-    	this.nom = "lion" ; 
+    	this.nom = "Lion" ; 
     	this.predateursV = null ; 
     	this.proiesV =  null ;
     	this.proiesA = new ArrayList <Animal>(); 

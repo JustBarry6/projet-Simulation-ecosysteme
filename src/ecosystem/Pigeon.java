@@ -11,7 +11,7 @@ public class Pigeon extends Oiseau implements AnimalVolant, Herbivore
 	
     public Pigeon(int rayon) {
     	super(rayon, Color.GRAY);
-    	this.nom = "pigeon" ; 
+    	this.nom = "Pigeon" ; 
     	this.proiesA = new ArrayList <Animal>() ; 
     	this.predateursV = null ; 
     	this.proiesV = new ArrayList <Vegetal>(); 

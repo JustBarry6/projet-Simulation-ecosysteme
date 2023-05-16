@@ -10,7 +10,7 @@ public class Aigle extends Oiseau implements Carnivore, AnimalVolant{
 	
     public Aigle(int rayon) {
     	super(rayon, Color.PINK);
-    	this.nom = "aigle" ; 
+    	this.nom = "Aigle" ; 
     	this.predateursV = null ; 
     	this.proiesV =  null ;
     	this.proiesA = new ArrayList <Animal>(); 

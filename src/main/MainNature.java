@@ -1,36 +1,35 @@
 package main;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import ecosystem.Aigle;
 import ecosystem.Animal;
+import ecosystem.Arbre;
+import ecosystem.Biche;
+import ecosystem.Chenille;
 import ecosystem.Lion;
 import ecosystem.Pigeon;
 import ecosystem.Sauterelle;
 import ecosystem.Vegetal;
-import ecosystem.Biche;
 import ecosystem.Vivace;
-import ecosystem.Chenille;
-import ecosystem.Arbre;
 import ecosystem.Zone;
 import view.Ecosystem;
 
 public class MainNature {
 
-	static int p1 = 30; // Pourcentage de chance qu'une proie soit placée dans une case
-	static int p2 = 10; // Pourcentage de chance qu'un predateur soit placé dans une case
-	static int p3 = 15; // Pourcentage de chance de reproduction des ...
-	static int p4 = 15; // Pourcentage de chance de reproduction des ...
-	static int p5 = 10; // Pourcentage de chance de prédation
-	static int p6 = 25; // Pourcentage de chance de déplacement des proies
-	static int p7 = 25; // Pourcentage de chance de déplacement des prédateurs
+	private static final int POURCENTAGE_PROIE = 30;
+	private static final int POURCENTAGE_PREDATEUR = 10;
+	private static final int POURCENTAGE_REPRODUCTION_PROIE = 15;
+	private static final int POURCENTAGE_REPRODUCTION_PREDATEUR = 15;
+	private static final int POURCENTAGE_PREDATION = 10;
+	private static final int POURCENTAGE_DEPLACEMENT_PROIE = 25;
+	private static final int POURCENTAGE_DEPLACEMENT_PREDATEUR = 25;
 
 	public static void main(String[] args) {
 		int nbCasesL = 7, nbCasesH = 8;
-		Ecosystem ecosystem = new Ecosystem(nbCasesL, nbCasesH, 100);
+		Ecosystem ecosystem = new Ecosystem(nbCasesL, nbCasesH, 130);
 
 		Random r = new Random();
 
@@ -49,7 +48,7 @@ public class MainNature {
 		// Boucle de simulation
 		for (int iteration = 0; iteration < nbIterations; iteration++) {
 			deplacementAnimaux(ecosystem);
-			nutritionAnimauxVegetaux(ecosystem) ; 
+			nutritionAnimauxVegetaux(ecosystem);
 			ecosystem.redessine();
 
 			// Pause entre les itérations
@@ -61,53 +60,45 @@ public class MainNature {
 		for (int i = 0; i < nbCasesL; i++) {
 			for (int j = 0; j < nbCasesH; j++) {
 				if (i < j)
-					ecosystem.colorieFond(i, j,ecosystem.getZone(i, j).getCouleur());
+					ecosystem.colorieFond(i, j, ecosystem.getZone(i, j).getCouleur());
 				else
-					ecosystem.colorieFond(i, j,ecosystem.getZone(i, j).getCouleur());
+					ecosystem.colorieFond(i, j, ecosystem.getZone(i, j).getCouleur());
 			}
 		}
 	}
 
-	private static void placerAnimauxInitiaux(Ecosystem ecosystem, Random r) {
+	private static void placerAnimauxInitiaux(Ecosystem ecosystem, Random random) {
 		int nbCasesL = ecosystem.getNbCasesL();
 		int nbCasesH = ecosystem.getNbCasesH();
 
-		// ! Ici on place une instance de chaque animal par case en fonction des
-		// pourcentages
-		// ! Il faudra determiner une certaine quantité "faible" d'instance d'animaux
-		// qu'on peut placer
-		// Comment définir une proie et un predateur; sachant que certains animaux sont
-		// proies et prédateurs à la fois
 		for (int i = 0; i < nbCasesL; i++) {
 			for (int j = 0; j < nbCasesH; j++) {
-				if (r.nextInt(100) < p1) {
-					ecosystem.addAnimal(i, j, new Sauterelle(15)); 
-				}
-				if (r.nextInt(100) < p1) {
-					ecosystem.addAnimal(i, j, new Pigeon(15)); 
-				}
-				if (r.nextInt(100) < p2) {
-					ecosystem.addAnimal(i, j, new Aigle(15)); 
-				}
-				if (r.nextInt(100) < p2) {
-					ecosystem.addAnimal(i, j, new Lion(15));
-				}
-				if (r.nextInt(100) < p1) {
-					ecosystem.addAnimal(i, j, new Biche(15)); 
-				}
-				if (r.nextInt(100) < p1) {
-					ecosystem.addAnimal(i, j, new Chenille(15)); 
-				}
-				if (r.nextInt(100) < p1) {
-					ecosystem.addVegetal(i, j, new Arbre()); 		//seuil ? temp ? pas rayon ?	: à voir
-				}
-				if (r.nextInt(100) < p1) {
-					ecosystem.addVegetal(i, j, new Vivace());	//seuil ? temp ? pas rayon ?		à voir 											// aléatoire
-				}
+				placerAnimalSelonPourcentage(ecosystem, random, i, j, new Sauterelle(15), POURCENTAGE_PROIE);
+				placerAnimalSelonPourcentage(ecosystem, random, i, j, new Pigeon(15), POURCENTAGE_PROIE);
+				placerAnimalSelonPourcentage(ecosystem, random, i, j, new Aigle(15), POURCENTAGE_PREDATEUR);
+				placerAnimalSelonPourcentage(ecosystem, random, i, j, new Lion(15), POURCENTAGE_PREDATEUR);
+				placerAnimalSelonPourcentage(ecosystem, random, i, j, new Biche(15), POURCENTAGE_PROIE);
+				placerAnimalSelonPourcentage(ecosystem, random, i, j, new Chenille(15), POURCENTAGE_PROIE);
+				placerVegetalSelonPourcentage(ecosystem, random, i, j, new Arbre(), POURCENTAGE_PROIE);
+				placerVegetalSelonPourcentage(ecosystem, random, i, j, new Vivace(), POURCENTAGE_PROIE);
+
 				ecosystem.redessine();
-				// Pause de 2s
 				pause(200);
 			}
+		}
+	}
+
+	public static void placerAnimalSelonPourcentage(Ecosystem ecosysteme, Random random, int x, int y, Animal animal,
+			double pourcentage) {
+		if (random.nextInt(101) < pourcentage) {
+			ecosysteme.placerAnimal(x, y, animal);
+		}
+	}
+
+	public static void placerVegetalSelonPourcentage(Ecosystem ecosysteme, Random random, int x, int y, Vegetal vegetal,
+			double pourcentage) {
+		if (random.nextInt(101) < pourcentage) {
+			ecosysteme.placerVegetal(x, y, vegetal);
 		}
 	}
 
@@ -119,16 +110,18 @@ public class MainNature {
 			for (int j = 0; j < nbCasesH; j++) {
 				Zone zone = ecosystem.getZone(i, j);
 				List<Animal> animaux = new ArrayList<>(zone.getAnimaux()); // Créer une copie de la liste d'animaux
+
 				for (Animal animal : animaux) {
 					animal.seDeplacer(ecosystem, i, j);
-//					animal.manger(ecosystem, i, j);
+					// animal.manger(ecosystem, i, j);
+
 				}
-//				zone.changementZone() ; 
+				// zone.changementZone() ;
 				ecosystem.update(i, j);
 			}
 		}
 	}
-	
+
 	private static void nutritionAnimauxVegetaux(Ecosystem ecosystem) {
 		int nbCasesL = ecosystem.getNbCasesL();
 		int nbCasesH = ecosystem.getNbCasesH();
@@ -137,21 +130,22 @@ public class MainNature {
 			for (int j = 0; j < nbCasesH; j++) {
 				Zone zone = ecosystem.getZone(i, j);
 				List<Animal> animaux = new ArrayList<>(zone.getAnimaux()); // Créer une copie de la liste d'animaux
-				List<Vegetal> vegetaux = new ArrayList<>(zone.getVegetaux()) ; 
-				
+				List<Vegetal> vegetaux = new ArrayList<>(zone.getVegetaux());
+
 				for (Animal animal : animaux) {
 					animal.manger(ecosystem, i, j);
 					animal.boire(zone);
-					zone.changementZone() ; 
+					zone.changementZone();
 				}
 				for (Vegetal V : vegetaux) {
 					V.consommerEau(zone);
-					zone.changementZone() ; 
+					zone.changementZone();
 				}
 				ecosystem.update(i, j);
 			}
 		}
 	}
+
 	private static void pause(int milliseconds) {
 		try {
 			Thread.sleep(milliseconds);
