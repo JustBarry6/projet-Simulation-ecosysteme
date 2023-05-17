@@ -49,6 +49,8 @@ public class MainNature {
 		for (int iteration = 0; iteration < nbIterations; iteration++) {
 			deplacementAnimaux(ecosystem);
 			nutritionAnimauxVegetaux(ecosystem);
+			vieillissementCollectif(ecosystem) ; 
+			checkEsperanceDeVie(ecosystem);
 			ecosystem.redessine();
 
 			// Pause entre les itérations
@@ -113,6 +115,7 @@ public class MainNature {
 
 				for (Animal animal : animaux) {
 					animal.seDeplacer(ecosystem, i, j);
+					animal.utiliserEau(); // Le deplacement entraine la baisse de la reserve d'eau
 					// animal.manger(ecosystem, i, j);
 
 				}
@@ -145,6 +148,52 @@ public class MainNature {
 			}
 		}
 	}
+	
+	private static void checkEsperanceDeVie(Ecosystem ecosystem) {
+		int nbCasesL = ecosystem.getNbCasesL();
+		int nbCasesH = ecosystem.getNbCasesH();
+
+		for (int i = 0; i < nbCasesL; i++) {
+			for (int j = 0; j < nbCasesH; j++) {
+				Zone zone = ecosystem.getZone(i, j);
+				List<Animal> animaux = new ArrayList<>(zone.getAnimaux()); // Créer une copie de la liste d'animaux
+				List<Vegetal> vegetaux = new ArrayList<>(zone.getVegetaux());
+
+				for (Animal animal : animaux) {
+					if (animal.getAge() >= animal.getEsperanceDeVie())
+						animal.mourir(zone);
+				}
+				for (Vegetal V : vegetaux) {
+					if (V.getAge() >= V.getEsperanceDeVie())
+						V.mourir(zone);
+				}
+				ecosystem.update(i, j);
+			}
+		}
+	}
+	
+	public static void vieillissementCollectif(Ecosystem ecosystem)
+	{
+		int nbCasesL = ecosystem.getNbCasesL();
+		int nbCasesH = ecosystem.getNbCasesH();
+
+		for (int i = 0; i < nbCasesL; i++) {
+			for (int j = 0; j < nbCasesH; j++) {
+				Zone zone = ecosystem.getZone(i, j);
+				List<Animal> animaux = new ArrayList<>(zone.getAnimaux()); // Créer une copie de la liste d'animaux
+				List<Vegetal> vegetaux = new ArrayList<>(zone.getVegetaux());
+
+				for (Animal animal : animaux) {
+						animal.vieillir() ; 
+				}
+				for (Vegetal V : vegetaux) {
+						V.vieillir() ; 
+				}
+				ecosystem.update(i, j);
+			}
+		}
+	}
+
 
 	private static void pause(int milliseconds) {
 		try {

@@ -12,6 +12,7 @@ public class Arbre extends Vegetal {
         super("Arbre", RAYON_ARBRE, SEUIL_TEMP_CRITIQUE, SEUIL_EAU_CRITIQUE, COULEUR_ARBRE);
         qteEauConsommee = SEUIL_EAU_CRITIQUE ; // Au départ l'arbre a assez d'eau pour vivre   
         maxEauConsommable = 500 ; 
+        esperanceDeVie = 60 ;
     }
 
 }

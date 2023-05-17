@@ -25,6 +25,7 @@ public class Biche extends Mammifere implements Herbivore {
 	    // Récupérer la liste des végétaux dans la zone
 	    List<Vegetal> vegetaux = eco.getZone(i,j).getVegetaux();
 
+	    
 	    // Rechercher un végétal
 	    Vegetal vegetalTrouve = null;
 	    for (Vegetal vegetal : vegetaux) {
@@ -37,6 +38,7 @@ public class Biche extends Mammifere implements Herbivore {
 
 	    // Si un végétal a été trouvé, le consommer
 	    if (vegetalTrouve != null) {
+	    	
 	        eco.getZone(i,j).removeVegetal(vegetalTrouve.getClass()); // Retirer le végétal de la zone
 	        ajouterNourriture(vegetalTrouve); // Ajouter le végétal à la liste des nourritures de la biche
 
@@ -61,10 +63,10 @@ public class Biche extends Mammifere implements Herbivore {
 //		// implémentation de la méthode boire pour les biches
 //	}
 
-	@Override
-	public void mourir() {
-		// implémentation de la méthode mourir pour les biches
-	}
+//	@Override
+//	public void mourir() {
+//		// implémentation de la méthode mourir pour les biches
+//	}
 
 	@Override
 	public void seReproduire() {

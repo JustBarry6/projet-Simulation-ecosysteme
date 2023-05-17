@@ -28,10 +28,10 @@ public class Pigeon extends Oiseau implements AnimalVolant, Herbivore
 //		// implémentation de la méthode boire pourles Pigeons
 //	}
 
-	@Override
-	public void mourir() {
-		// implémentation de la méthode mourir pour les Pigeons
-	}
+//	@Override
+//	public void mourir() {
+//		// implémentation de la méthode mourir pour les Pigeons
+//	}
 
 	@Override
 	public void seReproduire() {
@@ -46,15 +46,24 @@ public class Pigeon extends Oiseau implements AnimalVolant, Herbivore
 
 	    // Si la liste des végétaux n'est pas vide, chercher un végétal à consommer
 	    if (!vegetaux.isEmpty()) {
-	        Vegetal vegetalTrouve = vegetaux.get(0);
+		    // Rechercher un végétal
+		    Vegetal vegetalTrouve = null;
+		    for (Vegetal vegetal : vegetaux) {
+		        if (vegetal instanceof Arbre) { // Ignorer les arbres
+		            continue;
+		        }
+		        vegetalTrouve = vegetal;
+		        break;
+		    }
 
-	        // Consommer le végétal trouvé
-	        eco.getZone(i, j).removeVegetal(vegetalTrouve.getClass());
-	        ajouterProieV(vegetalTrouve);
-	        System.out.println("Le Pigeon a consommé un végétal : " + vegetalTrouve.getNom());
+		    // Si un végétal a été trouvé, le consommer
+		    if (vegetalTrouve != null) {
+		    	
+		        eco.getZone(i,j).removeVegetal(vegetalTrouve.getClass()); // Retirer le végétal de la zone
+		        ajouterProieV(vegetalTrouve); // Ajouter le végétal à la liste des nourritures de la biche
 
-	        // Sortir de la méthode une fois que le végétal a été consommé
-	        return;
+		        System.out.println("La biche a consommé un végétal : " + vegetalTrouve.getNom());
+		    }
 	    }
 
 	    // Si la liste des animaux n'est pas vide, chercher un animal à consommer en fonction de ses préférences

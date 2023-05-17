@@ -30,10 +30,10 @@ public class Sauterelle extends Insecte implements Herbivore
 //		// implémentation de la méthode boire pourles sauterelles
 //	}
 
-	@Override
-	public void mourir() {
-		// implémentation de la méthode mourir pour les sauterelles
-	}
+//	@Override
+//	public void mourir() {
+//		// implémentation de la méthode mourir pour les sauterelles
+//	}
 
 	@Override
 	public void seReproduire() {
@@ -45,12 +45,15 @@ public class Sauterelle extends Insecte implements Herbivore
 		// Récupérer la liste des végétaux dans la zone
 		List<Vegetal> vegetaux = eco.getZone(i, j).getVegetaux();
 
-		// Si la liste des végétaux n'est pas vide, chercher un végétal à consommer
-		Vegetal vegetalTrouve = null;
-		if (!vegetaux.isEmpty()) {
-			vegetalTrouve = vegetaux.get(0);
-		}
-
+		// Rechercher un végétal
+	    Vegetal vegetalTrouve = null;
+	    for (Vegetal vegetal : vegetaux) {
+	        if (vegetal instanceof Arbre) { // Ignorer les arbres
+	            continue;
+	        }
+	        vegetalTrouve = vegetal;
+	        break;
+	    }
 		// Si un végétal a été trouvé, le consommer
 		if (vegetalTrouve != null) {
 			eco.getZone(i, j).removeVegetal(vegetalTrouve.getClass()); // Retirer le végétal de la zone

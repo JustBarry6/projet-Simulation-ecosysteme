@@ -13,6 +13,7 @@ public class Vivace extends Vegetal {
         super("Vivace", RAYON_VIVACE, SEUIL_TEMP_CRITIQUE, SEUIL_EAU_CRITIQUE, COULEUR_VIVACE);
         qteEauConsommee = SEUIL_EAU_CRITIQUE ; // Au départ le vivace a assez d'eau pour vivre   
         maxEauConsommable = 300 ; 
+        esperanceDeVie = 50 ;
     }
 
    

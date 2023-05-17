@@ -36,8 +36,8 @@ public class Aigle extends Oiseau implements Carnivore, AnimalVolant{
 
         // Si une proie a été trouvée, effectuer la prédation
         if (proieTrouvee != null) {
-            proieTrouvee.mourir(); // Tuer la proie
-            eco.getZone(i,j).removeAnimal(proieTrouvee.getClass()); // Retirer la proie de la zone
+            proieTrouvee.mourir(eco.getZone(i,j)); // Tuer la proie
+//            eco.getZone(i,j).removeAnimal(proieTrouvee.getClass()); // Retirer la proie de la zone
             ajouterProieA(proieTrouvee); // Ajouter la proie à la liste des proies du lion
 
             System.out.println("L'aigle a capturé une proie : " + proieTrouvee.getNom());
@@ -69,10 +69,10 @@ public class Aigle extends Oiseau implements Carnivore, AnimalVolant{
 //		// implémentation de la méthode boire pourles Aigle
 //	}
 
-	@Override
-	public void mourir() {
-		// implémentation de la méthode mourir pour les Aigle
-	}
+//	@Override
+//	public void mourir() {
+//		// implémentation de la méthode mourir pour les Aigle
+//	}
 
 	@Override
 	public void seReproduire() {

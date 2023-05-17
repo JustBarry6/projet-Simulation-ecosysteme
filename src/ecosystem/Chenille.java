@@ -28,10 +28,10 @@ public class Chenille extends Insecte implements Herbivore {
 //		// implémentation de la méthode boire pourles Chenilles
 //	}
 
-	@Override
-	public void mourir() {
-		// implémentation de la méthode mourir pour les Chenilles
-	}
+//	@Override
+//	public void mourir() {
+//		// implémentation de la méthode mourir pour les Chenilles
+//	}
 
 	@Override
 	public void seReproduire() {
@@ -45,9 +45,13 @@ public class Chenille extends Insecte implements Herbivore {
 
 		// Si la liste des végétaux n'est pas vide, chercher un végétal à consommer
 		Vegetal vegetalTrouve = null;
-		if (!vegetaux.isEmpty()) {
-			vegetalTrouve = vegetaux.get(0);
-		}
+		for (Vegetal vegetal : vegetaux) {
+	        if (vegetal instanceof Arbre) { // Ignorer les arbres
+	            continue;
+	        }
+	        vegetalTrouve = vegetal;
+	        break;
+	    }
 
 		// Si un végétal a été trouvé, le consommer
 		if (vegetalTrouve != null) {
