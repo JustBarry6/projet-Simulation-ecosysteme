@@ -91,7 +91,11 @@ public class Ecosystem extends JPanel {
 				int cellX = 10 + (i * nbPixelCoteCase);
 				int cellY = 10 + (j * nbPixelCoteCase);
 				g.setColor(zone[i][j].getCouleur());
-				dessinerImage(g, zone[i][j].getImagePath(), cellX, cellY, nbPixelCoteCase);
+				if(zone[i][j].getType() == TypeZone.DESERT) {
+					dessinerImage(g, zone[i][j].getImagePath(), cellX, cellY, nbPixelCoteCase);
+				}else {
+					g.fillRect(cellX, cellY, nbPixelCoteCase, nbPixelCoteCase);	
+				}
 
 
 				// Dessiner les animaux

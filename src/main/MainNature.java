@@ -10,6 +10,7 @@ import ecosystem.Arbre;
 import ecosystem.Biche;
 import ecosystem.Chenille;
 import ecosystem.Lion;
+import ecosystem.NoWaterException;
 import ecosystem.Pigeon;
 import ecosystem.Sauterelle;
 import ecosystem.Vegetal;
@@ -36,12 +37,12 @@ public class MainNature {
 		initialiserEcosystem(ecosystem, nbCasesL, nbCasesH);
 
 		// Pause de 2s
-		pause(1000);
+		pause(100);
 
 		placerAnimauxEtVegetauxInitiaux(ecosystem, r);
 
 		// Pause de 2s
-		pause(1000);
+		pause(100);
 
 		// Boucle de simulation
 		for (int iteration = 0; iteration < nbIterations; iteration++) {
@@ -122,30 +123,41 @@ public class MainNature {
 	}
 
 	private static void nutritionAnimauxVegetaux(Ecosystem ecosystem) {
-		int nbCasesL = ecosystem.getNbCasesL();
-		int nbCasesH = ecosystem.getNbCasesH();
+	    int nbCasesL = ecosystem.getNbCasesL();
+	    int nbCasesH = ecosystem.getNbCasesH();
 
-		for (int i = 0; i < nbCasesL; i++) {
-			for (int j = 0; j < nbCasesH; j++) {
-				Zone zone = ecosystem.getZone(i, j);
-				List<Animal> animaux = new ArrayList<>(zone.getAnimaux()); // Créer une copie de la liste d'animaux
-				List<Vegetal> vegetaux = new ArrayList<>(zone.getVegetaux());
+	    for (int i = 0; i < nbCasesL; i++) {
+	        for (int j = 0; j < nbCasesH; j++) {
+	            Zone zone = ecosystem.getZone(i, j);
+	            List<Animal> animaux = new ArrayList<>(zone.getAnimaux()); // Créer une copie de la liste d'animaux
+	            List<Vegetal> vegetaux = new ArrayList<>(zone.getVegetaux());
 
-				for (Animal animal : animaux) {
-					animal.manger(ecosystem, i, j);
-					animal.boire(zone);
-					zone.changementZone();
-				}
+	            for (Animal animal : animaux) {
+	                try {
+	                    animal.manger(ecosystem, i, j);
+	                    animal.boire(zone);
+	                    zone.changementZone();
+	                } catch (NoWaterException e) {
+	                    // Gérer l'exception lorsqu'il n'y a pas assez d'eau
+	                    System.out.println("Plus d'eau disponible dans la zone !");
+	                }
+	            }
 
-				for (Vegetal vegetal : vegetaux) {
-					vegetal.consommerEau(zone);
-					zone.changementZone();
-				}
+	            for (Vegetal vegetal : vegetaux) {
+	                try {
+	                    vegetal.consommerEau(zone);
+	                    zone.changementZone();
+	                } catch (NoWaterException e) {
+	                    // Gérer l'exception lorsqu'il n'y a pas assez d'eau
+	                    System.out.println("Plus d'eau disponible dans la zone !");
+	                }
+	            }
 
-				ecosystem.mettreAJourAnimaux(i, j);
-			}
-		}
+	            ecosystem.mettreAJourAnimaux(i, j);
+	        }
+	    }
 	}
+
 
 	private static void checkEsperanceDeVie(Ecosystem ecosystem) {
 		int nbCasesL = ecosystem.getNbCasesL();

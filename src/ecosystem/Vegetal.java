@@ -71,28 +71,25 @@ public abstract class Vegetal {
 	// simulation
 
 	// Penser a creer une exception si une zone ne contient plus d'eau
-	public void consommerEau(Zone Z) {
-		double qteDisponible = Z.getNiveauEau();
+	public void consommerEau(Zone Z) throws NoWaterException {
+	    double qteDisponible = Z.getNiveauEau();
 
-		if (qteDisponible != 0) {
-			if (qteEauConsommee < maxEauConsommable) {
-				double qteEauConsommable = maxEauConsommable - qteEauConsommee;
-				if (qteEauConsommable < qteDisponible) // Cas où la qte disponible est suffisante pour "rassasier" le
-														// vivace
-				{
-					qteEauConsommee += qteEauConsommable;
-					Z.setNiveauEau(qteDisponible - qteEauConsommable);
-				} else // Cas où il ne reste pas assez d'eau pour que le vivace soit "rassasié"
-				{
-					qteEauConsommee += qteDisponible;
-					Z.setNiveauEau(0);
-				}
-			}
-		} else {
-			System.out.println("Plus d'eau disponible dans la zone !");
-			
-		}
+	    if (qteDisponible != 0) {
+	        if (qteEauConsommee < maxEauConsommable) {
+	            double qteEauConsommable = maxEauConsommable - qteEauConsommee;
+	            if (qteEauConsommable < qteDisponible) {
+	                qteEauConsommee += qteEauConsommable;
+	                Z.setNiveauEau(qteDisponible - qteEauConsommable);
+	            } else {
+	                qteEauConsommee += qteDisponible;
+	                Z.setNiveauEau(0);
+	            }
+	        }
+	    } else {
+	        throw new NoWaterException("Plus d'eau disponible dans la zone !");
+	    }
 	}
+
 	// Apres avoir consomme de l'eau, le vegetal l'utilise pour ses cellules
 	public void utiliserEau()
 	{

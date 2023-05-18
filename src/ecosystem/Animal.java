@@ -186,7 +186,7 @@ public abstract class Animal {
      * 
      * @param zone La zone dans laquelle l'animal boit.
      */
-    public void boire(Zone zone) {
+    public void boire(Zone zone) throws NoWaterException {
         double qteDisponible = zone.getNiveauEau();
 
         if (qteDisponible != 0) {
@@ -201,9 +201,10 @@ public abstract class Animal {
                 }
             }
         } else {
-            System.out.println("Plus d'eau disponible dans la zone !");
+            throw new NoWaterException("Plus d'eau disponible dans la zone !");
         }
     }
+
 
     /**
      * Utilise l'eau consommée par l'animal.
