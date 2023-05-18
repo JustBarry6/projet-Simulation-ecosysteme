@@ -13,7 +13,15 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import ecosystem.Aigle;
 import ecosystem.Animal;
+import ecosystem.Biche;
+import ecosystem.Carnivore;
+import ecosystem.Chenille;
+import ecosystem.Herbivore;
+import ecosystem.Lion;
+import ecosystem.Pigeon;
+import ecosystem.Sauterelle;
 import ecosystem.TypeZone;
 import ecosystem.Vegetal;
 import ecosystem.Zone;
@@ -31,6 +39,9 @@ public class Ecosystem extends JPanel {
     private static final String IMAGE_PATH_CHENILLE = "src/view/images/chenille.png";
     private static final String IMAGE_PATH_ARBRE = "src/view/images/arbre.png";
     private static final String IMAGE_PATH_VIVACE = "src/view/images/vivace.png";
+    
+    private static final int POURCENTAGE_REPRODUCTION_PROIE = 15;
+	private static final int POURCENTAGE_REPRODUCTION_PREDATEUR = 15;
 
 	public Ecosystem(int nbCasesL, int nbCasesH, int nbPixelCoteCase) {
 		int i, j;
@@ -119,9 +130,9 @@ public class Ecosystem extends JPanel {
 					int vegX = cellX + nbPixelCoteCase / 4 - vegetal.getRayon() / 2;
 					int vegY = cellY + nbPixelCoteCase / 4 - vegetal.getRayon() / 2;
 					if (vegetal.getNom().equals("Arbre")) {
-						dessinerImage(g, IMAGE_PATH_ARBRE, vegX, vegY, vegetal.getRayon());
+						dessinerImage(g, "src/view/images/arbre.png", vegX, vegY, vegetal.getRayon());
 					} else if (vegetal.getNom().equals("Vivace")) {
-						dessinerImage(g, IMAGE_PATH_VIVACE, vegX+10, vegY+10, vegetal.getRayon());
+						dessinerImage(g, "src/view/images/vivace.png", vegX+10, vegY+10, vegetal.getRayon());
 					} else {
 						g.fillOval(vegX, vegY, vegetal.getRayon(), vegetal.getRayon());
 					}
@@ -174,15 +185,62 @@ public class Ecosystem extends JPanel {
 	public int getNbCasesH() {
 		return nbCasesH;
 	}
+	public void placerAnimal(int x, int y, Animal animal) {
+		Zone zone = getZone(x, y);
+		if (zone != null) {
+			zone.addAnimal(animal);
+		}
+	}
+	
+	public void placerVegetal(int x, int y, Vegetal vegetal) {
+		Zone zone = getZone(x, y);
+		if (zone != null) {
+			zone.addVegetal(vegetal);
+		}
+	}
+	
 
 	public void updateAnimaux(int i, int j) {
 	    List<Animal> animaux = this.getZone(i, j).getAnimaux();
+	    int countProies = 0;
+	    int countPredateurs = 0;
+
+	    for (Animal animal : animaux) {
+	        if (animal instanceof Herbivore) {
+	            countProies++;
+	        } else if (animal instanceof Carnivore) {
+	            countPredateurs++;
+	        }
+	    }
+
+	    if (countProies >= 2 && countPredateurs == 0) {
+	        reproduireProies(i, j, POURCENTAGE_REPRODUCTION_PROIE);
+	    } else if (countPredateurs >= 2 && countProies > 0) {
+	        reproduirePredateurs(i, j, POURCENTAGE_REPRODUCTION_PREDATEUR);
+	    }
+
+	    mettreAJourAnimaux(i, j);
+	}
+
+	private void reproduireProies(int i, int j, int pourcentageReproduction) {
+		System.out.println("implementation de la reproduction proie à faire ici ");
+	}
+
+	private void reproduirePredateurs(int i, int j, int pourcentageReproduction) {
+		System.out.println("implementation de la reproduction predateur à faire ici ");
+	}
+
+
+
+	private void mettreAJourAnimaux(int i, int j) {
+	    List<Animal> animaux = this.getZone(i, j).getAnimaux();
+
 	    for (Animal animal : animaux) {
 	        int count = this.getZone(i, j).getNbAnimal(animal.getClass());
 	        if (count > 1) {
 	            for (int k = 0; k < count - 1; k++) {
 	                Animal removedAnimal = this.getZone(i, j).removeAnimal(animal.getClass());
-	                int newRadius = removedAnimal.getRayon() + (count);
+	                int newRadius = removedAnimal.getRayon() + (count - 1);
 	                Animal newAnimal = null;
 	                try {
 	                    newAnimal = animal.getClass().getDeclaredConstructor(int.class).newInstance(newRadius);
@@ -193,43 +251,10 @@ public class Ecosystem extends JPanel {
 	            }
 	        } else {
 	            // Si l'animal est le seul de son type dans la zone, on réinitialise son rayon
-	            animal.setRayon(15);
+	            animal.setRayon(30);
 	        }
 	    }
 	}
-
-
-//	public void updateVegetaux() {
-//		for (Zone zone : zone) {
-//			List<Vegetal> vegetaux = zone.getVegetaux();
-//			for (Class<? extends Vegetal> vegetalClass : vegetalClasses) {
-//				int count = zone.getNbVegetal(vegetalClass);
-//				if (count > 1) {
-//					for (int i = 0; i < count - 1; i++) {
-//						zone.removeVegetal(vegetalClass);
-//					}
-//				}
-//			}
-//		}
-//	}
 	
-	public void placerAnimal(int x, int y, Animal animal) {
-		Zone zone = getZone(x, y);
-		if (zone != null) {
-			zone.addAnimal(animal);
-		}
-	}
-
-	public void placerVegetal(int x, int y, Vegetal vegetal) {
-		Zone zone = getZone(x, y);
-		if (zone != null) {
-			zone.addVegetal(vegetal);
-		}
-	}
-
-	public void update(int i, int j) {
-		// updateVegetaux();
-		updateAnimaux(i, j);
-	}
 
 }
