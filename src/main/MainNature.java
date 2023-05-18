@@ -21,26 +21,24 @@ public class MainNature {
 
 	private static final int POURCENTAGE_PROIE = 30;
 	private static final int POURCENTAGE_PREDATEUR = 10;
-	private static final int POURCENTAGE_REPRODUCTION_PROIE = 15;
-	private static final int POURCENTAGE_REPRODUCTION_PREDATEUR = 15;
 	private static final int POURCENTAGE_PREDATION = 10;
 	private static final int POURCENTAGE_DEPLACEMENT_PROIE = 25;
 	private static final int POURCENTAGE_DEPLACEMENT_PREDATEUR = 25;
 
 	public static void main(String[] args) {
 		int nbCasesL = 7, nbCasesH = 8;
-		Ecosystem ecosystem = new Ecosystem(nbCasesL, nbCasesH, 130);
+		Ecosystem ecosystem = new Ecosystem(nbCasesL, nbCasesH, 100);
 
 		Random r = new Random();
 
 		int nbIterations = 100; // Nombre d'itérations de la simulation
 
-		initialiserecosystem(ecosystem, nbCasesL, nbCasesH);
+		initialiserEcosystem(ecosystem, nbCasesL, nbCasesH);
 
 		// Pause de 2s
 		pause(1000);
 
-		placerAnimauxInitiaux(ecosystem, r); // changer le nom de cette fonction puisqu'elle place aussi des Vegetaux
+		placerAnimauxEtVegetauxInitiaux(ecosystem, r);
 
 		// Pause de 2s
 		pause(1000);
@@ -49,7 +47,7 @@ public class MainNature {
 		for (int iteration = 0; iteration < nbIterations; iteration++) {
 			deplacementAnimaux(ecosystem);
 			nutritionAnimauxVegetaux(ecosystem);
-			vieillissementCollectif(ecosystem) ; 
+			vieillissementCollectif(ecosystem);
 			checkEsperanceDeVie(ecosystem);
 			ecosystem.redessine();
 
@@ -58,7 +56,7 @@ public class MainNature {
 		}
 	}
 
-	private static void initialiserecosystem(Ecosystem ecosystem, int nbCasesL, int nbCasesH) {
+	private static void initialiserEcosystem(Ecosystem ecosystem, int nbCasesL, int nbCasesH) {
 		for (int i = 0; i < nbCasesL; i++) {
 			for (int j = 0; j < nbCasesH; j++) {
 				if (i < j)
@@ -69,18 +67,18 @@ public class MainNature {
 		}
 	}
 
-	private static void placerAnimauxInitiaux(Ecosystem ecosystem, Random random) {
+	private static void placerAnimauxEtVegetauxInitiaux(Ecosystem ecosystem, Random random) {
 		int nbCasesL = ecosystem.getNbCasesL();
 		int nbCasesH = ecosystem.getNbCasesH();
 
 		for (int i = 0; i < nbCasesL; i++) {
 			for (int j = 0; j < nbCasesH; j++) {
-				placerAnimalSelonPourcentage(ecosystem, random, i, j, new Sauterelle(15), POURCENTAGE_PROIE);
-				placerAnimalSelonPourcentage(ecosystem, random, i, j, new Pigeon(15), POURCENTAGE_PROIE);
-				placerAnimalSelonPourcentage(ecosystem, random, i, j, new Aigle(15), POURCENTAGE_PREDATEUR);
-				placerAnimalSelonPourcentage(ecosystem, random, i, j, new Lion(15), POURCENTAGE_PREDATEUR);
-				placerAnimalSelonPourcentage(ecosystem, random, i, j, new Biche(15), POURCENTAGE_PROIE);
-				placerAnimalSelonPourcentage(ecosystem, random, i, j, new Chenille(15), POURCENTAGE_PROIE);
+				placerAnimalSelonPourcentage(ecosystem, random, i, j, new Sauterelle(30), POURCENTAGE_PROIE);
+				placerAnimalSelonPourcentage(ecosystem, random, i, j, new Pigeon(30), POURCENTAGE_PROIE);
+				placerAnimalSelonPourcentage(ecosystem, random, i, j, new Aigle(30), POURCENTAGE_PREDATEUR);
+				placerAnimalSelonPourcentage(ecosystem, random, i, j, new Lion(30), POURCENTAGE_PREDATEUR);
+				placerAnimalSelonPourcentage(ecosystem, random, i, j, new Biche(30), POURCENTAGE_PROIE);
+				placerAnimalSelonPourcentage(ecosystem, random, i, j, new Chenille(30), POURCENTAGE_PROIE);
 				placerVegetalSelonPourcentage(ecosystem, random, i, j, new Arbre(), POURCENTAGE_PROIE);
 				placerVegetalSelonPourcentage(ecosystem, random, i, j, new Vivace(), POURCENTAGE_PROIE);
 
@@ -90,17 +88,17 @@ public class MainNature {
 		}
 	}
 
-	public static void placerAnimalSelonPourcentage(Ecosystem ecosysteme, Random random, int x, int y, Animal animal,
+	public static void placerAnimalSelonPourcentage(Ecosystem ecosystem, Random random, int x, int y, Animal animal,
 			double pourcentage) {
 		if (random.nextInt(101) < pourcentage) {
-			ecosysteme.placerAnimal(x, y, animal);
+			ecosystem.placerAnimal(x, y, animal);
 		}
 	}
 
-	public static void placerVegetalSelonPourcentage(Ecosystem ecosysteme, Random random, int x, int y, Vegetal vegetal,
+	public static void placerVegetalSelonPourcentage(Ecosystem ecosystem, Random random, int x, int y, Vegetal vegetal,
 			double pourcentage) {
 		if (random.nextInt(101) < pourcentage) {
-			ecosysteme.placerVegetal(x, y, vegetal);
+			ecosystem.placerVegetal(x, y, vegetal);
 		}
 	}
 
@@ -115,12 +113,10 @@ public class MainNature {
 
 				for (Animal animal : animaux) {
 					animal.seDeplacer(ecosystem, i, j);
-					animal.utiliserEau(); // Le deplacement entraine la baisse de la reserve d'eau
-					// animal.manger(ecosystem, i, j);
-
+					animal.utiliserEau(); // Le déplacement entraîne la baisse de la réserve d'eau
 				}
-				// zone.changementZone() ;
-				ecosystem.update(i, j);
+
+				ecosystem.updateAnimaux(i, j);
 			}
 		}
 	}
@@ -140,15 +136,17 @@ public class MainNature {
 					animal.boire(zone);
 					zone.changementZone();
 				}
-				for (Vegetal V : vegetaux) {
-					V.consommerEau(zone);
+
+				for (Vegetal vegetal : vegetaux) {
+					vegetal.consommerEau(zone);
 					zone.changementZone();
 				}
-				ecosystem.update(i, j);
+
+				ecosystem.updateAnimaux(i, j);
 			}
 		}
 	}
-	
+
 	private static void checkEsperanceDeVie(Ecosystem ecosystem) {
 		int nbCasesL = ecosystem.getNbCasesL();
 		int nbCasesH = ecosystem.getNbCasesH();
@@ -167,13 +165,12 @@ public class MainNature {
 					if (V.getAge() >= V.getEsperanceDeVie())
 						V.mourir(zone);
 				}
-				ecosystem.update(i, j);
+				ecosystem.updateAnimaux(i, j);
 			}
 		}
 	}
-	
-	public static void vieillissementCollectif(Ecosystem ecosystem)
-	{
+
+	public static void vieillissementCollectif(Ecosystem ecosystem) {
 		int nbCasesL = ecosystem.getNbCasesL();
 		int nbCasesH = ecosystem.getNbCasesH();
 
@@ -184,16 +181,15 @@ public class MainNature {
 				List<Vegetal> vegetaux = new ArrayList<>(zone.getVegetaux());
 
 				for (Animal animal : animaux) {
-						animal.vieillir() ; 
+					animal.vieillir();
 				}
 				for (Vegetal V : vegetaux) {
-						V.vieillir() ; 
+					V.vieillir();
 				}
-				ecosystem.update(i, j);
+				ecosystem.updateAnimaux(i, j);
 			}
 		}
 	}
-
 
 	private static void pause(int milliseconds) {
 		try {

@@ -23,6 +23,14 @@ public class Ecosystem extends JPanel {
 	private int nbPixelCoteCase;
 	private Zone[][] zone;
 	private Random random;
+	private static final String IMAGE_PATH_BICHE = "src/view/images/biche.png";
+    private static final String IMAGE_PATH_LION = "src/view/images/lion.png";
+    private static final String IMAGE_PATH_SAUTERELLE = "src/view/images/sauterelle.png";
+    private static final String IMAGE_PATH_AIGLE = "src/view/images/aigle.png";
+    private static final String IMAGE_PATH_PIGEON = "src/view/images/pigeon.png";
+    private static final String IMAGE_PATH_CHENILLE = "src/view/images/chenille.png";
+    private static final String IMAGE_PATH_ARBRE = "src/view/images/arbre.png";
+    private static final String IMAGE_PATH_VIVACE = "src/view/images/vivace.png";
 
 	public Ecosystem(int nbCasesL, int nbCasesH, int nbPixelCoteCase) {
 		int i, j;
@@ -82,21 +90,21 @@ public class Ecosystem extends JPanel {
 				for (Animal animal : zone[i][j].getAnimaux()) {
 					g.setColor(animal.getCouleur());
 					if (animal.getNom().equals("Biche")) {
-						dessinerImage(g, "src/view/images/biche.png", cellX, cellY, animal.getRayon());
+						dessinerImage(g, IMAGE_PATH_BICHE, cellX, cellY, animal.getRayon());
 					} else if (animal.getNom().equals("Lion")) {
-						dessinerImage(g, "src/view/images/lion.png", cellX + nbPixelCoteCase / 2 - animal.getRayon() / 2,
+						dessinerImage(g, IMAGE_PATH_LION, cellX + nbPixelCoteCase / 2 - animal.getRayon() / 2,
 								cellY, animal.getRayon());
 					} else if (animal.getNom().equals("Sauterelle")) {
-						dessinerImage(g, "src/view/images/sauterelle.png", cellX + nbPixelCoteCase - animal.getRayon(), cellY,
+						dessinerImage(g, IMAGE_PATH_SAUTERELLE, cellX + nbPixelCoteCase - animal.getRayon(), cellY,
 								animal.getRayon());
 					} else if (animal.getNom().equals("Aigle")) {
-						dessinerImage(g, "src/view/images/aigle.png", cellX + nbPixelCoteCase - animal.getRayon(),
+						dessinerImage(g, IMAGE_PATH_AIGLE, cellX + nbPixelCoteCase - animal.getRayon(),
 								cellY + nbPixelCoteCase / 2 - animal.getRayon() / 2, animal.getRayon());
 					} else if (animal.getNom().equals("Pigeon")) {
-						dessinerImage(g, "src/view/images/pigeon.png", cellX + nbPixelCoteCase - animal.getRayon(),
+						dessinerImage(g, IMAGE_PATH_PIGEON, cellX + nbPixelCoteCase - animal.getRayon(),
 								cellY + nbPixelCoteCase - animal.getRayon(), animal.getRayon());
 					} else if (animal.getNom().equals("Chenille")) {
-						dessinerImage(g, "src/view/images/chenille.png", cellX, cellY + nbPixelCoteCase - animal.getRayon(),
+						dessinerImage(g, IMAGE_PATH_CHENILLE, cellX, cellY + nbPixelCoteCase - animal.getRayon(),
 								animal.getRayon());
 					} else {
 						g.fillOval(cellX + nbPixelCoteCase / 2 - animal.getRayon() / 2,
@@ -111,15 +119,16 @@ public class Ecosystem extends JPanel {
 					int vegX = cellX + nbPixelCoteCase / 4 - vegetal.getRayon() / 2;
 					int vegY = cellY + nbPixelCoteCase / 4 - vegetal.getRayon() / 2;
 					if (vegetal.getNom().equals("Arbre")) {
-						dessinerImage(g, "src/view/images/arbre.png", vegX, vegY, vegetal.getRayon());
+						dessinerImage(g, IMAGE_PATH_ARBRE, vegX, vegY, vegetal.getRayon());
 					} else if (vegetal.getNom().equals("Vivace")) {
-						dessinerImage(g, "src/view/images/vivace.png", vegX+10, vegY+10, vegetal.getRayon());
+						dessinerImage(g, IMAGE_PATH_VIVACE, vegX+10, vegY+10, vegetal.getRayon());
 					} else {
 						g.fillOval(vegX, vegY, vegetal.getRayon(), vegetal.getRayon());
 					}
 				}
 			}
 		}
+		
 		// Dessiner les contours des cases
 		g.setColor(Color.BLACK);
 		g.drawRect(10, 10, nbCasesL * nbPixelCoteCase, nbCasesH * nbPixelCoteCase);
@@ -134,6 +143,7 @@ public class Ecosystem extends JPanel {
 			g.drawLine(10, i, nbCasesL * nbPixelCoteCase + 10, i);
 		}
 	}
+	
 
 	private void dessinerImage(Graphics g, String imagePath, int x, int y, int rayon) {
 		try {
@@ -172,7 +182,7 @@ public class Ecosystem extends JPanel {
 	        if (count > 1) {
 	            for (int k = 0; k < count - 1; k++) {
 	                Animal removedAnimal = this.getZone(i, j).removeAnimal(animal.getClass());
-	                int newRadius = removedAnimal.getRayon() + (count+5);
+	                int newRadius = removedAnimal.getRayon() + (count);
 	                Animal newAnimal = null;
 	                try {
 	                    newAnimal = animal.getClass().getDeclaredConstructor(int.class).newInstance(newRadius);
