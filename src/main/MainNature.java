@@ -142,7 +142,7 @@ public class MainNature {
 					zone.changementZone();
 				}
 
-				ecosystem.updateAnimaux(i, j);
+				ecosystem.mettreAJourAnimaux(i, j);
 			}
 		}
 	}
@@ -165,7 +165,7 @@ public class MainNature {
 					if (V.getAge() >= V.getEsperanceDeVie())
 						V.mourir(zone);
 				}
-				ecosystem.updateAnimaux(i, j);
+				ecosystem.mettreAJourAnimaux(i, j);
 			}
 		}
 	}
@@ -186,7 +186,7 @@ public class MainNature {
 				for (Vegetal V : vegetaux) {
 					V.vieillir();
 				}
-				ecosystem.updateAnimaux(i, j);
+				ecosystem.mettreAJourAnimaux(i, j);
 			}
 		}
 	}

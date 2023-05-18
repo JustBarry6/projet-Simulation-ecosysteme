@@ -88,8 +88,10 @@ public abstract class Vegetal {
 					Z.setNiveauEau(0);
 				}
 			}
-		} else
-			System.out.println("Plus D'eau Disponible\n");
+		} else {
+			System.out.println("Plus d'eau disponible dans la zone !");
+			
+		}
 	}
 	// Apres avoir consomme de l'eau, le vegetal l'utilise pour ses cellules
 	public void utiliserEau()
@@ -104,7 +106,7 @@ public abstract class Vegetal {
 	// Dans le Main, l'une des conditions pour mourir est d'atteindre l'esperance de
 	// Vie
 	public void mourir(Zone Z) {
-		System.out.println("Mort d'un Végétal\n") ; 
 		Z.removeVegetal(this.getClass());
+		System.out.println("Mort d'un Végétal\n") ; 
 	}
 }

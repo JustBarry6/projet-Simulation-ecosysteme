@@ -6,21 +6,21 @@ import java.util.List;
 
 import view.Ecosystem;
 
-public class Aigle extends Oiseau implements Carnivore, AnimalVolant{
-	
+public class Aigle extends Oiseau implements Carnivore, AnimalVolant {
+
     public Aigle(int rayon) {
-    	super(rayon, Color.PINK);
-    	this.nom = "Aigle" ; 
-    	this.predateursV = null ; 
-    	this.proiesV =  null ;
-    	this.proiesA = new ArrayList <Animal>(); 
-    	this.predateursA = new ArrayList <Animal>();  
+        super(rayon, Color.PINK);
+        this.nom = "Aigle";
+        this.predateursVegetaux = null;
+        this.proiesVegetales = null;
+        this.proiesAnimales = new ArrayList<>();
+        this.predateursAnimaux = new ArrayList<>();
     }
-    
+
     @Override
     public void manger(Ecosystem eco, int i, int j) {
         // Récupérer la liste des animaux dans la zone
-        List<Animal> animaux = eco.getZone(i,j).getAnimaux();
+        List<Animal> animaux = eco.getZone(i, j).getAnimaux();
 
         // Rechercher une proie
         Animal proieTrouvee = null;
@@ -28,7 +28,7 @@ public class Aigle extends Oiseau implements Carnivore, AnimalVolant{
             if (animal instanceof Carnivore) { // Ignorer les carnivores
                 continue;
             }
-            if (animal instanceof Herbivore) {// Vérifier si l'animal est 
+            if (animal instanceof Herbivore) { // Vérifier si l'animal est un herbivore
                 proieTrouvee = animal;
                 break;
             }
@@ -36,46 +36,24 @@ public class Aigle extends Oiseau implements Carnivore, AnimalVolant{
 
         // Si une proie a été trouvée, effectuer la prédation
         if (proieTrouvee != null) {
-            proieTrouvee.mourir(eco.getZone(i,j)); // Tuer la proie
-//            eco.getZone(i,j).removeAnimal(proieTrouvee.getClass()); // Retirer la proie de la zone
-            ajouterProieA(proieTrouvee); // Ajouter la proie à la liste des proies du lion
+            proieTrouvee.mourir(eco.getZone(i, j)); // Tuer la proie
+            ajouterProieAnimale(proieTrouvee); // Ajouter la proie à la liste des proies de l'aigle
 
             System.out.println("L'aigle a capturé une proie : " + proieTrouvee.getNom());
         }
     }
 
-    private void ajouterProieA(Animal proie) {
-        proiesA.add(proie);
+    private void ajouterProieAnimale(Animal proie) {
+        proiesAnimales.add(proie);
     }
 
-	public void seDeplacer(Ecosystem eco, int i, int j) {
-		moveAnimaux(eco, i, j, 25, Aigle.class);
-		
-//		// Mise à jour des prédateurs et proies dans les zones adjacentes
-//	    Zone zoneActuelle = ecosystem.getZone(i, j);
-//	    for (Zone zoneAdjacente : ecosystem.getZonesAdjacentes(i, j)) {
-//	        List<Animal> animauxPredateurs = zoneActuelle.getAnimauxPredateursA();
-//	        List<Animal> animauxProies = zoneAdjacente.getAnimauxProiesA();
-//	        
-//	        for (Animal predateur : animauxPredateurs) {
-//	            animauxProies.add(predateur);
-//	            predateur.ajouterPredateurA(this); // Définit l'aigle comme prédateur animal des proies dans la zone adjacente
-//	        }
-//	    }
+    @Override
+    public void seDeplacer(Ecosystem eco, int i, int j) {
+        moveAnimaux(eco, i, j, 25, Aigle.class);
     }
 
-//	@Override
-//	public void boire() {
-//		// implémentation de la méthode boire pourles Aigle
-//	}
-
-//	@Override
-//	public void mourir() {
-//		// implémentation de la méthode mourir pour les Aigle
-//	}
-
-	@Override
-	public void seReproduire() {
-		// implémentation de la méthode seReproduire pour les Aigle
-	}
+    @Override
+    public Aigle seReproduire(Carnivore partenaire) {
+        return new Aigle(30);
+    }
 }

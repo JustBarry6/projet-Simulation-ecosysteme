@@ -6,125 +6,208 @@ import java.util.Random;
 
 import view.Ecosystem;
 
+/**
+ * Classe abstraite représentant un animal.
+ */
 public abstract class Animal {
 
     protected String nom;
     protected int age = 1;
     protected final int esperanceDeVie = 40;
     private int rayon;
-    private Color c;
+    private Color couleur;
     protected double qteEauConsommee;
     protected double maxEauConsommable;
 
-    protected ArrayList<Vegetal> proiesV;
-    protected ArrayList<Animal> proiesA;
-    protected ArrayList<Vegetal> predateursV;
-    protected ArrayList<Animal> predateursA;
+    protected ArrayList<Vegetal> proiesVegetales;
+    protected ArrayList<Animal> proiesAnimales;
+    protected ArrayList<Vegetal> predateursVegetaux;
+    protected ArrayList<Animal> predateursAnimaux;
 
-    public Animal(int rayon, Color c) {
+    /**
+     * Constructeur de la classe Animal.
+     * 
+     * @param rayon   Le rayon de l'animal.
+     * @param couleur La couleur de l'animal.
+     */
+    public Animal(int rayon, Color couleur) {
         this.rayon = rayon;
-        this.c = c;
+        this.couleur = couleur;
     }
 
-    public String toString() {
-        return "Animal : " + nom;
-    }
-
+    /**
+     * Renvoie le nom de l'animal.
+     * 
+     * @return Le nom de l'animal.
+     */
     public String getNom() {
         return nom;
     }
 
+    /**
+     * Renvoie le rayon de l'animal.
+     * 
+     * @return Le rayon de l'animal.
+     */
     public int getRayon() {
         return rayon;
     }
 
+    /**
+     * Définit le rayon de l'animal.
+     * 
+     * @param rayon Le nouveau rayon de l'animal.
+     */
     public void setRayon(int rayon) {
         this.rayon = rayon;
     }
 
+    /**
+     * Renvoie la couleur de l'animal.
+     * 
+     * @return La couleur de l'animal.
+     */
     public Color getCouleur() {
-        return c;
+        return couleur;
     }
 
-    public void setCouleur(Color c) {
-        this.c = c;
+    /**
+     * Définit la couleur de l'animal.
+     * 
+     * @param couleur La nouvelle couleur de l'animal.
+     */
+    public void setCouleur(Color couleur) {
+        this.couleur = couleur;
     }
 
+    /**
+     * Renvoie l'espérance de vie de l'animal.
+     * 
+     * @return L'espérance de vie de l'animal.
+     */
     public int getEsperanceDeVie() {
         return esperanceDeVie;
     }
 
+    /**
+     * Renvoie l'âge de l'animal.
+     * 
+     * @return L'âge de l'animal.
+     */
     public int getAge() {
         return age;
     }
 
-    public abstract void seDeplacer(Ecosystem ecosystem, int i, int j);
-
+    /**
+     * Incrémente l'âge de l'animal.
+     */
     public void vieillir() {
         age += 1;
     }
 
-    // Dans le Main, l'une des conditions pour mourir est d'atteindre l'esperance de
-    // Vie
-    public void mourir(Zone Z) {
-        System.out.println("L'animal <" + this.nom + "> est mort\n");
-        Z.removeAnimal(this.getClass());
+    /**
+     * Fait mourir l'animal dans la zone donnée.
+     * 
+     * @param zone La zone où l'animal se trouve.
+     */
+    public void mourir(Zone zone) {
+        System.out.println("\nL'animal <" + this.nom + "> est mort");
+        zone.removeAnimal(this.getClass());
     }
 
-    public abstract void seReproduire();
+    /**
+     * Méthode abstraite pour le déplacement de l'animal.
+     * 
+     * @param ecosystem L'écosystème dans lequel l'animal se déplace.
+     * @param i         La position x de la zone dans laquelle se trouve l'animal.
+     * @param j         La position y de la zone dans laquelle se trouve l'animal.
+     */
+    public abstract void seDeplacer(Ecosystem ecosystem, int i, int j);
 
+    /**
+     * Méthode abstraite pour la reproduction de l'animal.
+     */
+    // public abstract void seReproduire();
+
+    /**
+     * Méthode abstraite pour l'alimentation de l'animal.
+     * 
+     * @param eco L'écosystème dans lequel l'animal se nourrit.
+     * @param i   La position x de la zone dans laquelle se trouve l'animal.
+     * @param j   La position y de la zone dans laquelle se trouve l'animal.
+     */
     public abstract void manger(Ecosystem eco, int i, int j);
 
+    /**
+     * Déplace les animaux de la zone donnée vers une nouvelle zone aléatoire.
+     * 
+     * @param ecosystem    L'écosystème dans lequel se trouvent les animaux.
+     * @param i            La position x de la zone d'origine.
+     * @param j            La position y de la zone d'origine.
+     * @param p            Le pourcentage de chance de déplacement.
+     * @param animalClass  La classe des animaux à déplacer.
+     */
     public void moveAnimaux(Ecosystem ecosystem, int i, int j, int p, Class<? extends Animal> animalClass) {
         int nbCasesL = ecosystem.getNbCasesL();
         int nbCasesH = ecosystem.getNbCasesH();
-        Random r = new Random();
+        Random random = new Random();
         int nbAnimaux = ecosystem.getNbAnimal(i, j, animalClass);
         for (int k = 0; k < nbAnimaux; k++) {
-            if (r.nextInt(100) < p) {
-                int newI = (i + r.nextInt(3) - 1 + nbCasesL) % nbCasesL;
-                int newJ = (j + r.nextInt(3) - 1 + nbCasesH) % nbCasesH;
+            if (random.nextInt(100) < p) {
+                int newI = (i + random.nextInt(3) - 1 + nbCasesL) % nbCasesL;
+                int newJ = (j + random.nextInt(3) - 1 + nbCasesH) % nbCasesH;
                 if (ecosystem.getNbAnimal(newI, newJ, animalClass) < 3) {
                     moveAnimal(ecosystem, i, j, newI, newJ, animalClass);
                 }
             }
         }
-        // les appeler ici ? à réfléchir !
-//        this.manger(ecosystem, i, j);
-//        ecosystem.update(i, j);
     }
 
-    public void moveAnimal(Ecosystem ecosystem, int x, int y, int newX, int newY, Class<? extends Animal> animalClass) {
+    /**
+     * Déplace un animal d'une zone d'origine vers une nouvelle zone.
+     * 
+     * @param ecosystem    L'écosystème dans lequel se trouvent les zones.
+     * @param x            La position x de la zone d'origine.
+     * @param y            La position y de la zone d'origine.
+     * @param newX         La position x de la nouvelle zone.
+     * @param newY         La position y de la nouvelle zone.
+     * @param animalClass  La classe de l'animal à déplacer.
+     */
+    public void moveAnimal(Ecosystem ecosystem, int x, int y, int newX, int newY,
+            Class<? extends Animal> animalClass) {
         Zone currentZone = ecosystem.getZone(x, y);
         Zone newZone = ecosystem.getZone(newX, newY);
         Animal animalToMove = currentZone.removeAnimal(animalClass);
         newZone.addAnimal(animalToMove);
     }
 
-    // Penser à créer une exception si une zone ne contient plus d'eau
-    public void boire(Zone Z) {
-        double qteDisponible = Z.getNiveauEau();
+    /**
+     * Permet à l'animal de boire de l'eau dans la zone donnée.
+     * 
+     * @param zone La zone dans laquelle l'animal boit.
+     */
+    public void boire(Zone zone) {
+        double qteDisponible = zone.getNiveauEau();
 
         if (qteDisponible != 0) {
             if (qteEauConsommee < maxEauConsommable) {
                 double qteEauConsommable = maxEauConsommable - qteEauConsommee;
-                if (qteEauConsommable < qteDisponible) // Cas où la qte disponible est suffisante pour "rassasier" le
-                                                        // vivace
-                {
+                if (qteEauConsommable < qteDisponible) {
                     qteEauConsommee += qteEauConsommable;
-                    Z.setNiveauEau(qteDisponible - qteEauConsommable);
-                } else // Cas où il ne reste pas assez d'eau pour que le vivace soit "rassasié"
-                {
+                    zone.setNiveauEau(qteDisponible - qteEauConsommable);
+                } else {
                     qteEauConsommee += qteDisponible;
-                    Z.setNiveauEau(0);
+                    zone.setNiveauEau(0);
                 }
             }
         } else {
-            System.out.println("Plus d'eau disponible\n");
+            System.out.println("Plus d'eau disponible dans la zone !");
         }
     }
 
-    // Après avoir bu de l'eau, l'animal l'utilise pour ses cellules
+    /**
+     * Utilise l'eau consommée par l'animal.
+     */
     public void utiliserEau() {
         qteEauConsommee -= 10;
     }

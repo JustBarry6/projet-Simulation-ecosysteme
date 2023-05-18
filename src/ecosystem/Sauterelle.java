@@ -6,66 +6,51 @@ import java.util.List;
 
 import view.Ecosystem;
 
-public class Sauterelle extends Insecte implements Herbivore
-{
-	
-	
+public class Sauterelle extends Insecte implements Herbivore {
+
     public Sauterelle(int rayon) {
-    	super(rayon, Color.BLACK);
-    	this.nom = "Sauterelle" ; 
-    	this.proiesA = null ; // La sautrelle ne mange pas d'autres animaux ; elle est herbivore
-    	this.predateursV = null ; // Ses prédateurs ne peuvent pas être des vegetaux (sauf plante carnivore (pas dans le systeme))
-    	this.proiesV = new ArrayList <Vegetal>(); // La sauterelle est herbivore donc ses proies sont végétales
-    	this.predateursA = new ArrayList <Animal>();  
-    	
+        super(rayon, Color.BLACK);
+        this.nom = "Sauterelle";
+        this.proiesVegetales = new ArrayList<>();
+        this.predateursVegetaux = new ArrayList<>();
+        this.predateursAnimaux = new ArrayList<>();
     }
 
     @Override
     public void seDeplacer(Ecosystem eco, int i, int j) {
-    	moveAnimaux(eco, i, j, 25, Sauterelle.class);
+        moveAnimaux(eco, i, j, 25, Sauterelle.class);
     }
 
-//	@Override
-//	public void boire() {
-//		// implémentation de la méthode boire pourles sauterelles
-//	}
+    @Override
+    public Sauterelle seReproduire(Herbivore partenaire) {
+        return new Sauterelle(30);
+    }
 
-//	@Override
-//	public void mourir() {
-//		// implémentation de la méthode mourir pour les sauterelles
-//	}
+    @Override
+    public void manger(Ecosystem eco, int i, int j) {
+        // Récupérer la liste des végétaux dans la zone
+        List<Vegetal> vegetaux = eco.getZone(i, j).getVegetaux();
 
-	@Override
-	public void seReproduire() {
-		// implémentation de la méthode seReproduire pour les sauterelles
-	}
+        // Rechercher un végétal
+        Vegetal vegetalTrouve = null;
+        for (Vegetal vegetal : vegetaux) {
+            if (vegetal instanceof Arbre) { // Ignorer les arbres
+                continue;
+            }
+            vegetalTrouve = vegetal;
+            break;
+        }
+        // Si un végétal a été trouvé, le consommer
+        if (vegetalTrouve != null) {
+            eco.getZone(i, j).removeVegetal(vegetalTrouve.getClass()); // Retirer le végétal de la zone
+            ajouterNourriture(vegetalTrouve); // Ajouter le végétal à la liste des nourritures de la sauterelle
 
-	@Override
-	public void manger(Ecosystem eco, int i, int j) {
-		// Récupérer la liste des végétaux dans la zone
-		List<Vegetal> vegetaux = eco.getZone(i, j).getVegetaux();
+            System.out.println("La sauterelle a consommé un végétal : " + vegetalTrouve.getNom());
+        }
+    }
 
-		// Rechercher un végétal
-	    Vegetal vegetalTrouve = null;
-	    for (Vegetal vegetal : vegetaux) {
-	        if (vegetal instanceof Arbre) { // Ignorer les arbres
-	            continue;
-	        }
-	        vegetalTrouve = vegetal;
-	        break;
-	    }
-		// Si un végétal a été trouvé, le consommer
-		if (vegetalTrouve != null) {
-			eco.getZone(i, j).removeVegetal(vegetalTrouve.getClass()); // Retirer le végétal de la zone
-			ajouterNourriture(vegetalTrouve); // Ajouter le végétal à la liste des nourritures de la chenille
+    public void ajouterNourriture(Vegetal nourriture) {
+        this.proiesVegetales.add(nourriture);
+    }
 
-			System.out.println("La Sauterelle a consommé un végétal : " + vegetalTrouve.getNom());
-		}
-
-	}
-
-	public void ajouterNourriture(Vegetal nourriture) {
-		this.proiesV.add(nourriture);
-	}
-	 
 }

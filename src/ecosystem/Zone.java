@@ -66,7 +66,7 @@ public class Zone {
         return rayon;
     }
 
-    public int getCapacity() {
+    public int getCapaciteMax() {
         return capacite;
     }
 

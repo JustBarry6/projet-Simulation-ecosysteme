@@ -8,63 +8,50 @@ import view.Ecosystem;
 
 public class Chenille extends Insecte implements Herbivore {
 
-	public Chenille(int rayon) {
-		super(rayon, Color.WHITE);
-		this.nom = "Chenille";
-		this.proiesA = null;
-		this.predateursV = null;
-		this.proiesV = new ArrayList<Vegetal>();
-		this.predateursA = new ArrayList<Animal>();
+    public Chenille(int rayon) {
+        super(rayon, Color.WHITE);
+        this.nom = "Chenille";
+        this.proiesAnimales = null;
+        this.predateursVegetaux = null;
+        this.proiesVegetales = new ArrayList<>();
+        this.predateursAnimaux = new ArrayList<>();
+    }
 
-	}
+    @Override
+    public void seDeplacer(Ecosystem eco, int i, int j) {
+        moveAnimaux(eco, i, j, 25, Chenille.class);
+    }
 
-	@Override
-	public void seDeplacer(Ecosystem eco, int i, int j) {
-		moveAnimaux(eco, i, j, 25, Chenille.class);
-	}
+    @Override
+    public Chenille seReproduire(Herbivore partenaire) {
+        return new Chenille(30);
+    }
 
-//	@Override
-//	public void boire() {
-//		// implémentation de la méthode boire pourles Chenilles
-//	}
+    @Override
+    public void manger(Ecosystem eco, int i, int j) {
+        // Récupérer la liste des végétaux dans la zone
+        List<Vegetal> vegetaux = eco.getZone(i, j).getVegetaux();
 
-//	@Override
-//	public void mourir() {
-//		// implémentation de la méthode mourir pour les Chenilles
-//	}
+        // Si la liste des végétaux n'est pas vide, chercher un végétal à consommer
+        Vegetal vegetalTrouve = null;
+        for (Vegetal vegetal : vegetaux) {
+            if (vegetal instanceof Arbre) { // Ignorer les arbres
+                continue;
+            }
+            vegetalTrouve = vegetal;
+            break;
+        }
 
-	@Override
-	public void seReproduire() {
-		// implémentation de la méthode seReproduire pour les Chenilles
-	}
+        // Si un végétal a été trouvé, le consommer
+        if (vegetalTrouve != null) {
+            eco.getZone(i, j).removeVegetal(vegetalTrouve.getClass()); // Retirer le végétal de la zone
+            ajouterNourriture(vegetalTrouve); // Ajouter le végétal à la liste des nourritures de la chenille
 
-	@Override
-	public void manger(Ecosystem eco, int i, int j) {
-		// Récupérer la liste des végétaux dans la zone
-		List<Vegetal> vegetaux = eco.getZone(i, j).getVegetaux();
+            System.out.println("La Chenille a consommé un végétal : " + vegetalTrouve.getNom());
+        }
+    }
 
-		// Si la liste des végétaux n'est pas vide, chercher un végétal à consommer
-		Vegetal vegetalTrouve = null;
-		for (Vegetal vegetal : vegetaux) {
-	        if (vegetal instanceof Arbre) { // Ignorer les arbres
-	            continue;
-	        }
-	        vegetalTrouve = vegetal;
-	        break;
-	    }
-
-		// Si un végétal a été trouvé, le consommer
-		if (vegetalTrouve != null) {
-			eco.getZone(i, j).removeVegetal(vegetalTrouve.getClass()); // Retirer le végétal de la zone
-			ajouterNourriture(vegetalTrouve); // Ajouter le végétal à la liste des nourritures de la chenille
-
-			System.out.println("La Chenille a consommé un végétal : " + vegetalTrouve.getNom());
-		}
-
-	}
-
-	public void ajouterNourriture(Vegetal nourriture) {
-		this.proiesV.add(nourriture);
-	}
-
+    public void ajouterNourriture(Vegetal nourriture) {
+        this.proiesVegetales.add(nourriture);
+    }
 }
