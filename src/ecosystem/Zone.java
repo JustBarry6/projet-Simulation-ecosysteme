@@ -143,4 +143,16 @@ public class Zone {
     public List<Vegetal> getVegetaux() {
         return new ArrayList<>(vegetaux);
     }
+
+	public String getImagePath() {
+    if (this.type == TypeZone.FORET) {
+        return "src/view/images/foret.png";
+    } else if (this.type == TypeZone.PLAINE) {
+        return "src/view/images/plaine.png";
+    } else if(this.type == TypeZone.DESERT) {
+        return "src/view/images/desert.png";
+    }
+	return null;
+}
+
 }

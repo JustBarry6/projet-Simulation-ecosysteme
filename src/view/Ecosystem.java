@@ -79,6 +79,7 @@ public class Ecosystem extends JPanel {
 	public void addVegetal(int i, int j, Vegetal vegetal) {
 		zone[i][j].addVegetal(vegetal);
 	}
+	
 
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -90,7 +91,8 @@ public class Ecosystem extends JPanel {
 				int cellX = 10 + (i * nbPixelCoteCase);
 				int cellY = 10 + (j * nbPixelCoteCase);
 				g.setColor(zone[i][j].getCouleur());
-				g.fillRect(cellX, cellY, nbPixelCoteCase, nbPixelCoteCase);
+				dessinerImage(g, zone[i][j].getImagePath(), cellX, cellY, nbPixelCoteCase);
+
 
 				// Dessiner les animaux
 				for (Animal animal : zone[i][j].getAnimaux()) {
