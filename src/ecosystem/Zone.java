@@ -150,7 +150,7 @@ public class Zone {
     } else if (this.type == TypeZone.PLAINE) {
         return "src/view/images/plaine.png";
     } else if(this.type == TypeZone.DESERT) {
-        return "src/view/images/desert.png";
+        return "src/view/images/desert2.png";
     }
 	return null;
 }
