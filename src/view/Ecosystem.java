@@ -133,7 +133,7 @@ public class Ecosystem extends JPanel {
 					if (vegetal.getNom().equals("Arbre")) {
 						dessinerImage(g, IMAGE_PATH_ARBRE, vegX, vegY, vegetal.getRayon());
 					} else if (vegetal.getNom().equals("Vivace")) {
-						dessinerImage(g, IMAGE_PATH_VIVACE, vegX + 10, vegY + 10, vegetal.getRayon());
+						dessinerImage(g, IMAGE_PATH_VIVACE, vegX + 15, vegY + 15, vegetal.getRayon());
 					} else {
 						g.fillOval(vegX, vegY, vegetal.getRayon(), vegetal.getRayon());
 					}
