@@ -1,9 +1,16 @@
 package ecosystem;
 
+/**
+ * L'interface Herbivore définit le comportement des herbivores dans l'écosystème.
+ */
 public interface Herbivore {
-//	public void mangerVivace(Ecosystem eco, int i, int j);
-//	
-	public static final double maxEauConsommable = 200;
+	
+	// Méthodes
 
+	/**
+	 * Méthode de reproduction des herbivores.
+	 * @param partenaire le partenaire herbivore avec lequel se reproduire
+	 * @return un nouvel herbivore résultant de la reproduction
+	 */
 	public Herbivore seReproduire(Herbivore partenaire); 
 }

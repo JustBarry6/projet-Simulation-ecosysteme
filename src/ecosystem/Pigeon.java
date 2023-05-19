@@ -6,8 +6,16 @@ import java.util.List;
 
 import view.Ecosystem;
 
+/**
+ * La classe Pigeon représente un pigeon dans notre écosystème simulé.
+ * Elle hérite de la classe Oiseau et implémente les interfaces AnimalVolant et Herbivore.
+ */
 public class Pigeon extends Oiseau implements AnimalVolant, Herbivore {
-	
+    
+    /**
+     * Constructeur de la classe Pigeon.
+     * @param rayon le rayon du pigeon
+     */
     public Pigeon(int rayon) {
         super(rayon, Color.GRAY);
         this.nom = "Pigeon";
@@ -18,20 +26,9 @@ public class Pigeon extends Oiseau implements AnimalVolant, Herbivore {
     }
     
     @Override
-    public void seDeplacer(Ecosystem eco, int i, int j) throws ZonePleineException{
+    public void seDeplacer(Ecosystem eco, int i, int j) throws ZonePleineException {
         moveAnimaux(eco, i, j, POURCENTAGE_DEPLACEMENT_PROIE, Pigeon.class);
     }
-
-//	@Override
-//	public void boire() {
-//		// implémentation de la méthode boire pour les pigeons
-//	}
-
-//	@Override
-//	public void mourir() {
-//		// implémentation de la méthode mourir pour les pigeons
-//	}
-
 
     @Override
     public void manger(Ecosystem eco, int i, int j) {
@@ -81,11 +78,19 @@ public class Pigeon extends Oiseau implements AnimalVolant, Herbivore {
             return;
         }
     }
-    
+
+    /**
+     * Méthode permettant d'ajouter une proie animale à la liste des proies animales du pigeon.
+     * @param proie l'animal proie à ajouter
+     */
     private void ajouterProieAnimale(Animal proie) {
         proiesAnimales.add(proie);
     }
-    
+
+    /**
+     * Méthode permettant d'ajouter une proie végétale à la liste des proies végétales du pigeon.
+     * @param proie le végétal proie à ajouter
+     */
     public void ajouterProieVegetale(Vegetal proie) {
         this.proiesVegetales.add(proie);
     }
@@ -96,8 +101,7 @@ public class Pigeon extends Oiseau implements AnimalVolant, Herbivore {
     }
 
     @Override
-	public void voler() {
-		System.out.println("Le pigeon vole dans les airs !\"");
-		
-	}
+    public void voler() {
+        System.out.println("Le pigeon vole dans les airs !");
+    }
 }

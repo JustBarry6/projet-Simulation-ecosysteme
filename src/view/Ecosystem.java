@@ -24,63 +24,94 @@ import ecosystem.Vivace;
 import ecosystem.Zone;
 import ecosystem.ZonePleineException;
 
+/**
+ * Classe représentant un écosystème.
+ */
 public class Ecosystem extends JPanel {
-	private int nbCasesL, nbCasesH;
-	private int nbPixelCoteCase;
-	private Zone[][] zone;
-	private Random random;
-	private static final String IMAGE_PATH_BICHE = "src/view/images/biche.png";
-	private static final String IMAGE_PATH_LION = "src/view/images/lion.png";
-	private static final String IMAGE_PATH_SAUTERELLE = "src/view/images/sauterelle.png";
-	private static final String IMAGE_PATH_AIGLE = "src/view/images/aigle.png";
-	private static final String IMAGE_PATH_PIGEON = "src/view/images/pigeon.png";
-	private static final String IMAGE_PATH_CHENILLE = "src/view/images/chenille.png";
-	private static final String IMAGE_PATH_ARBRE = "src/view/images/arbre.png";
-	private static final String IMAGE_PATH_VIVACE = "src/view/images/vivace.png";
+    private int nbCasesL; // Nombre de cases en largeur
+    private int nbCasesH; // Nombre de cases en hauteur
+    private int nbPixelCoteCase; // Nombre de pixels par côté de la case
+    private Zone[][] zone; // Matrice de zones représentant l'écosystème
+    private Random random; // Générateur de nombres aléatoires
+    private static final String IMAGE_PATH_BICHE = "src/view/images/biche.png";
+    private static final String IMAGE_PATH_LION = "src/view/images/lion.png";
+    private static final String IMAGE_PATH_SAUTERELLE = "src/view/images/sauterelle.png";
+    private static final String IMAGE_PATH_AIGLE = "src/view/images/aigle.png";
+    private static final String IMAGE_PATH_PIGEON = "src/view/images/pigeon.png";
+    private static final String IMAGE_PATH_CHENILLE = "src/view/images/chenille.png";
+    private static final String IMAGE_PATH_ARBRE = "src/view/images/arbre.png";
+    private static final String IMAGE_PATH_VIVACE = "src/view/images/vivace.png";
 
-	private static final int POURCENTAGE_REPRODUCTION_PROIE = 25;
-	private static final int POURCENTAGE_REPRODUCTION_PREDATEUR = 25;
+    private static final int POURCENTAGE_REPRODUCTION_PROIE = 25;
+    private static final int POURCENTAGE_REPRODUCTION_PREDATEUR = 25;
 
-	public Ecosystem(int nbCasesL, int nbCasesH, int nbPixelCoteCase) {
-		int i, j;
-		this.nbCasesL = nbCasesL;
-		this.nbCasesH = nbCasesH;
-		this.nbPixelCoteCase = nbPixelCoteCase;
-		random = new Random();
+    /**
+     * Constructeur de la classe Ecosystem.
+     * @param nbCasesL le nombre de cases en largeur
+     * @param nbCasesH le nombre de cases en hauteur
+     * @param nbPixelCoteCase le nombre de pixels par côté de la case
+     */
+    public Ecosystem(int nbCasesL, int nbCasesH, int nbPixelCoteCase) {
+        int i, j;
+        this.nbCasesL = nbCasesL;
+        this.nbCasesH = nbCasesH;
+        this.nbPixelCoteCase = nbPixelCoteCase;
+        random = new Random();
 
-		JFrame window = new JFrame();
-		window.setSize(nbCasesL * nbPixelCoteCase + 50, nbCasesH * nbPixelCoteCase + 50);
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.add(this);
-		window.setVisible(true);
+        JFrame window = new JFrame();
+        window.setSize(nbCasesL * nbPixelCoteCase + 50, nbCasesH * nbPixelCoteCase + 50);
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.add(this);
+        window.setVisible(true);
 
-		this.zone = new Zone[nbCasesL][nbCasesH];
-		// L'ecosyteme est divise au debut en plaine et desert on cree donc autant de
-		// type Foret que desert
-		for (i = 0; i < nbCasesL; i++) {
-			for (j = 0; j < nbCasesH; j++) {
-				if (i < j)
-					zone[i][j] = new Zone(50, 10, TypeZone.FORET);
-				else
-					zone[i][j] = new Zone(50, 10, TypeZone.PLAINE);
-			}
-		}
-	}
+        this.zone = new Zone[nbCasesL][nbCasesH];
+        // L'écosystème est divisé au début en plaine et désert, on crée donc autant de types de forêt que de désert
+        for (i = 0; i < nbCasesL; i++) {
+            for (j = 0; j < nbCasesH; j++) {
+                if (i < j)
+                    zone[i][j] = new Zone(50, 10, TypeZone.FORET);
+                else
+                    zone[i][j] = new Zone(50, 10, TypeZone.PLAINE);
+            }
+        }
+    }
 
 	public void redessine() {
 		repaint();
 	}
 
+	/**
+	 * Change la couleur de fond d'une case de l'écosystème.
+	 *
+	 * @param i l'index de la case en largeur
+	 * @param j l'index de la case en hauteur
+	 * @param c la couleur de fond à attribuer à la case
+	 */
 	public void colorieFond(int i, int j, Color c) {
-		zone[i][j].setCouleur(c);
+	    zone[i][j].setCouleur(c);
 	}
 
-	public void addAnimal(int i, int j, Animal animal) throws ZonePleineException{
-		zone[i][j].addAnimal(animal);
+	/**
+	 * Ajoute un animal à une case de l'écosystème.
+	 *
+	 * @param i l'index de la case en largeur
+	 * @param j l'index de la case en hauteur
+	 * @param animal l'animal à ajouter à la case
+	 * @throws ZonePleineException si la case est pleine et ne peut pas accueillir l'animal
+	 */
+	public void addAnimal(int i, int j, Animal animal) throws ZonePleineException {
+	    zone[i][j].addAnimal(animal);
 	}
 
+	/**
+	 * Ajoute un végétal à une case de l'écosystème.
+	 *
+	 * @param i l'index de la case en largeur
+	 * @param j l'index de la case en hauteur
+	 * @param vegetal le végétal à ajouter à la case
+	 */
 	public void addVegetal(int i, int j, Vegetal vegetal) {
-		zone[i][j].addVegetal(vegetal);
+	    zone[i][j].addVegetal(vegetal);
 	}
 
 	@Override
@@ -157,43 +188,92 @@ public class Ecosystem extends JPanel {
 		}
 	}
 
+	/**
+	 * Dessine une image à l'emplacement spécifié avec les dimensions données.
+	 *
+	 * @param g         le contexte graphique dans lequel dessiner
+	 * @param imagePath le chemin vers l'image à dessiner
+	 * @param x         la coordonnée x de l'emplacement de l'image
+	 * @param y         la coordonnée y de l'emplacement de l'image
+	 * @param rayon     le rayon de l'image à dessiner
+	 */
 	private void dessinerImage(Graphics g, String imagePath, int x, int y, int rayon) {
-		try {
-			BufferedImage image = ImageIO.read(new File(imagePath));
-			int newWidth = rayon;
-			int newHeight = rayon;
-			Image resizedImage = image.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
-			g.drawImage(resizedImage, x, y, null);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	    try {
+	        BufferedImage image = ImageIO.read(new File(imagePath));
+	        int newWidth = rayon;
+	        int newHeight = rayon;
+	        Image resizedImage = image.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+	        g.drawImage(resizedImage, x, y, null);
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
 	}
 
+	/**
+	 * Récupère le nombre d'animaux d'une classe spécifique dans une zone donnée.
+	 *
+	 * @param i      l'index de la case en largeur
+	 * @param j      l'index de la case en hauteur
+	 * @param animal la classe d'animal spécifique
+	 * @return le nombre d'animaux de la classe spécifiée dans la zone donnée
+	 */
 	public int getNbAnimal(int i, int j, Class<? extends Animal> animal) {
-		Zone z = zone[i][j];
-		int count = z.getNbAnimal(animal);
-		return count;
+	    Zone z = zone[i][j];
+	    int count = z.getNbAnimal(animal);
+	    return count;
 	}
 
+	/**
+	 * Récupère la zone de l'écosystème à l'index spécifié.
+	 *
+	 * @param i l'index de la case en largeur
+	 * @param j l'index de la case en hauteur
+	 * @return la zone à l'index spécifié
+	 */
 	public Zone getZone(int i, int j) {
-		return zone[i][j];
+	    return zone[i][j];
 	}
 
+	/**
+	 * Récupère le nombre de cases en largeur de l'écosystème.
+	 *
+	 * @return le nombre de cases en largeur
+	 */
 	public int getNbCasesL() {
-		return nbCasesL;
+	    return nbCasesL;
 	}
 
+	/**
+	 * Récupère le nombre de cases en hauteur de l'écosystème.
+	 *
+	 * @return le nombre de cases en hauteur
+	 */
 	public int getNbCasesH() {
-		return nbCasesH;
+	    return nbCasesH;
 	}
 
-	public void placerAnimal(int x, int y, Animal animal) throws ZonePleineException{
-		Zone zone = getZone(x, y);
-		if (zone != null) {
-			zone.addAnimal(animal);
-		}
+	/**
+	 * Place un animal dans une case de l'écosystème.
+	 *
+	 * @param x      la coordonnée x de la case
+	 * @param y      la coordonnée y de la case
+	 * @param animal l'animal à placer dans la case
+	 * @throws ZonePleineException si la case est pleine et ne peut pas accueillir l'animal
+	 */
+	public void placerAnimal(int x, int y, Animal animal) throws ZonePleineException {
+	    Zone zone = getZone(x, y);
+	    if (zone != null) {
+	        zone.addAnimal(animal);
+	    }
 	}
 
+	/**
+	 * Place un végétal dans une case de l'écosystème.
+	 *
+	 * @param x        la coordonnée x de la case
+	 * @param y        la coordonnée y de la case
+	 * @param vegetal  le végétal à placer dans la case
+	 */
 	public void placerVegetal(int x, int y, Vegetal vegetal) {
 		Zone zone = getZone(x, y);
 		if (zone != null && zone.getType() != TypeZone.DESERT) {
@@ -201,35 +281,50 @@ public class Ecosystem extends JPanel {
 		}
 	}
 
+	/**
+	 * Met à jour les animaux dans la zone spécifiée.
+	 * Effectue la reproduction des proies et des prédateurs, et met à jour la taille des animaux.
+	 *
+	 * @param i l'index de la case en largeur
+	 * @param j l'index de la case en hauteur
+	 */
 	public void updateAnimaux(int i, int j) {
-		// Récupère la liste des animaux dans la zone spécifiée
-		List<Animal> animaux = this.getZone(i, j).getAnimaux();
-		int countProies = 0;
-		int countPredateurs = 0;
+	    // Récupère la liste des animaux dans la zone spécifiée
+	    List<Animal> animaux = this.getZone(i, j).getAnimaux();
+	    int countProies = 0;
+	    int countPredateurs = 0;
 
-		// Compte le nombre de proies et de prédateurs dans la zone
-		for (Animal animal : animaux) {
-			if (animal instanceof Herbivore) {
-				countProies++;
-			} else if (animal instanceof Carnivore) {
-				countPredateurs++;
-			}
-		}
+	    // Compte le nombre de proies et de prédateurs dans la zone
+	    for (Animal animal : animaux) {
+	        if (animal instanceof Herbivore) {
+	            countProies++;
+	        } else if (animal instanceof Carnivore) {
+	            countPredateurs++;
+	        }
+	    }
 
-		// Si suffisamment de proies et aucun prédateur, les proies se reproduisent
-		if (countProies >= 2 && countPredateurs == 0) {
-			reproduireProies(i, j, POURCENTAGE_REPRODUCTION_PROIE);
-		}
-		// Si suffisamment de prédateurs et au moins une proie, les prédateurs se
-		// reproduisent
-		else if (countPredateurs >= 2 && countProies > 0) {
-			reproduirePredateurs(i, j, POURCENTAGE_REPRODUCTION_PREDATEUR);
-		}
+	    // Si suffisamment de proies et aucun prédateur, les proies se reproduisent
+	    if (countProies >= 2 && countPredateurs == 0) {
+	        reproduireProies(i, j, POURCENTAGE_REPRODUCTION_PROIE);
+	    }
+	    // Si suffisamment de prédateurs et au moins une proie, les prédateurs se reproduisent
+	    else if (countPredateurs >= 2 && countProies > 0) {
+	        reproduirePredateurs(i, j, POURCENTAGE_REPRODUCTION_PREDATEUR);
+	    }
 
-		// Met à jour les animaux dans la zone
-		mettreAJourAnimaux(i, j);
+	    // Met à jour les animaux dans la zone
+	    mettreAJourAnimaux(i, j);
 	}
 
+	/**
+	 * Effectue la reproduction des proies dans la zone spécifiée.
+	 * Les proies se reproduisent si au moins deux herbivores sont présents dans la zone.
+	 * La reproduction a lieu avec un certain pourcentage de chance.
+	 *
+	 * @param i                      l'index de la case en largeur
+	 * @param j                      l'index de la case en hauteur
+	 * @param pourcentageReproduction le pourcentage de chance de reproduction des proies
+	 */
 	public void reproduireProies(int i, int j, int pourcentageReproduction) {
 		// Récupère la liste des animaux dans la zone spécifiée
 		List<Animal> animaux = zone[i][j].getAnimaux();
@@ -260,55 +355,70 @@ public class Ecosystem extends JPanel {
 		}
 	}
 
+	/**
+	 * Effectue la reproduction des prédateurs dans la zone spécifiée.
+	 * Les prédateurs se reproduisent si au moins deux carnivores sont présents dans la zone.
+	 * La reproduction a lieu avec un certain pourcentage de chance.
+	 *
+	 * @param i                      l'index de la case en largeur
+	 * @param j                      l'index de la case en hauteur
+	 * @param pourcentageReproduction le pourcentage de chance de reproduction des prédateurs
+	 */
 	public void reproduirePredateurs(int i, int j, int pourcentageReproduction) {
-		// Récupère la liste des animaux dans la zone spécifiée
-		List<Animal> animaux = zone[i][j].getAnimaux();
-		List<Carnivore> carnivores = new ArrayList<>();
+	    // Récupère la liste des animaux dans la zone spécifiée
+	    List<Animal> animaux = zone[i][j].getAnimaux();
+	    List<Carnivore> carnivores = new ArrayList<>();
 
-		// Filtre les carnivores dans la liste des animaux
-		for (Animal animal : animaux) {
-			if (animal instanceof Carnivore) {
-				carnivores.add((Carnivore) animal);
-			}
-		}
+	    // Filtre les carnivores dans la liste des animaux
+	    for (Animal animal : animaux) {
+	        if (animal instanceof Carnivore) {
+	            carnivores.add((Carnivore) animal);
+	        }
+	    }
 
-		// Si au moins deux carnivores sont présents dans la zone
-		if (carnivores.size() >= 2) {
-			// Effectue une reproduction avec un certain pourcentage de chance
-			if (random.nextInt(100) < pourcentageReproduction) {
-				Carnivore parent1 = carnivores.get(0);
-				Carnivore parent2 = carnivores.get(1);
-				Carnivore nouvelAnimal = parent1.seReproduire(parent2);
-				try {
-					zone[i][j].addAnimal((Animal) nouvelAnimal);
-				} catch (ZonePleineException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				System.out.println("Nouvel animal carnivore créé : " + ((Animal) nouvelAnimal).getNom());
-			}
-		}
+	    // Si au moins deux carnivores sont présents dans la zone
+	    if (carnivores.size() >= 2) {
+	        // Effectue une reproduction avec un certain pourcentage de chance
+	        if (random.nextInt(100) < pourcentageReproduction) {
+	            Carnivore parent1 = carnivores.get(0);
+	            Carnivore parent2 = carnivores.get(1);
+	            Carnivore nouvelAnimal = parent1.seReproduire(parent2);
+	            try {
+	                zone[i][j].addAnimal((Animal) nouvelAnimal);
+	            } catch (ZonePleineException e) {
+	                e.printStackTrace();
+	            }
+	            System.out.println("Nouvel animal carnivore créé : " + ((Animal) nouvelAnimal).getNom());
+	        }
+	    }
 	}
-	
-	//expliquer dans le rapport la difficulté à adapter la taille en fonction de nombre des animauxx
+
+	/**
+	 * Met à jour la taille des animaux dans la zone spécifiée en fonction de leur nombre.
+	 * Les animaux du même type ont leur taille augmentée en fonction du nombre d'animaux du même type dans la zone.
+	 * Si un animal est le seul de son type dans la zone, sa taille est réinitialisée.
+	 *
+	 * @param i l'index de la case en largeur
+	 * @param j l'index de la case en hauteur
+	 */
 	public void mettreAJourAnimaux(int i, int j) {
-		// Récupère la liste des animaux dans la zone spécifiée
-		List<Animal> animaux = this.getZone(i, j).getAnimaux();
+	    // Récupère la liste des animaux dans la zone spécifiée
+	    List<Animal> animaux = this.getZone(i, j).getAnimaux();
 
-		// Parcourt tous les animaux dans la zone
-		for (Animal animal : animaux) {
-			int count = this.getZone(i, j).getNbAnimal(animal.getClass());
+	    // Parcourt tous les animaux dans la zone
+	    for (Animal animal : animaux) {
+	        int count = this.getZone(i, j).getNbAnimal(animal.getClass());
 
-			// Si plusieurs animaux du même type sont présents dans la zone
-			if (count > 1 && count < 3) {
-				int newRadius = animal.getRayon() + count;
-
-				animal.setRayon(newRadius);
-			} else {
-				// Si l'animal est le seul de son type dans la zone, on réinitialise son rayon
-				animal.setRayon(30);
-			}
-		}
+	        // Si plusieurs animaux du même type sont présents dans la zone
+	        if (count > 1 && count < 3) {
+	            int newRadius = animal.getRayon() + count;
+	            animal.setRayon(newRadius);
+	        } else {
+	            // Si l'animal est le seul de son type dans la zone, on réinitialise sa taille
+	            animal.setRayon(30);
+	        }
+	    }
 	}
+
 
 }
