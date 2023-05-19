@@ -20,6 +20,8 @@ import ecosystem.Herbivore;
 import ecosystem.TypeZone;
 import ecosystem.Vegetal;
 import ecosystem.Zone;
+import ecosystem.Arbre;
+import ecosystem.Vivace;
 
 public class Ecosystem extends JPanel {
 	private int nbCasesL, nbCasesH;
@@ -36,7 +38,7 @@ public class Ecosystem extends JPanel {
 	private static final String IMAGE_PATH_VIVACE = "src/view/images/vivace.png";
 
 	private static final int POURCENTAGE_REPRODUCTION_PROIE = 15;
-	private static final int POURCENTAGE_REPRODUCTION_PREDATEUR = 15;
+	private static final int POURCENTAGE_REPRODUCTION_PREDATEUR = 15; 
 
 	public Ecosystem(int nbCasesL, int nbCasesH, int nbPixelCoteCase) {
 		int i, j;
@@ -130,9 +132,9 @@ public class Ecosystem extends JPanel {
 					g.setColor(vegetal.getCouleur());
 					int vegX = cellX + nbPixelCoteCase / 4 - vegetal.getRayon() / 2;
 					int vegY = cellY + nbPixelCoteCase / 4 - vegetal.getRayon() / 2;
-					if (vegetal.getNom().equals("Arbre")) {
+					if (vegetal instanceof Arbre) {
 						dessinerImage(g, IMAGE_PATH_ARBRE, vegX, vegY, vegetal.getRayon());
-					} else if (vegetal.getNom().equals("Vivace")) {
+					} else if (vegetal instanceof Vivace) {
 						dessinerImage(g, IMAGE_PATH_VIVACE, vegX + 15, vegY + 15, vegetal.getRayon());
 					} else {
 						g.fillOval(vegX, vegY, vegetal.getRayon(), vegetal.getRayon());
@@ -195,9 +197,18 @@ public class Ecosystem extends JPanel {
 
 	public void placerVegetal(int x, int y, Vegetal vegetal) {
 		Zone zone = getZone(x, y);
-		if (zone != null) {
+		if (zone != null && zone.getType() != TypeZone.DESERT) {
 			zone.addVegetal(vegetal);
 		}
+//		// L'esperance de vie diminue si le vegetal se trouve dans un desert
+//		if(zone.getType() == TypeZone.DESERT)
+//		{
+//			int EDV = vegetal.getEsperanceDeVie() ; 
+//			if (vegetal instanceof Arbre)
+//				vegetal.setEsperanceDeVie(EDV/2);
+//			else if (vegetal instanceof Vivace)
+//				vegetal.setEsperanceDeVie(EDV/2 + 5) ; 
+//		}
 	}
 
 	public void updateAnimaux(int i, int j) {

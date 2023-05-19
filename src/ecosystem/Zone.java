@@ -35,7 +35,8 @@ public class Zone {
             // Définition des niveaux d'eau et de temperature
             niveauEau = rand.nextInt(500) + 250; // nivEau entre 250 et 500mm
             temperature = rand.nextInt(40); // temperature entre 0 et 40°
-        } else {
+        } else { 
+        	//TypeZone = DESERT
             couleur = Color.ORANGE;
 
             // Définition des niveaux d'eau et de temperature pour un desert

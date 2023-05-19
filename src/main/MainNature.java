@@ -13,15 +13,19 @@ import ecosystem.Lion;
 import ecosystem.NoWaterException;
 import ecosystem.Pigeon;
 import ecosystem.Sauterelle;
+import ecosystem.TypeZone;
 import ecosystem.Vegetal;
 import ecosystem.Vivace;
 import ecosystem.Zone;
+import ecosystem.Pivoine;
+import ecosystem.Iris;
+import ecosystem.Chene;
 import view.Ecosystem;
 
 public class MainNature {
 
-	private static final int POURCENTAGE_PROIE = 30;
-	private static final int POURCENTAGE_PREDATEUR = 10;
+	private static final int POURCENTAGE_PROIE = 30;  //Valeur initiale = 30
+	private static final int POURCENTAGE_PREDATEUR = 5; // Valeur initiale = 10
 	private static final int POURCENTAGE_PREDATION = 10;
 	private static final int POURCENTAGE_DEPLACEMENT_PROIE = 25;
 	private static final int POURCENTAGE_DEPLACEMENT_PREDATEUR = 25;
@@ -81,8 +85,9 @@ public class MainNature {
 				placerAnimalSelonPourcentage(ecosystem, random, i, j, new Lion(30), POURCENTAGE_PREDATEUR);
 				placerAnimalSelonPourcentage(ecosystem, random, i, j, new Biche(30), POURCENTAGE_PROIE);
 				placerAnimalSelonPourcentage(ecosystem, random, i, j, new Chenille(30), POURCENTAGE_PROIE);
-				placerVegetalSelonPourcentage(ecosystem, random, i, j, new Arbre(), POURCENTAGE_PROIE);
-				placerVegetalSelonPourcentage(ecosystem, random, i, j, new Vivace(), POURCENTAGE_PROIE);
+				placerVegetalSelonPourcentage(ecosystem, random, i, j, new Chene(), POURCENTAGE_PROIE);
+				placerVegetalSelonPourcentage(ecosystem, random, i, j, new Pivoine(), POURCENTAGE_PROIE);
+				placerVegetalSelonPourcentage(ecosystem, random, i, j, new Iris(), POURCENTAGE_PROIE);
 
 				ecosystem.redessine();
 				pause(200);
@@ -173,11 +178,18 @@ public class MainNature {
 
 				for (Animal animal : animaux) {
 					if (animal.getAge() >= animal.getEsperanceDeVie())
+					{
 						animal.mourir(zone);
+						System.out.println("ESPERANCE DE VIE ANIMALE ATTEINTE\n") ; 
+					}
+						
 				}
 				for (Vegetal V : vegetaux) {
 					if (V.getAge() >= V.getEsperanceDeVie())
+					{
 						V.mourir(zone);
+						System.out.println("ESPERANCE DE VIE VEGETALE ATTEINTE\n") ; 						
+					}
 				}
 				ecosystem.mettreAJourAnimaux(i, j);
 			}
@@ -201,8 +213,11 @@ public class MainNature {
 //				}
 				for (Vegetal V : vegetaux) {
 					if (zone.getTemperarure() < V.getseuilTempCritiqueMin() || 
-							zone.getTemperarure() > V.getseuilTempCritiqueMax() )
+							zone.getTemperarure() > V.getseuilTempCritiqueMax() || zone.getType() == TypeZone.DESERT )
+					{
 						V.mourir(zone);
+						System.out.println("TEMPERATURE INSUPPORTABLE\n") ; 						
+					}
 							
 					// Si le niveau d'eau est critique, le vegetal cherche à en consommer, s'il n'en trouve pas il meurt
 					if (V.getQteEauConsommee() < V.getSeuilEauCritique()) {						
@@ -211,6 +226,7 @@ public class MainNature {
 						}
 						catch (NoWaterException e){
 							V.mourir(zone);
+							System.out.println("MORT SUITE A L'ABSENCE D'EAU\n") ; 
 						}	
 					}
 				}

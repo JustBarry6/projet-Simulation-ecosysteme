@@ -75,6 +75,9 @@ public abstract class Vegetal {
 	public int getEsperanceDeVie() {
 		return esperanceDeVie;
 	}
+	public void setEsperanceDeVie(int esperanceDeVie) {
+		this.esperanceDeVie = esperanceDeVie ;
+	}
 	public int getAge() {
 		return age;
 	}
@@ -114,6 +117,6 @@ public abstract class Vegetal {
 
 	public void mourir(Zone Z) {
 		Z.removeVegetal(this.getClass());
-		System.out.println("Mort d'un Végétal\n") ; 
+		System.out.println("Mort d'un Végétal : " + nom + "\n") ; 
 	}
 }

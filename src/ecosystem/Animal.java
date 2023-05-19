@@ -13,7 +13,7 @@ public abstract class Animal {
 
     protected String nom;
     protected int age = 1;
-    protected int esperanceDeVie = 40;
+    protected int esperanceDeVie = 50; //Valeur initiale 40
     private int rayon;
     private Color couleur;
     protected double qteEauConsommee;
@@ -182,7 +182,8 @@ public abstract class Animal {
         newZone.addAnimal(animalToMove);
         
         if (newZone.getType() == TypeZone.DESERT)
-        	esperanceDeVie -- ;
+//        	animalToMove.mourir(newZone);
+        	esperanceDeVie -= 10 ;
     }
 
     /**
