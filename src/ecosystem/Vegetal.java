@@ -8,16 +8,18 @@ public abstract class Vegetal {
 	protected int esperanceDeVie;
 	protected int rayon;
 	protected int seuilEauCritique;
-	protected int seuilTempCritique; // Pour la temperature il faudrait un seuil minimal et un seuil maximal
+	protected int seuilTempCritiqueMin; 
+	protected int seuilTempCritiqueMax; 
 	protected double qteEauConsommee;
 	protected double maxEauConsommable;
 	protected Color couleur;
 
-	public Vegetal(String nom, int rayon, int seuilEauCritique, int seuilTempCritique, Color couleur) {
+	public Vegetal(String nom, int rayon, int seuilEauCritique, int seuilTempCritiqueMin,int seuilTempCritiqueMax, Color couleur) {
 		this.nom = nom;
 		this.rayon = rayon;
 		this.seuilEauCritique = seuilEauCritique;
-		this.seuilTempCritique = seuilTempCritique;
+		this.seuilTempCritiqueMin = seuilTempCritiqueMin;
+		this.seuilTempCritiqueMax = seuilTempCritiqueMax;
 		this.couleur = couleur;
 	}
 
@@ -37,6 +39,10 @@ public abstract class Vegetal {
 		this.rayon = rayon;
 	}
 
+	public double getQteEauConsommee() {
+		return qteEauConsommee ; 
+	}
+	
 	public int getSeuilEauCritique() {
 		return seuilEauCritique;
 	}
@@ -45,12 +51,18 @@ public abstract class Vegetal {
 		this.seuilEauCritique = seuilEauCritique;
 	}
 
-	public int getSeuilTempCritique() {
-		return seuilTempCritique;
+	public int getseuilTempCritiqueMin() {
+		return seuilTempCritiqueMin;
 	}
-
-	public void setSeuilTempCritique(int seuilTempCritique) {
-		this.seuilTempCritique = seuilTempCritique;
+	
+	public void setseuilTempCritiqueMin(int seuilTempCritiqueMin) {
+		this.seuilTempCritiqueMin = seuilTempCritiqueMin ;
+	}
+	public int getseuilTempCritiqueMax() {
+		return seuilTempCritiqueMax;
+	}
+	public void setseuilTempCritiqueMax(int seuilTempCritiqueMax) {
+		this.seuilTempCritiqueMax = seuilTempCritiqueMax;
 	}
 
 	public Color getCouleur() {
@@ -100,8 +112,6 @@ public abstract class Vegetal {
 		age += 1;
 	}
 
-	// Dans le Main, l'une des conditions pour mourir est d'atteindre l'esperance de
-	// Vie
 	public void mourir(Zone Z) {
 		Z.removeVegetal(this.getClass());
 		System.out.println("Mort d'un Végétal\n") ; 

@@ -124,6 +124,10 @@ public class Zone {
         this.couleur = couleur;
     }
 
+    public double getTemperarure() {
+        return temperature;
+    }
+
     public double getNiveauEau() {
         return niveauEau;
     }

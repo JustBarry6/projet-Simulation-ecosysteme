@@ -13,7 +13,7 @@ public abstract class Animal {
 
     protected String nom;
     protected int age = 1;
-    protected final int esperanceDeVie = 40;
+    protected int esperanceDeVie = 40;
     private int rayon;
     private Color couleur;
     protected double qteEauConsommee;
@@ -165,6 +165,7 @@ public abstract class Animal {
 
     /**
      * Déplace un animal d'une zone d'origine vers une nouvelle zone.
+     * Si la zone est un desert, alors l'esperance de vie de l'animal diminue
      * 
      * @param ecosystem    L'écosystème dans lequel se trouvent les zones.
      * @param x            La position x de la zone d'origine.
@@ -179,6 +180,9 @@ public abstract class Animal {
         Zone newZone = ecosystem.getZone(newX, newY);
         Animal animalToMove = currentZone.removeAnimal(animalClass);
         newZone.addAnimal(animalToMove);
+        
+        if (newZone.getType() == TypeZone.DESERT)
+        	esperanceDeVie -- ;
     }
 
     /**

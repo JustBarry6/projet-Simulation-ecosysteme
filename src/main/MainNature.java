@@ -47,6 +47,7 @@ public class MainNature {
 		// Boucle de simulation
 		for (int iteration = 0; iteration < nbIterations; iteration++) {
 			deplacementAnimaux(ecosystem);
+			checkConditionsTemperatureEau(ecosystem) ; 
 			nutritionAnimauxVegetaux(ecosystem);
 			vieillissementCollectif(ecosystem);
 			checkEsperanceDeVie(ecosystem);
@@ -114,6 +115,7 @@ public class MainNature {
 
 				for (Animal animal : animaux) {
 					animal.seDeplacer(ecosystem, i, j);
+					
 					animal.utiliserEau(); // Le déplacement entraîne la baisse de la réserve d'eau
 				}
 
@@ -176,6 +178,41 @@ public class MainNature {
 				for (Vegetal V : vegetaux) {
 					if (V.getAge() >= V.getEsperanceDeVie())
 						V.mourir(zone);
+				}
+				ecosystem.mettreAJourAnimaux(i, j);
+			}
+		}
+	}
+	
+	// Cette fonction verifie si les conditions de temperature sont adequates pour les animaux et vegetaux sinon ils meurent
+	private static void checkConditionsTemperatureEau(Ecosystem ecosystem) {
+		int nbCasesL = ecosystem.getNbCasesL();
+		int nbCasesH = ecosystem.getNbCasesH();
+
+		for (int i = 0; i < nbCasesL; i++) {
+			for (int j = 0; j < nbCasesH; j++) {
+				Zone zone = ecosystem.getZone(i, j);
+//				List<Animal> animaux = new ArrayList<>(zone.getAnimaux()); // Créer une copie de la liste d'animaux
+				List<Vegetal> vegetaux = new ArrayList<>(zone.getVegetaux());
+
+//				for (Animal animal : animaux) {
+//					if (animal.getAge() >= animal.getEsperanceDeVie())
+//						animal.mourir(zone);
+//				}
+				for (Vegetal V : vegetaux) {
+					if (zone.getTemperarure() < V.getseuilTempCritiqueMin() || 
+							zone.getTemperarure() > V.getseuilTempCritiqueMax() )
+						V.mourir(zone);
+							
+					// Si le niveau d'eau est critique, le vegetal cherche à en consommer, s'il n'en trouve pas il meurt
+					if (V.getQteEauConsommee() < V.getSeuilEauCritique()) {						
+						try {
+							V.consommerEau(zone);
+						}
+						catch (NoWaterException e){
+							V.mourir(zone);
+						}	
+					}
 				}
 				ecosystem.mettreAJourAnimaux(i, j);
 			}
