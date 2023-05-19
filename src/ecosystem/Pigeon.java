@@ -18,8 +18,8 @@ public class Pigeon extends Oiseau implements AnimalVolant, Herbivore {
     }
     
     @Override
-    public void seDeplacer(Ecosystem eco, int i, int j) {
-        moveAnimaux(eco, i, j, 25, Pigeon.class);
+    public void seDeplacer(Ecosystem eco, int i, int j) throws ZonePleineException{
+        moveAnimaux(eco, i, j, POURCENTAGE_DEPLACEMENT_PROIE, Pigeon.class);
     }
 
 //	@Override
@@ -94,4 +94,10 @@ public class Pigeon extends Oiseau implements AnimalVolant, Herbivore {
     public Pigeon seReproduire(Herbivore partenaire) {
         return new Pigeon(30);
     }
+
+    @Override
+	public void voler() {
+		System.out.println("Le pigeon vole dans les airs !\"");
+		
+	}
 }

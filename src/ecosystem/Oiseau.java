@@ -8,8 +8,6 @@ public abstract class Oiseau extends Animal implements AnimalVolant {
     }
 
     @Override
-    public void voler() {
-        // implémentation de la méthode voler pour les oiseaux
-    }
+    public abstract void voler();
 }
 

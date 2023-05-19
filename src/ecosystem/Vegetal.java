@@ -108,7 +108,7 @@ public abstract class Vegetal {
 	// Apres avoir consomme de l'eau, le vegetal l'utilise pour ses cellules
 	public void utiliserEau()
 	{
-		qteEauConsommee -= 10 ; 
+		qteEauConsommee -= 1 ; 
 	}
 
 	public void vieillir() {

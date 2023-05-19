@@ -15,13 +15,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import ecosystem.Animal;
+import ecosystem.Arbre;
 import ecosystem.Carnivore;
 import ecosystem.Herbivore;
 import ecosystem.TypeZone;
 import ecosystem.Vegetal;
-import ecosystem.Zone;
-import ecosystem.Arbre;
 import ecosystem.Vivace;
+import ecosystem.Zone;
+import ecosystem.ZonePleineException;
 
 public class Ecosystem extends JPanel {
 	private int nbCasesL, nbCasesH;
@@ -37,8 +38,8 @@ public class Ecosystem extends JPanel {
 	private static final String IMAGE_PATH_ARBRE = "src/view/images/arbre.png";
 	private static final String IMAGE_PATH_VIVACE = "src/view/images/vivace.png";
 
-	private static final int POURCENTAGE_REPRODUCTION_PROIE = 15;
-	private static final int POURCENTAGE_REPRODUCTION_PREDATEUR = 15; 
+	private static final int POURCENTAGE_REPRODUCTION_PROIE = 25;
+	private static final int POURCENTAGE_REPRODUCTION_PREDATEUR = 25;
 
 	public Ecosystem(int nbCasesL, int nbCasesH, int nbPixelCoteCase) {
 		int i, j;
@@ -74,14 +75,13 @@ public class Ecosystem extends JPanel {
 		zone[i][j].setCouleur(c);
 	}
 
-	public void addAnimal(int i, int j, Animal animal) {
+	public void addAnimal(int i, int j, Animal animal) throws ZonePleineException{
 		zone[i][j].addAnimal(animal);
 	}
 
 	public void addVegetal(int i, int j, Vegetal vegetal) {
 		zone[i][j].addVegetal(vegetal);
 	}
-	
 
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -93,12 +93,11 @@ public class Ecosystem extends JPanel {
 				int cellX = 10 + (i * nbPixelCoteCase);
 				int cellY = 10 + (j * nbPixelCoteCase);
 				g.setColor(zone[i][j].getCouleur());
-				if(zone[i][j].getType() == TypeZone.DESERT) {
+				if (zone[i][j].getType() == TypeZone.DESERT) {
 					dessinerImage(g, zone[i][j].getImagePath(), cellX, cellY, nbPixelCoteCase);
-				}else {
-					g.fillRect(cellX, cellY, nbPixelCoteCase, nbPixelCoteCase);	
+				} else {
+					g.fillRect(cellX, cellY, nbPixelCoteCase, nbPixelCoteCase);
 				}
-
 
 				// Dessiner les animaux
 				for (Animal animal : zone[i][j].getAnimaux()) {
@@ -188,7 +187,7 @@ public class Ecosystem extends JPanel {
 		return nbCasesH;
 	}
 
-	public void placerAnimal(int x, int y, Animal animal) {
+	public void placerAnimal(int x, int y, Animal animal) throws ZonePleineException{
 		Zone zone = getZone(x, y);
 		if (zone != null) {
 			zone.addAnimal(animal);
@@ -200,124 +199,116 @@ public class Ecosystem extends JPanel {
 		if (zone != null && zone.getType() != TypeZone.DESERT) {
 			zone.addVegetal(vegetal);
 		}
-//		// L'esperance de vie diminue si le vegetal se trouve dans un desert
-//		if(zone.getType() == TypeZone.DESERT)
-//		{
-//			int EDV = vegetal.getEsperanceDeVie() ; 
-//			if (vegetal instanceof Arbre)
-//				vegetal.setEsperanceDeVie(EDV/2);
-//			else if (vegetal instanceof Vivace)
-//				vegetal.setEsperanceDeVie(EDV/2 + 5) ; 
-//		}
 	}
 
 	public void updateAnimaux(int i, int j) {
-	    // Récupère la liste des animaux dans la zone spécifiée
-	    List<Animal> animaux = this.getZone(i, j).getAnimaux();
-	    int countProies = 0;
-	    int countPredateurs = 0;
+		// Récupère la liste des animaux dans la zone spécifiée
+		List<Animal> animaux = this.getZone(i, j).getAnimaux();
+		int countProies = 0;
+		int countPredateurs = 0;
 
-	    // Compte le nombre de proies et de prédateurs dans la zone
-	    for (Animal animal : animaux) {
-	        if (animal instanceof Herbivore) {
-	            countProies++;
-	        } else if (animal instanceof Carnivore) {
-	            countPredateurs++;
-	        }
-	    }
+		// Compte le nombre de proies et de prédateurs dans la zone
+		for (Animal animal : animaux) {
+			if (animal instanceof Herbivore) {
+				countProies++;
+			} else if (animal instanceof Carnivore) {
+				countPredateurs++;
+			}
+		}
 
-	    // Si suffisamment de proies et aucun prédateur, les proies se reproduisent
-	    if (countProies >= 2 && countPredateurs == 0) {
-	        reproduireProies(i, j, POURCENTAGE_REPRODUCTION_PROIE);
-	    }
-	    // Si suffisamment de prédateurs et au moins une proie, les prédateurs se reproduisent
-	    else if (countPredateurs >= 2 && countProies > 0) {
-	        reproduirePredateurs(i, j, POURCENTAGE_REPRODUCTION_PREDATEUR);
-	    }
+		// Si suffisamment de proies et aucun prédateur, les proies se reproduisent
+		if (countProies >= 2 && countPredateurs == 0) {
+			reproduireProies(i, j, POURCENTAGE_REPRODUCTION_PROIE);
+		}
+		// Si suffisamment de prédateurs et au moins une proie, les prédateurs se
+		// reproduisent
+		else if (countPredateurs >= 2 && countProies > 0) {
+			reproduirePredateurs(i, j, POURCENTAGE_REPRODUCTION_PREDATEUR);
+		}
 
-	    // Met à jour les animaux dans la zone
-	    mettreAJourAnimaux(i, j);
+		// Met à jour les animaux dans la zone
+		mettreAJourAnimaux(i, j);
 	}
 
 	public void reproduireProies(int i, int j, int pourcentageReproduction) {
-	    // Récupère la liste des animaux dans la zone spécifiée
-	    List<Animal> animaux = zone[i][j].getAnimaux();
-	    List<Herbivore> herbivores = new ArrayList<>();
+		// Récupère la liste des animaux dans la zone spécifiée
+		List<Animal> animaux = zone[i][j].getAnimaux();
+		List<Herbivore> herbivores = new ArrayList<>();
 
-	    // Filtre les herbivores dans la liste des animaux
-	    for (Animal animal : animaux) {
-	        if (animal instanceof Herbivore) {
-	            herbivores.add((Herbivore) animal);
-	        }
-	    }
+		// Filtre les herbivores dans la liste des animaux
+		for (Animal animal : animaux) {
+			if (animal instanceof Herbivore) {
+				herbivores.add((Herbivore) animal);
+			}
+		}
 
-	    // Si au moins deux herbivores sont présents dans la zone
-	    if (herbivores.size() >= 2) {
-	        // Effectue une reproduction avec un certain pourcentage de chance
-	        if (random.nextInt(100) < pourcentageReproduction) {
-	            Herbivore parent1 = herbivores.get(0);
-	            Herbivore parent2 = herbivores.get(1);
-	            Herbivore nouvelAnimal = parent1.seReproduire(parent2);
-	            zone[i][j].addAnimal((Animal) nouvelAnimal);
-	            System.out.println("Nouvel animal herbivore créé : " + ((Animal) nouvelAnimal).getNom());
-	        }
-	    }
+		// Si au moins deux herbivores sont présents dans la zone
+		if (herbivores.size() >= 2) {
+			// Effectue une reproduction avec un certain pourcentage de chance
+			if (random.nextInt(100) < pourcentageReproduction) {
+				Herbivore parent1 = herbivores.get(0);
+				Herbivore parent2 = herbivores.get(1);
+				Herbivore nouvelAnimal = parent1.seReproduire(parent2);
+				try {
+					zone[i][j].addAnimal((Animal) nouvelAnimal);
+				} catch (ZonePleineException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.out.println("Nouvel animal herbivore créé : " + ((Animal) nouvelAnimal).getNom());
+			}
+		}
 	}
 
 	public void reproduirePredateurs(int i, int j, int pourcentageReproduction) {
-	    // Récupère la liste des animaux dans la zone spécifiée
-	    List<Animal> animaux = zone[i][j].getAnimaux();
-	    List<Carnivore> carnivores = new ArrayList<>();
+		// Récupère la liste des animaux dans la zone spécifiée
+		List<Animal> animaux = zone[i][j].getAnimaux();
+		List<Carnivore> carnivores = new ArrayList<>();
 
-	    // Filtre les carnivores dans la liste des animaux
-	    for (Animal animal : animaux) {
-	        if (animal instanceof Carnivore) {
-	            carnivores.add((Carnivore) animal);
-	        }
-	    }
+		// Filtre les carnivores dans la liste des animaux
+		for (Animal animal : animaux) {
+			if (animal instanceof Carnivore) {
+				carnivores.add((Carnivore) animal);
+			}
+		}
 
-	    // Si au moins deux carnivores sont présents dans la zone
-	    if (carnivores.size() >= 2) {
-	        // Effectue une reproduction avec un certain pourcentage de chance
-	        if (random.nextInt(100) < pourcentageReproduction) {
-	            Carnivore parent1 = carnivores.get(0);
-	            Carnivore parent2 = carnivores.get(1);
-	            Carnivore nouvelAnimal = parent1.seReproduire(parent2);
-	            zone[i][j].addAnimal((Animal) nouvelAnimal);
-	            System.out.println("Nouvel animal carnivore créé : " + ((Animal) nouvelAnimal).getNom());
-	        }
-	    }
+		// Si au moins deux carnivores sont présents dans la zone
+		if (carnivores.size() >= 2) {
+			// Effectue une reproduction avec un certain pourcentage de chance
+			if (random.nextInt(100) < pourcentageReproduction) {
+				Carnivore parent1 = carnivores.get(0);
+				Carnivore parent2 = carnivores.get(1);
+				Carnivore nouvelAnimal = parent1.seReproduire(parent2);
+				try {
+					zone[i][j].addAnimal((Animal) nouvelAnimal);
+				} catch (ZonePleineException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.out.println("Nouvel animal carnivore créé : " + ((Animal) nouvelAnimal).getNom());
+			}
+		}
 	}
-
+	
+	//expliquer dans le rapport la difficulté à adapter la taille en fonction de nombre des animauxx
 	public void mettreAJourAnimaux(int i, int j) {
-	    // Récupère la liste des animaux dans la zone spécifiée
-	    List<Animal> animaux = this.getZone(i, j).getAnimaux();
+		// Récupère la liste des animaux dans la zone spécifiée
+		List<Animal> animaux = this.getZone(i, j).getAnimaux();
 
-	    // Parcourt tous les animaux dans la zone
-	    for (Animal animal : animaux) {
-	        int count = this.getZone(i, j).getNbAnimal(animal.getClass());
+		// Parcourt tous les animaux dans la zone
+		for (Animal animal : animaux) {
+			int count = this.getZone(i, j).getNbAnimal(animal.getClass());
 
-	        // Si plusieurs animaux du même type sont présents dans la zone
-	        if (count > 1) {
-	            // Supprime un animal de la zone et ajuste le rayon des animaux restants
-	            for (int k = 0; k < count - 1; k++) {
-	                Animal removedAnimal = this.getZone(i, j).removeAnimal(animal.getClass());
-	                int newRadius = removedAnimal.getRayon() + (count - 1);
-	                Animal newAnimal = null;
-	                try {
-	                    // Crée un nouvel animal avec un rayon ajusté
-	                    newAnimal = animal.getClass().getDeclaredConstructor(int.class).newInstance(newRadius);
-	                } catch (Exception e) {
-	                    e.printStackTrace();
-	                }
-	                this.getZone(i, j).addAnimal(newAnimal);
-	            }
-	        } else {
-	            // Si l'animal est le seul de son type dans la zone, on réinitialise son rayon
-	            animal.setRayon(30);
-	        }
-	    }
+			// Si plusieurs animaux du même type sont présents dans la zone
+			if (count > 1 && count < 3) {
+				int newRadius = animal.getRayon() + count;
+
+				animal.setRayon(newRadius);
+			} else {
+				// Si l'animal est le seul de son type dans la zone, on réinitialise son rayon
+				animal.setRayon(30);
+			}
+		}
 	}
-
 
 }

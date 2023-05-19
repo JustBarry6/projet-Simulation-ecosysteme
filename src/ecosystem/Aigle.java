@@ -48,12 +48,18 @@ public class Aigle extends Oiseau implements Carnivore, AnimalVolant {
     }
 
     @Override
-    public void seDeplacer(Ecosystem eco, int i, int j) {
-        moveAnimaux(eco, i, j, 25, Aigle.class);
+    public void seDeplacer(Ecosystem eco, int i, int j) throws ZonePleineException{
+        moveAnimaux(eco, i, j, POURCENTAGE_DEPLACEMENT_PREDATEUR, Aigle.class);
     }
 
     @Override
     public Aigle seReproduire(Carnivore partenaire) {
         return new Aigle(30);
     }
+
+	@Override
+	public void voler() {
+		System.out.println("L'aigle vole dans les airs !\"");
+		
+	}
 }

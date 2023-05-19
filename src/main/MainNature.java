@@ -6,29 +6,26 @@ import java.util.Random;
 
 import ecosystem.Aigle;
 import ecosystem.Animal;
-import ecosystem.Arbre;
+import ecosystem.AnimalVolant;
 import ecosystem.Biche;
+import ecosystem.Chene;
 import ecosystem.Chenille;
+import ecosystem.Iris;
 import ecosystem.Lion;
 import ecosystem.NoWaterException;
 import ecosystem.Pigeon;
+import ecosystem.Pivoine;
 import ecosystem.Sauterelle;
 import ecosystem.TypeZone;
 import ecosystem.Vegetal;
-import ecosystem.Vivace;
 import ecosystem.Zone;
-import ecosystem.Pivoine;
-import ecosystem.Iris;
-import ecosystem.Chene;
+import ecosystem.ZonePleineException;
 import view.Ecosystem;
 
 public class MainNature {
 
 	private static final int POURCENTAGE_PROIE = 30;  //Valeur initiale = 30
-	private static final int POURCENTAGE_PREDATEUR = 5; // Valeur initiale = 10
-	private static final int POURCENTAGE_PREDATION = 10;
-	private static final int POURCENTAGE_DEPLACEMENT_PROIE = 25;
-	private static final int POURCENTAGE_DEPLACEMENT_PREDATEUR = 25;
+	private static final int POURCENTAGE_PREDATEUR = 10; // Valeur initiale = 10
 
 	public static void main(String[] args) {
 		int nbCasesL = 7, nbCasesH = 8;
@@ -98,7 +95,12 @@ public class MainNature {
 	public static void placerAnimalSelonPourcentage(Ecosystem ecosystem, Random random, int x, int y, Animal animal,
 			double pourcentage) {
 		if (random.nextInt(101) < pourcentage) {
-			ecosystem.placerAnimal(x, y, animal);
+			try {
+				ecosystem.placerAnimal(x, y, animal);
+			} catch (ZonePleineException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -119,9 +121,16 @@ public class MainNature {
 				List<Animal> animaux = new ArrayList<>(zone.getAnimaux()); // Créer une copie de la liste d'animaux
 
 				for (Animal animal : animaux) {
-					animal.seDeplacer(ecosystem, i, j);
-					
+					try {
+						animal.seDeplacer(ecosystem, i, j);
+					} catch (ZonePleineException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					animal.utiliserEau(); // Le déplacement entraîne la baisse de la réserve d'eau
+					if(animal instanceof AnimalVolant) {
+						((AnimalVolant) animal).voler();
+					}
 				}
 
 				ecosystem.updateAnimaux(i, j);

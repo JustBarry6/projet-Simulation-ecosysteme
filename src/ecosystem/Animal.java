@@ -23,6 +23,9 @@ public abstract class Animal {
     protected ArrayList<Animal> proiesAnimales;
     protected ArrayList<Vegetal> predateursVegetaux;
     protected ArrayList<Animal> predateursAnimaux;
+    
+    protected static final int POURCENTAGE_DEPLACEMENT_PROIE = 25;
+    protected static final int POURCENTAGE_DEPLACEMENT_PREDATEUR = 25;
 
     /**
      * Constructeur de la classe Animal.
@@ -33,6 +36,7 @@ public abstract class Animal {
     public Animal(int rayon, Color couleur) {
         this.rayon = rayon;
         this.couleur = couleur;
+        this.maxEauConsommable = 20;
     }
 
     /**
@@ -122,7 +126,7 @@ public abstract class Animal {
      * @param i         La position x de la zone dans laquelle se trouve l'animal.
      * @param j         La position y de la zone dans laquelle se trouve l'animal.
      */
-    public abstract void seDeplacer(Ecosystem ecosystem, int i, int j);
+    public abstract void seDeplacer(Ecosystem ecosystem, int i, int j) throws ZonePleineException;
 
     /**
      * Méthode abstraite pour la reproduction de l'animal.
@@ -147,7 +151,7 @@ public abstract class Animal {
      * @param p            Le pourcentage de chance de déplacement.
      * @param animalClass  La classe des animaux à déplacer.
      */
-    public void moveAnimaux(Ecosystem ecosystem, int i, int j, int p, Class<? extends Animal> animalClass) {
+    public void moveAnimaux(Ecosystem ecosystem, int i, int j, int p, Class<? extends Animal> animalClass) throws ZonePleineException{
         int nbCasesL = ecosystem.getNbCasesL();
         int nbCasesH = ecosystem.getNbCasesH();
         Random random = new Random();
@@ -175,7 +179,7 @@ public abstract class Animal {
      * @param animalClass  La classe de l'animal à déplacer.
      */
     public void moveAnimal(Ecosystem ecosystem, int x, int y, int newX, int newY,
-            Class<? extends Animal> animalClass) {
+            Class<? extends Animal> animalClass) throws ZonePleineException{
         Zone currentZone = ecosystem.getZone(x, y);
         Zone newZone = ecosystem.getZone(newX, newY);
         Animal animalToMove = currentZone.removeAnimal(animalClass);
@@ -215,6 +219,6 @@ public abstract class Animal {
      * Utilise l'eau consommée par l'animal.
      */
     public void utiliserEau() {
-        qteEauConsommee -= 10;
+        qteEauConsommee -= 1;
     }
 }

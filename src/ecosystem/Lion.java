@@ -50,19 +50,9 @@ public class Lion extends Mammifere implements Carnivore {
     }
 	
     @Override
-    public void seDeplacer(Ecosystem eco, int i, int j) {
-        moveAnimaux(eco, i, j, 25, Lion.class);
+    public void seDeplacer(Ecosystem eco, int i, int j) throws ZonePleineException{
+        moveAnimaux(eco, i, j, POURCENTAGE_DEPLACEMENT_PREDATEUR, Lion.class);
     }
-
-//	@Override
-//	public void boire() {
-//		// implémentation de la méthode boire pour les lions
-//	}
-
-//	@Override
-//	public void mourir() {
-//		// implémentation de la méthode mourir pour les lions
-//	}
 
     @Override
     public Lion seReproduire(Carnivore partenaire) {

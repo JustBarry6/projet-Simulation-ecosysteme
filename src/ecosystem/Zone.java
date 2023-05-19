@@ -79,13 +79,14 @@ public class Zone {
         return new ArrayList<>(animaux);
     }
 
-    public void addAnimal(Animal animal) {
-        if (animaux.size() < capacite) {
+    public void addAnimal(Animal animal) throws ZonePleineException {
+        if (this.animaux.size() < this.getCapaciteMax()) {
             animaux.add(animal);
         } else {
-            System.out.println("La zone est déjà pleine. Impossible d'ajouter un nouvel animal.");
+            throw new ZonePleineException("La zone est déjà pleine. Impossible d'ajouter un nouvel animal.");
         }
     }
+
 
     public Animal removeAnimal(Class<? extends Animal> animalClass) {
         for (int i = 0; i < animaux.size(); i++) {
@@ -138,7 +139,7 @@ public class Zone {
     }
 
     public void addVegetal(Vegetal vegetal) {
-        if (vegetaux.size() < capacite) {
+        if (vegetaux.size() < getCapaciteMax()) {
             vegetaux.add(vegetal);
         } else {
             System.out.println("La zone est déjà pleine. Impossible d'ajouter un nouvel végétal.");

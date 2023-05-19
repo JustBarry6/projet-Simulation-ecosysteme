@@ -12,7 +12,7 @@ public abstract class Arbre extends Vegetal {
     public Arbre() {
         super("Arbre", RAYON_ARBRE,SEUIL_EAU_CRITIQUE, SEUIL_TEMP_CRITIQUE_MIN, SEUIL_TEMP_CRITIQUE_MAX, COULEUR_ARBRE);
         qteEauConsommee = SEUIL_EAU_CRITIQUE ; // Au départ l'arbre a assez d'eau pour vivre   
-        maxEauConsommable = 500 ; 
+        maxEauConsommable = 20 ; 
         esperanceDeVie = 500; // Valeur initiale à 60
     }
 

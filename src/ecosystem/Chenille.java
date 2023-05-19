@@ -18,8 +18,8 @@ public class Chenille extends Insecte implements Herbivore {
     }
 
     @Override
-    public void seDeplacer(Ecosystem eco, int i, int j) {
-        moveAnimaux(eco, i, j, 25, Chenille.class);
+    public void seDeplacer(Ecosystem eco, int i, int j) throws ZonePleineException{
+        moveAnimaux(eco, i, j, POURCENTAGE_DEPLACEMENT_PROIE, Chenille.class);
     }
 
     @Override
